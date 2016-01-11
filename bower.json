@@ -1,0 +1,23 @@
+{
+  "name": "notification-component",
+  "description": "Component for new feature notifications",
+  "main": "index.js",
+  "authors": [
+    "Aegis Team (aegisteam@pearson.com)"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "o-drawer": "~1.0.0",
+    "o-xhr": "~1.1.0"
+  }
+}
