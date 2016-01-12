@@ -1,0 +1,25 @@
+.hide {
+	display: none;
+}
+
+.notification-dropdown {
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+	position: relative;
+	right: 50%;
+	padding: 5px 10px 10px 10px;
+	min-width: 360px;
+}
+
+.dropdown-title {
+	text-align: center;
+	padding-bottom: 10px;
+	.close-dropdown {
+		float:right;
+	}
+}
+
+.pointer:hover{
+	cursor: pointer;
+}

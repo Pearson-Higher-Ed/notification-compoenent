@@ -1,9 +1,8 @@
 let NotificationApi = require("./NotificationApi");
 let configuration = require("./config");
-let drawer = require("o-drawer");
-let NotificationList = require("./NotificationList");
 let React = require("react");
 let ReactDOM = require("react-dom");
+let NotificationDropdown = require("./NotificationDropdown");
 
 function Notification(element, env, configOverride) {
 
@@ -37,21 +36,9 @@ function Notification(element, env, configOverride) {
 	
 	// create bell and notificationList objects
 	ReactDOM.render(
-		<div>
-			<i className="fa fa-bell"></i>
-			<div id="notificationContent"></div>
-		</div>,
+		<NotificationDropdown />,
 		element
 	);
-	ReactDOM.render(
-		<NotificationList />,
-		document.getElementById("notificationContent")
-	);
-
-	// give the bell some mouse event
-	element.onmousedown = function() {
-		console.log("mouse down");
-	};
 
 	// get notification list
 	let notApi = new NotificationApi(config);
