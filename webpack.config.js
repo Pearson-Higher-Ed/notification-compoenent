@@ -3,7 +3,7 @@ var path = require("path");
 var BowerWebpackPlugin = require("bower-webpack-plugin");
 
 module.exports = {
-	entry: "./src/notification.js",
+	entry: "./src/Notification.jsx",
 	output: {
 		path: __dirname + "/lib",
 		publicPath: "/lib",
@@ -14,7 +14,7 @@ module.exports = {
 	module: {
 		loaders: [
 			{ 
-				test: /\.js$/, 
+				test: /\.jsx?$/, 
 				exclude: /(node_modules|bower_components)/,
 				loader: "babel-loader" 
 			},
@@ -44,6 +44,7 @@ module.exports = {
 
 	//resolve bower_components
 	resolve: {
-		modulesDirectories: ["bower_components"]
+		modulesDirectories: ["node_modules", "bower_components"],
+		extensions: ["", ".js", ".jsx"]
 	}
 };

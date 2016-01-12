@@ -1,11 +1,13 @@
-let NotificationApi = require("./notification-api");
+let NotificationApi = require("./NotificationApi");
 let configuration = require("./config");
 let drawer = require("o-drawer");
-
+let NotificationList = require("./NotificationList");
+let React = require("react");
+let ReactDOM = require("react-dom");
 
 function Notification(element, env, configOverride) {
 
-	// validation area
+	// -------------------validation area----------------------------- //
 	if (!(this instanceof Notification)) {
 		throw new TypeError("Constructor Notification requires \"new\"");
 	}
@@ -31,15 +33,28 @@ function Notification(element, env, configOverride) {
 	if(!config) {
 		throw new Error("Configuration with " + env + " was not found");
 	}
-	// validation area
-
-	let notApi = new NotificationApi(config);
-
-	this.notificationNode = document.createElement("div");
-	this.notificationNode.appendChild(document.createTextNode("click here"));
+	// -------------------validation area----------------------------- //
 	
-	element.appendChild(this.notificationNode);
+	// create bell and notificationList objects
+	ReactDOM.render(
+		<div>
+			<i className="fa fa-bell"></i>
+			<div id="notificationContent"></div>
+		</div>,
+		element
+	);
+	ReactDOM.render(
+		<NotificationList />,
+		document.getElementById("notificationContent")
+	);
 
+	// give the bell some mouse event
+	element.onmousedown = function() {
+		console.log("mouse down");
+	};
+
+	// get notification list
+	let notApi = new NotificationApi(config);
 	let userNotifications = notApi.getNotifications("console");
 
 	userNotifications.then(function(result) {
@@ -47,6 +62,7 @@ function Notification(element, env, configOverride) {
 	}, function(error) {
 		console.log(error);
 	});
+
 }
 
 module.exports = Notification;

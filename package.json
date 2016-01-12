@@ -2,7 +2,7 @@
   "name": "notification-component",
   "version": "0.0.1",
   "description": "Component for new feature notifications",
-  "main": "index.js",
+  "main": "lib/notification.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,5 +24,10 @@
     "style-loader": "^0.13.0",
     "webpack": "^1.12.10"
   },
-  "dependencies": {}
+  "dependencies": {
+    "babel-preset-react": "^6.3.13",
+    "babelify": "^7.2.0",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6"
+  }
 }
