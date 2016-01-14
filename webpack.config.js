@@ -9,7 +9,7 @@ module.exports = {
 		publicPath: "/lib",
 		filename: "notification.min.js",
 		libraryTarget: "var",
-		library: "Notification"
+		library: "NotificationComponent"
 	},
 	module: {
 		loaders: [

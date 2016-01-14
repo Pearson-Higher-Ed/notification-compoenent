@@ -1,1 +1,1 @@
-var not = new Notification("#notification", "prd");
+var not = new NotificationComponent("#notification", "prd");
