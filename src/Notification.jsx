@@ -4,7 +4,7 @@ let React = require("react");
 let ReactDOM = require("react-dom");
 let NotificationDropdown = require("./NotificationDropdown");
 
-function Notification(element, env, configOverride) {
+module.exports = function(element, env, configOverride) {
 
 	// -------------------validation area----------------------------- //
 	if (!(this instanceof Notification)) {
@@ -50,6 +50,4 @@ function Notification(element, env, configOverride) {
 		console.log(error);
 	});
 
-}
-
-module.exports = Notification;
+};

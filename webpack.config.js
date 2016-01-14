@@ -8,7 +8,7 @@ module.exports = {
 		path: __dirname + "/lib",
 		publicPath: "/lib",
 		filename: "notification.min.js",
-		libraryTarget: "var",
+		libraryTarget: "umd",
 		library: "NotificationComponent"
 	},
 	module: {

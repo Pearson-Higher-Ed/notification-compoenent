@@ -2,7 +2,7 @@
   "name": "notification-component",
   "version": "0.0.1",
   "description": "Component for new feature notifications",
-  "main": "lib/notification.min.js",
+  "main": "./lib/notification.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
