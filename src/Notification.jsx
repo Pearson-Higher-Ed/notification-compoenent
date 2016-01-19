@@ -1,10 +1,9 @@
-let NotificationApi = require("./NotificationApi");
 let configuration = require("./config");
 let React = require("react");
 let ReactDOM = require("react-dom");
 let NotificationDropdown = require("./NotificationDropdown");
 
-module.exports = function(element, env, configOverride) {
+function Notification(element, env, configOverride) {
 
 	// -------------------validation area----------------------------- //
 	if (!(this instanceof Notification)) {
@@ -36,18 +35,10 @@ module.exports = function(element, env, configOverride) {
 	
 	// create bell and notificationList objects
 	ReactDOM.render(
-		<NotificationDropdown />,
+		<NotificationDropdown config={config}/>,
 		element
 	);
 
-	// get notification list
-	let notApi = new NotificationApi(config);
-	let userNotifications = notApi.getNotifications("console");
+}
 
-	userNotifications.then(function(result) {
-		console.log(result);
-	}, function(error) {
-		console.log(error);
-	});
-
-};
+module.exports = Notification;

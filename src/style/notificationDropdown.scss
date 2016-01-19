@@ -3,13 +3,16 @@
 }
 
 .notification-dropdown {
-	border-right: 1px solid black;
-	border-bottom: 1px solid black;
-	border-left: 1px solid black;
-	position: relative;
-	right: 50%;
-	padding: 5px 10px 10px 10px;
-	min-width: 360px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    position: relative;
+    right: 180px;
+    margin-top: 17px;
+    padding: 5px 10px 10px 10px;
+    min-width: 360px;
+    color: black;
+    background-color: white;
 }
 
 .dropdown-title {
