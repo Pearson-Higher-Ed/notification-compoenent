@@ -10,7 +10,6 @@ module.exports = React.createClass({
 		let userNotifications = notApi.getNotifications("console");
 
 		userNotifications.then((result) => {
-			console.log(result);
 			this.setState({notificationList: result});
 
 		}, function(error) {
@@ -45,7 +44,7 @@ module.exports = React.createClass({
 							Notifications
 							<i className="fa fa-remove close-dropdown pointer" onClick={this.closeDropdown}></i>
 						</div>
-						<NotificationList />
+						<NotificationList list={this.state.notificationList}/>
 					</div>
 				</div>
 			</div>

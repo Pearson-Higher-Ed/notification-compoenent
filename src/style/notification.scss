@@ -1,0 +1,30 @@
+.notification-node {
+    margin-left: -18px;
+    margin-right: -18px;
+    display: block;
+    height: 52px;
+
+	.notification-node__icon {
+	    float: left;
+	    border-right: 1px solid #ddd;
+	    padding: 10px;
+	}
+
+	.notification-node__summary {
+		float:left;
+		h1 {
+		    font-size: 16px;
+		    padding-left: 10px;
+		    margin-bottom: 0;
+		    margin-top: 10px;
+		}
+		.notification-node__summary-description {
+			padding-left: 10px;
+		}
+	}
+
+	.notification-node__dismiss {
+		float: right;
+    	margin: 10px;
+	}
+}
