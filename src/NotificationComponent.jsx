@@ -2,6 +2,7 @@ let configuration = require("./config");
 let React = require("react");
 let ReactDOM = require("react-dom");
 let NotificationDropdown = require("./NotificationDropdown");
+let NotificationApi = require("./NotificationApi");
 
 function NotificationComponent(element, env, configOverride) {
 
@@ -33,11 +34,21 @@ function NotificationComponent(element, env, configOverride) {
 	}
 	// -------------------validation area----------------------------- //
 	
-	// create bell and notificationList objects
-	ReactDOM.render(
-		<NotificationDropdown config={config}/>,
+
+	let notApi = new NotificationApi(config);
+	let userNotifications = notApi.getNotifications("console");
+
+	userNotifications.then((result) => {
+		ReactDOM.render(
+		<NotificationDropdown notificationList={result}/>,
 		element
 	);
+
+	}, function(error) {
+		console.log(error);
+	});
+	// create bell and notificationList objects
+	
 
 }
 

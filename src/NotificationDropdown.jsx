@@ -1,25 +1,12 @@
 let React = require("react");
 let NotificationList = require("./NotificationList");
-let NotificationApi = require("./NotificationApi");
 require("./style/notificationDropdown.scss");
 
 module.exports = React.createClass({
-	componentDidMount: function() {
-		// get notification list
-		let notApi = new NotificationApi(this.props.config);
-		let userNotifications = notApi.getNotifications("console");
 
-		userNotifications.then((result) => {
-			this.setState({notificationList: result});
-
-		}, function(error) {
-			console.log(error);
-		});
-	},
 	getInitialState: function() {
 		return {
-			showDropdown: false,
-			notificationList: []
+			showDropdown: false
 		};
 	},
 	closeDropdown : function() {
@@ -44,7 +31,7 @@ module.exports = React.createClass({
 							Notifications
 							<i className="fa fa-remove close-dropdown pointer" onClick={this.closeDropdown}></i>
 						</div>
-						<NotificationList list={this.state.notificationList}/>
+						<NotificationList list={this.props.notificationList}/>
 					</div>
 				</div>
 			</div>
