@@ -1,4 +1,4 @@
-let xhr = require("o-xhr");
+// let xhr = require("o-xhr");
 
 
 module.exports = function(config) {
