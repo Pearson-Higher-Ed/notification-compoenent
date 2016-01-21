@@ -1,5 +1,10 @@
 .notification-container {
-    padding-left: 17px;
-    padding-right: 17px;
-    border: solid 1px #ddd;
+   
+    
+    .notification-container__list {
+    }   
+
+    .notification-container--hide {
+    	display: none;
+    }
 }

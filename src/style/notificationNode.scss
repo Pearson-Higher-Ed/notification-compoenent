@@ -1,8 +1,13 @@
 .notification-node {
-    margin-left: -18px;
-    margin-right: -18px;
-    display: block;
     height: 52px;
+	border: solid 1px #ddd;
+	margin-bottom: 10px;
+
+    .notification-node--details-click {
+    	cursor: pointer;
+    	height:100%;
+    	float: left;
+    }
 
 	.notification-node__icon {
 	    float: left;
@@ -12,6 +17,8 @@
 
 	.notification-node__summary {
 		float:left;
+		height: 100%;
+
 		h1 {
 		    font-size: 16px;
 		    padding-left: 10px;
@@ -27,5 +34,6 @@
 	.notification-node__dismiss {
 		float: right;
     	margin: 10px;
+    	cursor: pointer;
 	}
 }
