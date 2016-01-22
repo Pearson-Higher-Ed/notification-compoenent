@@ -1,55 +1,66 @@
-let configuration = require("./config");
 let React = require("react");
 let ReactDOM = require("react-dom");
 let NotificationDropdown = require("./NotificationDropdown");
 let NotificationApi = require("./NotificationApi");
 
-function NotificationComponent(element, env, configOverride) {
-
-	// -------------------validation area----------------------------- //
-	if (!(this instanceof NotificationComponent)) {
-		throw new TypeError("Constructor NotificationComponent requires \"new\"");
-	}
-	if (!element) {
-		throw new TypeError("missing required argument: element");
-	}
-	if(!env) {
-		throw new Error("no environment set need to pass in environment");
-	}
-
-	if (typeof element === "string") {
-		element = document.querySelector(element);
-	}
-	if (!element) {
-		return;
-	}
-
-	if(configOverride) {
-		configuration = configOverride;
-	}
-
-	let config = configuration[env];
-	if(!config) {
-		throw new Error("Configuration with " + env + " was not found");
-	}
-	// -------------------validation area----------------------------- //
+function NotificationComponent(config) {
 	
-
-	let notApi = new NotificationApi(config);
+	let notApi = new NotificationApi();
 	let userNotifications = notApi.getNotifications("console");
 
 	userNotifications.then((result) => {
-		ReactDOM.render(
-		<NotificationDropdown notificationList={result}/>,
-		element
-	);
-
+		this.reactComponent.setState({notificationList: result});
 	}, function(error) {
 		console.log(error);
 	});
 	// create bell and notificationList objects
-	
+	this.notificationList = [];
+
+	this.reactClass = React.createClass({
+		getInitialState: function() {
+			return {
+				notificationList: []
+			}
+		},
+		render: function() {
+			return (
+				<div>
+					<NotificationDropdown notificationList={this.state.notificationList}/>
+				</div>
+			);
+		}
+	});
+
+	this.attachComponent = function(element) {
+		if (!element) {
+			throw new TypeError("missing required argument: element");
+		}
+		if (typeof element === "string") {
+			element = document.querySelector(element);
+		}
+		if (!element) {
+			throw new Error("Element could not be found");
+		}
+		this.reactComponent = ReactDOM.render(<this.reactClass/>, element);
+	}
 
 }
 
-module.exports = NotificationComponent;
+
+module.exports = (function() {
+ 	var instance;
+ 
+    function createInstance(config) {
+        var object = new NotificationComponent(config);
+        return object;
+    }
+ 
+    return {
+        getInstance: function (config) {
+            if (!instance) {
+                instance = createInstance(config);
+            }
+            return instance;
+        }
+    }; 
+})();

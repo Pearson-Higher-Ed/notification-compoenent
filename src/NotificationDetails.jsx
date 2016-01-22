@@ -18,8 +18,7 @@ module.exports = React.createClass({
 					{this.props.body}
 				</div>
 				<div className="notification-details__buttons">
-					<button onClick={this.goToDestination()}>something</button>
-					<button onClick={this.props.previousClick}>Remind Me Later</button>
+					<button onClick={this.props.previousClick()}>go back</button>
 				</div>
 			</div>
 		);

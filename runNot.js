@@ -1,1 +1,2 @@
-var not = new NotificationComponent("#notification", "prd");
+var not = NotificationComponent.getInstance(null);
+not.attachComponent("#notification");

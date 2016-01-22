@@ -1,7 +1,7 @@
 let xhr = require("o-xhr");
 
 
-module.exports = function(config) {
+module.exports = function() {
 	this.getNotifications = function(application) {
 		let async = new Promise(function(resolve, reject) {
 			setTimeout(function() {
