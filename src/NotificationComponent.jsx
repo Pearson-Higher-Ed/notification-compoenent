@@ -13,9 +13,7 @@ function NotificationComponent(config) {
 	}, function(error) {
 		console.log(error);
 	});
-	// create bell and notificationList objects
-	this.notificationList = [];
-
+	
 	this.reactClass = React.createClass({
 		getInitialState: function() {
 			return {
@@ -42,7 +40,7 @@ function NotificationComponent(config) {
 			throw new Error("Element could not be found");
 		}
 		this.reactComponent = ReactDOM.render(<this.reactClass/>, element);
-	}
+	};
 
 }
 
