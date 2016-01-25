@@ -15,17 +15,25 @@ function NotificationComponent(config) {
 	let notApi = new NotificationApi();
 	let userNotifications = notApi.getNotifications("console");
 
+	//this is only here because it is possible for promise to come back before the consumer has placed the react component into a dom
+	this.notificationList = [];
+
 	userNotifications.then((result) => {
-		this.reactComponent.setState({notificationList: result});
+		if(this.reactComponent) {
+			this.reactComponent.setState({notificationList: result});
+		} else {
+			this.notificationList = result;
+		}
 	}, function(error) {
 		console.log(error);
 	});
-	
+
 	//  Keep track of the parent react class
+	var _this = this;//i'm not happy i need to do this....but it would be really complicated since i don't want to actually pass context down to the child except for the notificationList property.  
 	this.reactClass = React.createClass({
 		getInitialState: function() {
 			return {
-				notificationList: []
+				notificationList: _this.notificationList
 			}
 		},
 		render: function() {

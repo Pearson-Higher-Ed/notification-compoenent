@@ -1,2 +1,5 @@
 var not = NotificationComponent.getInstance(null);
-not.attachComponent("#notification");
+setTimeout(function() {
+	not.attachComponent("#notification");
+
+}, 5000);
