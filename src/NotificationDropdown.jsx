@@ -9,9 +9,11 @@ module.exports = React.createClass({
 			showDropdown: false
 		};
 	},
+
 	closeDropdown : function() {
 		this.setState({showDropdown: false});
 	},
+
 	toggle: function() {
 		if(this.state.showDropdown) {
 			this.setState({showDropdown: false});
@@ -19,8 +21,8 @@ module.exports = React.createClass({
 		}
 		this.setState({showDropdown: true});
 
-
 	},
+	
 	render: function() {
 		return (
 			<div>

@@ -3,22 +3,31 @@ let ReactDOM = require("react-dom");
 let NotificationDropdown = require("./NotificationDropdown");
 let NotificationApi = require("./NotificationApi");
 
+/**
+ *  NotificationComponent.  
+ *  	NotificationComponent will get larger as it is in charge of making API calls for all of the notification-apis.  
+ *  	To get an instance of it just create require the module inside your javascript file and call "getInstance" with configuration
+ * 		as a parameter.  This component needs to make several api calls from places that could change, so we need to pass configuration
+ *		into it.  
+ */
 function NotificationComponent(config) {
 	
-	let notApi = new NotificationApi();
-	let userNotifications = notApi.getNotifications("console");
-
-	userNotifications.then((result) => {
-		this.reactComponent.setState({notificationList: result});
-	}, function(error) {
-		console.log(error);
-	});
-	
+	//  Keep track of the parent react class
 	this.reactClass = React.createClass({
 		getInitialState: function() {
 			return {
 				notificationList: []
 			}
+		},
+		componentDidMount: function() {
+			let notApi = new NotificationApi();
+			let userNotifications = notApi.getNotifications("console");
+
+			userNotifications.then((result) => {
+				this.setState({notificationList: result});
+			}, function(error) {
+				console.log(error);
+			});
 		},
 		render: function() {
 			return (
@@ -39,12 +48,15 @@ function NotificationComponent(config) {
 		if (!element) {
 			throw new Error("Element could not be found");
 		}
-		this.reactComponent = ReactDOM.render(<this.reactClass/>, element);
+		//  We need the return of the render so that we can call the "setState" functino for when the promise comes back
+		ReactDOM.render(<this.reactClass/>, element);
 	};
 
 }
 
-
+/**
+ * Singleton of notification component.
+ */ 
 module.exports = (function() {
  	var instance;
  

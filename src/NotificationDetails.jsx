@@ -2,12 +2,7 @@ let React = require("react");
 require("./style/notificationDetails.scss");
 
 module.exports = React.createClass({
-	goToDestination: function() {
-		
-	},
-	remindLater: function() {
 
-	},
 	render: function() {
 		return (
 			<div className="notification-details">
@@ -18,7 +13,7 @@ module.exports = React.createClass({
 					{this.props.body}
 				</div>
 				<div className="notification-details__buttons">
-					<button onClick={this.props.previousClick()}>go back</button>
+					<button onClick={this.props.previousClick}>go back</button>
 				</div>
 			</div>
 		);
