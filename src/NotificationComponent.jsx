@@ -12,22 +12,21 @@ let NotificationApi = require("./NotificationApi");
  */
 function NotificationComponent(config) {
 	
+	let notApi = new NotificationApi();
+	let userNotifications = notApi.getNotifications("console");
+
+	userNotifications.then((result) => {
+		this.reactComponent.setState({notificationList: result});
+	}, function(error) {
+		console.log(error);
+	});
+	
 	//  Keep track of the parent react class
 	this.reactClass = React.createClass({
 		getInitialState: function() {
 			return {
 				notificationList: []
 			}
-		},
-		componentDidMount: function() {
-			let notApi = new NotificationApi();
-			let userNotifications = notApi.getNotifications("console");
-
-			userNotifications.then((result) => {
-				this.setState({notificationList: result});
-			}, function(error) {
-				console.log(error);
-			});
 		},
 		render: function() {
 			return (
@@ -49,7 +48,7 @@ function NotificationComponent(config) {
 			throw new Error("Element could not be found");
 		}
 		//  We need the return of the render so that we can call the "setState" functino for when the promise comes back
-		ReactDOM.render(<this.reactClass/>, element);
+		this.reactComponent = ReactDOM.render(<this.reactClass/>, element);
 	};
 
 }
