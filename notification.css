@@ -1,0 +1,51 @@
+.notification-node {
+  height: 52px;
+  border: solid 1px #ddd;
+  margin-bottom: 10px; }
+  .notification-node .notification-node--details-click {
+    cursor: pointer;
+    height: 100%;
+    float: left; }
+  .notification-node .notification-node__icon {
+    float: left;
+    border-right: 1px solid #ddd;
+    padding: 10px; }
+  .notification-node .notification-node__summary {
+    float: left;
+    height: 100%; }
+    .notification-node .notification-node__summary h1 {
+      font-size: 16px;
+      padding-left: 10px;
+      margin-bottom: 0;
+      margin-top: 10px;
+      font-weight: bold; }
+    .notification-node .notification-node__summary .notification-node__summary-description {
+      padding-left: 10px; }
+  .notification-node .notification-node__dismiss {
+    float: right;
+    margin: 10px;
+    cursor: pointer; }
+.hide {
+  display: none; }
+
+.notification-dropdown {
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  position: relative;
+  right: 180px;
+  margin-top: 17px;
+  padding: 5px 10px 10px 10px;
+  min-width: 360px;
+  max-width: 360px;
+  color: black;
+  background-color: white; }
+
+.dropdown-title {
+  text-align: center;
+  padding-bottom: 10px; }
+  .dropdown-title .close-dropdown {
+    float: right; }
+
+.pointer:hover {
+  cursor: pointer; }
