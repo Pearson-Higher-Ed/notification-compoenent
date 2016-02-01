@@ -1,4 +1,4 @@
-let NotificationDropdown = require("../src/NotificationDropdown");
+let NotificationList = require("../src/NotificationList");
 let ReactTestUtils = require("react-addons-test-utils");
 let expect = require("expect.js");
 let React = require("react");
@@ -13,23 +13,15 @@ describe("Notificationcomponent", () => {
 		icon: "fa fa-cogs fa-2x"
 	}];
 	let container = null;
-	let bell = null;
 	beforeEach(() => {
-		container = ReactTestUtils.renderIntoDocument(<NotificationDropdown notificationList={list}/>);
+		container = ReactTestUtils.renderIntoDocument(<NotificationList list={list}/>);
 	})
 
-	it("should toggle update the state to true for the showDropdown", () => {
-		bell = ReactTestUtils.scryRenderedDOMComponentsWithClass(container, "fa fa-lg fa-bell pointer");
-		ReactTestUtils.Simulate.click(bell[0]);
-		expect(container.state.showDropdown).to.be(true);
+	it("should change state when a notification node is clicked", () => {
+		let node = ReactTestUtils.scryRenderedDOMComponentsWithClass(container, "notification-node--details-click");
+		ReactTestUtils.Simulate.click(node[0]);
+		expect(container.state.isDetails).to.be(true);
 	});
 
-	it("should close list when clicking on close-dropdown dom", () => {
-		bell = ReactTestUtils.scryRenderedDOMComponentsWithClass(container, "fa fa-lg fa-bell pointer");
-		ReactTestUtils.Simulate.click(bell[0]);
-		let close = ReactTestUtils.scryRenderedDOMComponentsWithClass(container, "fa fa-remove close-dropdown pointer");
-		ReactTestUtils.Simulate.click(bell[0]);
-		expect(container.state.showDropdown).to.be(false);
-	});
 	
 });
