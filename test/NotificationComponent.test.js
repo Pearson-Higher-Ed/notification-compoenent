@@ -1,5 +1,6 @@
-let NotificationComponent = require("../src/NotificationComponent");
+let React = require("react");
 let expect = require("expect.js");
+let NotificationComponent = require("../src/NotificationComponent");
 
 describe("Notificationcomponent", () => {
 	let notificationComponent = null;

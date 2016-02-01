@@ -1,7 +1,7 @@
-let NotificationDropdown = require("../src/NotificationDropdown");
+let React = require("react");
 let ReactTestUtils = require("react-addons-test-utils");
 let expect = require("expect.js");
-let React = require("react");
+let NotificationDropdown = require("../src/NotificationDropdown");
 
 describe("Notificationcomponent", () => {
 	let list = [{
