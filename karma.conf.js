@@ -1,6 +1,7 @@
 /*global module, process*/
 
 var BowerWebpackPlugin = require("bower-webpack-plugin");
+var webpack = require("webpack");
 
 "use strict";
 
@@ -80,6 +81,11 @@ module.exports = function(config) {
 					excludes: [],
 					searchResolveModulesDirectories: true
 				}),
+				new webpack.DefinePlugin({
+				  "process.env": {
+				    NODE_ENV: JSON.stringify("production")
+				  }
+				})
 			]
 		},
 

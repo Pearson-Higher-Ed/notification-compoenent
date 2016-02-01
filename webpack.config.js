@@ -41,6 +41,11 @@ module.exports = {
 
 		// css bundles....
 		new ExtractTextPlugin("notification.css", {}),
+		new webpack.DefinePlugin({
+		  "process.env": {
+		    NODE_ENV: JSON.stringify("production")
+		  }
+		})
 	],
 
 	//resolve bower_components
