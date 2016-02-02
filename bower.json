@@ -1,5 +1,5 @@
 {
-  "name": "notification-component",
+  "name": "prsn.notification-component",
   "description": "Component for new feature notifications",
   "main": "lib/notification.min.js",
   "authors": [
