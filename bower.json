@@ -2,8 +2,8 @@
   "name": "prsn.notification-component",
   "description": "Component for new feature notifications",
   "main": [
-    "notification.min.js",
-    "notification.css"
+    "main.scss",
+    "main.js"
   ],
   "authors": [
     "Aegis Team (aegisteam@pearson.com)"
