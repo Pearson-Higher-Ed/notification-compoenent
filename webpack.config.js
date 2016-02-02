@@ -28,7 +28,7 @@ module.exports = {
 	},
 	plugins: [
 		// uncomment to minify
-		// new webpack.optimize.UglifyJsPlugin({minimize: true})
+		new webpack.optimize.UglifyJsPlugin({minimize: true}),
 
 		// bowerwebpackplugin makes it so that it searches the bower.json file for which file to add
 		new BowerWebpackPlugin({
