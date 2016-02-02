@@ -19,10 +19,22 @@ function NotificationComponent(config) {
 	this.notificationList = [];
 
 	userNotifications.then((result) => {
+        
+        let responseData = JSON.parse(result)._embedded.usernotifications;
+        let responseIs = [];
+        responseData.forEach(v => {
+            if (v.hasOwnProperty('eventId')) {
+                if (v.eventId === 'a4089ee0-bd4d-4395-9f92-f397cc2f1870') {
+                    responseIs.push(v.payload.message);
+                    return;
+                }
+            }
+        });
+        console.log(responseIs);
 		if(this.reactComponent) {
-			this.reactComponent.setState({notificationList: result});
+			this.reactComponent.setState({notificationList: responseIs});
 		} else {
-			this.notificationList = result;
+			this.notificationList = responseIs;
 		}
 	}, function(error) {
 		console.log(error);
