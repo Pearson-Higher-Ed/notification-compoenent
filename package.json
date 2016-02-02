@@ -6,6 +6,9 @@
   "scripts": {
     "test": "./node_modules/karma/bin/karma start karma.conf.js"
   },
+  "publishConfig" : {
+    "registry" : "https://devops-tools.pearson.com/nexus-deps/content/repositories/npm-internal/"
+  },
   "author": "Aegis Team (aegisteam@pearson.com)",
   "license": "ISC",
   "devDependencies": {
