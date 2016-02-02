@@ -1,6 +1,6 @@
 {
   "name": "prsn.notification-component",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Component for new feature notifications",
   "main": "./notification.min.js",
   "scripts": {
