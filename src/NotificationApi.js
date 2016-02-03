@@ -5,8 +5,8 @@ module.exports = function() {
 			let req = new XMLHttpRequest();
 			req.open('GET', UserNotConfig.Stg.UserNotificationURL + headerConfig.RecipientId);
 			req.setRequestHeader('X-Authorization', headerConfig.PiToken);
-			req.setRequestHeader('Accept', UserNotConfig.Stg.AcceptHeader);
-			req.setRequestHeader('Content-Type', UserNotConfig.Stg.ContentTypeHeader);
+			req.setRequestHeader('Accept', UserNotConfig.AcceptHeader);
+			req.setRequestHeader('Content-Type', UserNotConfig.ContentTypeHeader);
 			req.onload = function() {
 				if (req.status == 200) {
 					// Resolve the promise with the response text
