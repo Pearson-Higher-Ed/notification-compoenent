@@ -1,4 +1,6 @@
-var config = require("./NotificationConfig");
-console.log('config is'+config);
-var not = NotificationComponent.getInstance(config);
+var AppHeaderConfig = {
+    RecipientId: "ffffffff5627a777e4b010809dff5781",
+    PiToken: "eyJhbGciOiJSUzUxMiIsImtpZCI6ImsxMDY5NDgxOTAifQ.eyJleHAiOjE0NTQ1MzE3NjUsInN1YiI6ImZmZmZmZmZmNTNkYTNjYjNlNGIwZWFhZGRkNTc2ODc3Iiwic2Vzc2lkIjoiYjUyMzU2OWRjNmY3NDY4N2JkMjI2MmIyNzY4YjcxODkiLCJ0eXBlIjoiYXQiLCJpYXQiOjE0NTQ1MjA5NjV9.csl0sySKfIStleIWcFxQo7H6zXILoyU0etu7Lx-xvENWzczKS8c_q8tsAey4-qpHdRIFb5fVpUf1vjn5UJN-qPa7gFRm8QufGYshJkvqfBPqqisgGbX36CjADaZnLXZ3ahAYyNwKmNdiIVOz-T3zJ9Z-McURIpY-EFDoNYXU6Rg"
+}
+var not = NotificationComponent.getInstance(AppHeaderConfig);
 not.attachComponent("#notification");

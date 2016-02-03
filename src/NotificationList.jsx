@@ -29,10 +29,8 @@ module.exports = React.createClass({
 	render: function() {
 		if(!this.state.isDetails) {
 			let notificationNodeList = this.props.list.map((notification) => {
-				//console.log('inside notificationlist'+notification);
-				let jsonObjNotification = JSON.parse(notification)
 				return (	
-					<NotificationNode detailsClick={this.showDetails.bind(this, jsonObjNotification)} title={jsonObjNotification.title} icon={jsonObjNotification.icon} key={jsonObjNotification.id} summary={jsonObjNotification.body.substring(0, 30) + "..."}/> 
+					<NotificationNode detailsClick={this.showDetails.bind(this, notification)} title={notification.title} icon={notification.icon} key={notification.id} summary={notification.body.substring(0, 30) + "..."}/> 
 				);
 			});
 			return (

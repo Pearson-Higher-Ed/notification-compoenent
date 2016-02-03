@@ -1,12 +1,13 @@
 var webpack = require("webpack");
 var path = require("path");
 var BowerWebpackPlugin = require("bower-webpack-plugin");
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
 	entry: "./src/NotificationComponent.jsx",
 	output: {
-		path: __dirname + "/lib",
-		publicPath: "/lib",
+		path: __dirname,
+		publicPath: "./",
 		filename: "notification.min.js",
 		libraryTarget: "umd",
 		library: "NotificationComponent"
@@ -21,13 +22,13 @@ module.exports = {
 			{
 				// sass-loader for the origami pieces
 				test: /\.scss$/,
-				loaders: ["style", "css", "sass"]
+				loader: ExtractTextPlugin.extract("style", "css!sass")
 			}
 		]
 	},
 	plugins: [
 		// uncomment to minify
-		// new webpack.optimize.UglifyJsPlugin({minimize: true})
+		new webpack.optimize.UglifyJsPlugin({minimize: true}),
 
 		// bowerwebpackplugin makes it so that it searches the bower.json file for which file to add
 		new BowerWebpackPlugin({
@@ -39,7 +40,7 @@ module.exports = {
 		}),
 
 		// css bundles....
-		//new ExtractTextPlugin("[name].css", {}),
+		new ExtractTextPlugin("notification.css", {})
 	],
 
 	//resolve bower_components
