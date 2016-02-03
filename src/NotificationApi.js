@@ -3,41 +3,30 @@ module.exports = function() {
 	this.getNotifications = function(headerConfig) {
 		let responseIs = new Promise(function(resolve, reject) {
 			let req = new XMLHttpRequest();
-			req.open('GET', UserNotConfig.Stg.UserNotificationURL + headerConfig.RecipientId);
+			req.open('GET', `${UserNotConfig.UserNotificationURL}/${headerConfig.RecipientId}`);
 			req.setRequestHeader('X-Authorization', headerConfig.PiToken);
 			req.setRequestHeader('Accept', UserNotConfig.AcceptHeader);
 			req.setRequestHeader('Content-Type', UserNotConfig.ContentTypeHeader);
-			req.onload = function() {
-				if (req.status == 200) {
-					// Resolve the promise with the response text
-					resolve(req.response);
-				} else {
-					// Otherwise reject with the status text
-					reject(Error(req.statusText));
+			req.onload = () => {
+				if (req.status !== 200) {
+					return reject(new Error(req.statusText));
 				}
+				return resolve(req.response);
 			};
-			// Handle network errors
-			req.onerror = function() {
-				reject(Error("Network Error"));
+			req.onerror = (err) => {
+				reject(err || new Error('Network Error'));
 			};
-			// Make the request
 			req.send();
 		});
 		return responseIs;
 	}
 
 	this.parseResponse = function(response) {
-		let userNotificationsList = [];
 		let userNotifications = JSON.parse(response)._embedded.usernotifications;
-		userNotifications.forEach(notification => {
-			if (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser') {
-				try {
-					userNotificationsList.push(JSON.parse(notification.payload.message));
-				} catch (e) {
-					userNotificationsList.pop;
-					console.log("Error in the payload " + e);
-				}
-			}
+		let userNotificationsList = userNotifications.filter((notification) => {
+			return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser');
+		}).map((notification) => {
+			return JSON.parse(notification.payload.message);
 		});
 		return userNotificationsList;
 	}
