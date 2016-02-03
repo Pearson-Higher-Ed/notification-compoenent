@@ -5,7 +5,6 @@ This is for getting notifications from notification-api onto the screen.  It is 
 # Building
 ```
 	npm install
-	npm install common.js
 	bower install
 	webpack
 ```
