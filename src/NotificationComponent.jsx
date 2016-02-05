@@ -2,6 +2,7 @@ let React = require("react");
 let ReactDOM = require("react-dom");
 let NotificationDropdown = require("./NotificationDropdown");
 let NotificationApi = require("./NotificationApi");
+const UserNotConfig = require("./NotificationConfig");
 
 /**
  *  NotificationComponent.  
@@ -13,7 +14,7 @@ let NotificationApi = require("./NotificationApi");
 function NotificationComponent(config) {
 	
 	let notApi = new NotificationApi();
-	let userNotifications = notApi.getNotifications(config);
+	let userNotifications = notApi.getNotifications(config, UserNotConfig);
 
 	//this is only here because it is possible for promise to come back before the consumer has placed the react component into a dom
 	this.notificationList = [];

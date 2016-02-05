@@ -1,22 +1,22 @@
-let UserNotConfig = require("./NotificationConfig");
+import xhr from 'o-xhr';
 module.exports = function() {
-	this.getNotifications = function(headerConfig) {
+	this.getNotifications = function(headerConfig, UserNotConfig) {
 		let responseIs = new Promise(function(resolve, reject) {
-			let req = new XMLHttpRequest();
-			req.open('GET', `${UserNotConfig.UserNotificationURL}/${headerConfig.RecipientId}`);
-			req.setRequestHeader('X-Authorization', headerConfig.PiToken);
-			req.setRequestHeader('Accept', UserNotConfig.AcceptHeader);
-			req.setRequestHeader('Content-Type', UserNotConfig.ContentTypeHeader);
-			req.onload = () => {
-				if (req.status !== 200) {
-					return reject(new Error(req.statusText));
+			xhr({
+				url: `${UserNotConfig.UserNotificationURL}/${headerConfig.RecipientId}`,
+				headers: {
+					'X-Authorization': headerConfig.PiToken,
+					'Accept': UserNotConfig.AcceptHeader,
+					'Content-Type': UserNotConfig.ContentTypeHeader
+				},
+				onSuccess: function(request) {
+					resolve(request.responseText);
+				},
+				onError: function(request) {
+					console.log(request.responseText);
+					reject(request.responseText || new Error('Network Error'));
 				}
-				return resolve(req.response);
-			};
-			req.onerror = (err) => {
-				reject(err || new Error('Network Error'));
-			};
-			req.send();
+			});
 		});
 		return responseIs;
 	}
