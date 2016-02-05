@@ -25,12 +25,18 @@ module.exports = React.createClass({
 			isDetails: false,
 		});
 	},
-	
+
+	launchCoachmark: function() {
+		this.showList();
+		this.props.notificationCloseDropdown();
+		alert("Coachmark!");
+	},
+
 	render: function() {
 		if(!this.state.isDetails) {
 			let notificationNodeList = this.props.list.map((notification) => {
-				return (	
-					<NotificationNode detailsClick={this.showDetails.bind(this, notification)} title={notification.title} icon={notification.icon} key={notification.id} summary={notification.body.substring(0, 30) + "..."}/> 
+				return (
+					<NotificationNode detailsClick={this.showDetails.bind(this, notification)} title={notification.title} icon={notification.icon} key={notification.id} summary={notification.body.substring(0, 30) + "..."}/>
 				);
 			});
 			return (
@@ -41,6 +47,7 @@ module.exports = React.createClass({
 		} else {
 			return (
 				<div className="notification-container">
+					<button onClick={this.launchCoachmark}>Launch Coachmark</button>
 					<NotificationDetails title={this.state.notificationDetails.title} body={this.state.notificationDetails.body} previousClick={this.showList}/>
 				</div>
 			)

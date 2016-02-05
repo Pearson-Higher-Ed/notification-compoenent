@@ -22,7 +22,7 @@ module.exports = React.createClass({
 		this.setState({showDropdown: true});
 
 	},
-	
+
 	render: function() {
 		return (
 			<div>
@@ -33,7 +33,7 @@ module.exports = React.createClass({
 							Notifications
 							<i className="fa fa-remove close-dropdown pointer" onClick={this.closeDropdown}></i>
 						</div>
-						<NotificationList list={this.props.notificationList}/>
+						<NotificationList list={this.props.notificationList} notificationCloseDropdown={this.closeDropdown.bind(this)}/>
 					</div>
 				</div>
 			</div>
