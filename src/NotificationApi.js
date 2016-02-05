@@ -1,13 +1,13 @@
 import xhr from 'o-xhr';
 module.exports = function() {
-	this.getNotifications = function(headerConfig, UserNotConfig) {
+	this.getNotifications = function(headerConfig) {
 		let responseIs = new Promise(function(resolve, reject) {
 			xhr({
-				url: `${UserNotConfig.UserNotificationURL}/${headerConfig.RecipientId}`,
+				url: `${headerConfig.UserNotificationURL}/${headerConfig.RecipientId}`,
 				headers: {
 					'X-Authorization': headerConfig.PiToken,
-					'Accept': UserNotConfig.AcceptHeader,
-					'Content-Type': UserNotConfig.ContentTypeHeader
+					'Accept': headerConfig.AcceptHeader,
+					'Content-Type': headerConfig.ContentTypeHeader
 				},
 				onSuccess: function(request) {
 					resolve(request.responseText);
