@@ -1,5 +1,4 @@
 let React = require("react");
-require("./style/notificationDetails.scss");
 
 module.exports = React.createClass({
 

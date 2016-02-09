@@ -2,16 +2,18 @@ let React = require("react");
 let ReactDOM = require("react-dom");
 let NotificationDropdown = require("./NotificationDropdown");
 let NotificationApi = require("./NotificationApi");
+require("./style/main.scss");
+
 
 /**
- *  NotificationComponent.  
- *  	NotificationComponent will get larger as it is in charge of making API calls for all of the notification-apis.  
+ *  NotificationComponent.
+ *  	NotificationComponent will get larger as it is in charge of making API calls for all of the notification-apis.
  *  	To get an instance of it just create require the module inside your javascript file and call "getInstance" with configuration
  * 		as a parameter.  This component needs to make several api calls from places that could change, so we need to pass configuration
- *		into it.  
+ *		into it.
  */
 function NotificationComponent(config) {
-	
+
 	let notApi = new NotificationApi();
 	let userNotifications = notApi.getNotifications("console");
 
@@ -29,7 +31,7 @@ function NotificationComponent(config) {
 	});
 
 	//  Keep track of the parent react class
-	var _this = this;//i'm not happy i need to do this....but it would be really complicated since i don't want to actually pass context down to the child except for the notificationList property.  
+	var _this = this;//i'm not happy i need to do this....but it would be really complicated since i don't want to actually pass context down to the child except for the notificationList property.
 	this.reactClass = React.createClass({
 		getInitialState: function() {
 			return {
@@ -63,15 +65,15 @@ function NotificationComponent(config) {
 
 /**
  * Singleton of notification component.
- */ 
+ */
 module.exports = (function() {
  	var instance;
- 
+
     function createInstance(config) {
         var object = new NotificationComponent(config);
         return object;
     }
- 
+
     return {
         getInstance: function (config) {
             if (!instance) {
@@ -79,5 +81,5 @@ module.exports = (function() {
             }
             return instance;
         }
-    }; 
+    };
 })();

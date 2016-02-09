@@ -1,8 +1,9 @@
 let React = require("react");
-require("./style/notificationList.scss");
 let NotificationNode = require("./NotificationNode");
 let classNames = require("classnames");
 let NotificationDetails = require("./NotificationDetails");
+import CoachMark from 'o-coach-mark';
+
 
 module.exports = React.createClass({
 	getInitialState: function() {
@@ -27,9 +28,24 @@ module.exports = React.createClass({
 	},
 
 	launchCoachmark: function() {
+
+		// Toggle the list and close the dropdown
 		this.showList();
 		this.props.notificationCloseDropdown();
-		alert("Coachmark!");
+
+		// Collect coachmark data and display
+		var element = document.getElementById('foo');
+
+		var data = {
+			placement: 'bottom',
+			title: 'Coach Mark Below Feature',
+			text: 'Some text explaining to the user why you changed their interface',
+			id: '9834893498'
+		};
+
+		var callback = function (id) { console.log('Callback executed on exit '+ id);};
+
+		new CoachMark(element, data, callback);
 	},
 
 	render: function() {

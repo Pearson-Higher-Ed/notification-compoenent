@@ -14,10 +14,10 @@ module.exports = {
 	},
 	module: {
 		loaders: [
-			{ 
-				test: /\.jsx?$/, 
-				exclude: /(node_modules|bower_components)/,
-				loader: "babel-loader" 
+			{
+				test: /\.jsx?$/,
+				exclude: /(node_modules)/,
+				loader: "babel-loader"
 			},
 			{
 				// sass-loader for the origami pieces
@@ -28,7 +28,7 @@ module.exports = {
 	},
 	plugins: [
 		// uncomment to minify
-		new webpack.optimize.UglifyJsPlugin({minimize: true}),
+		//new webpack.optimize.UglifyJsPlugin({minimize: true}),
 
 		// bowerwebpackplugin makes it so that it searches the bower.json file for which file to add
 		new BowerWebpackPlugin({
