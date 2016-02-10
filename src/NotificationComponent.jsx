@@ -19,13 +19,12 @@ function NotificationComponent(config) {
 	this.notificationList = [];
 
 	userNotifications.then((result) => {
-        let userNotResponseList = notApi.parseResponse(result);
         if (this.reactComponent) {
             this.reactComponent.setState({
-                notificationList: userNotResponseList
+                notificationList: result
             });
         } else {
-            this.notificationList = userNotResponseList;
+            this.notificationList = result;
         }
     },
     function(error) {

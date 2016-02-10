@@ -10,7 +10,7 @@ module.exports = function() {
 					'Content-Type': headerConfig.ContentTypeHeader
 				},
 				onSuccess: function(request) {
-					resolve(request.responseText);
+					resolve(parseResponse(request.responseText));
 				},
 				onError: function(request) {
 					console.log(request.responseText);
@@ -21,7 +21,7 @@ module.exports = function() {
 		return responseIs;
 	}
 
-	this.parseResponse = function(response) {
+	 function parseResponse(response) {
 		let userNotifications = JSON.parse(response)._embedded.usernotifications;
 		let userNotificationsList = userNotifications.filter((notification) => {
 			return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser');

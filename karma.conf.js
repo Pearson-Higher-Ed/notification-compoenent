@@ -46,7 +46,7 @@ module.exports = function(config) {
 			"PhantomJS", 'Chrome'
 		],
 
-		singleRun: false,
+		singleRun: true,
 
 		// Configure code coverage reporter
 		coverageReporter: {
