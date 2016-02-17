@@ -2,8 +2,11 @@ let React = require("react");
 let NotificationNode = require("./NotificationNode");
 let classNames = require("classnames");
 let NotificationDetails = require("./NotificationDetails");
-import CoachMark from 'o-coach-mark';
+import Coachmark from 'o-coach-mark';
 
+//CoachmarkAPI
+let CoachmarkApi = require("./CoachmarkApi");
+let cmApi = new CoachmarkApi();
 
 module.exports = React.createClass({
 	getInitialState: function() {
@@ -27,25 +30,39 @@ module.exports = React.createClass({
 		});
 	},
 
-	launchCoachmark: function() {
-
-		// Toggle the list and close the dropdown
+	// Triggered from the click event on the page
+	// Closes the notifications, creates listeners, and launches the first coachmark
+	launchCoachmark: function(cmIds) {
+		//Close the notifications
 		this.showList();
 		this.props.notificationCloseDropdown();
 
-		// Collect coachmark data and display
-		var element = document.getElementById('foo');
+		// Creates the back/next button event listener
+		document.addEventListener('o-cm-backNext-clicked', function(event) {
+			let index = cmIds.indexOf(event.data.id);
+			if (index < cmIds.length && event.data.type === 'nextButton') {
+				return this.getDisplayCoachmark(cmIds, index + 1);
+			}
+			if (index > 0 && event.data.type === 'backButton') {
+				return this.getDisplayCoachmark(cmIds, index - 1);
+			}
+			return;
+		}.bind(this));
 
-		var data = {
-			placement: 'bottom',
-			title: 'Coach Mark Below Feature',
-			text: 'Some text explaining to the user why you changed their interface',
-			id: '9834893498'
-		};
+		// TODO: the rest of the listeners
 
-		var callback = function (id) { console.log('Callback executed on exit '+ id);};
+		// Launches the first callback in the series
+		this.getDisplayCoachmark(cmIds, 0);
+	},
 
-		new CoachMark(element, data, callback);
+	// Gets and displays a coachmark by the ID found at cmIds[index]
+	getDisplayCoachmark: function(cmIds, index) {
+		let coachmarkData = cmApi.getCoachmark(cmIds[index]);
+		coachmarkData.then(function(result) {
+			new Coachmark(document.getElementById(result.element), result.options, function(id){});
+		}, function(error) {
+			console.log('Error: ', error);
+		});
 	},
 
 	render: function() {
@@ -63,7 +80,7 @@ module.exports = React.createClass({
 		} else {
 			return (
 				<div className="notification-container">
-					<button onClick={this.launchCoachmark}>Launch Coachmark</button>
+					<button onClick={this.launchCoachmark.bind(this, this.state.notificationDetails.cmId)}>Launch Coachmark</button>
 					<NotificationDetails title={this.state.notificationDetails.title} body={this.state.notificationDetails.body} previousClick={this.showList}/>
 				</div>
 			)
