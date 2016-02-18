@@ -4,7 +4,7 @@ module.exports = function() {
 			setTimeout(function() {
 				let dataset = [{
           element: 'foo1',
-          //callback:'function (id) { console.log("Callback executed on exit " + id);};',
+					uri: 'index.html',
           options: {
             id: 10,
             like: false,
@@ -14,12 +14,11 @@ module.exports = function() {
             hasBack: false,
             hasNext: true,
             currentCM: 1,
-            totalCM: 3
+            totalCM: 6
           }
 				},
 				{
 					element: 'foo2',
-					//callback:'function (id) { console.log("Callback executed on exit " + id);};',
 					options: {
 						id: 11,
 						like: false,
@@ -29,43 +28,74 @@ module.exports = function() {
 						hasBack: true,
 						hasNext: true,
 						currentCM: 2,
-						totalCM: 3
+						totalCM: 6
 					}
 				},
 				{
 					element: 'foo3',
-					//callback:'function (id) { console.log("Callback executed on exit " + id);};',
+					uri: 'index.html',
 					options: {
 						id: 12,
 						like: false,
 						placement: 'bottom',
 						title: 'Coachmark #1.3',
-						text: 'Some text for the last coachmark',
+						text: 'Moar..',
 						hasBack: true,
 						hasNext: true,
 						currentCM: 3,
-						totalCM: 3
+						totalCM: 6
 					}
 				},
 				{
 					element: 'foo4',
-					//callback:'function (id) { console.log("Callback executed on exit " + id);};',
+					uri: 'index2.html',
 					options: {
 						id: 13,
-						like: true,
+						like: false,
 						placement: 'bottom',
 						title: 'Coachmark #1.4',
-						text: 'Some text for the last coachmark',
+						text: 'Last one before the redirect to the new page...',
+						hasBack: true,
+						hasNext: true,
+						currentCM: 4,
+						totalCM: 6
+					}
+				},
+				{
+					element: 'foo5',
+					uri: 'index2.html',
+					options: {
+						id: 14,
+						like: false,
+						placement: 'bottom',
+						title: 'Coachmark #1.5',
+						text: 'New page!',
+						hasBack: true,
+						hasNext: true,
+						currentCM: 5,
+						totalCM: 6
+					}
+				},
+				{
+					element: 'foo6',
+					uri: 'index2.html',
+					options: {
+						id: 15,
+						like: true,
+						placement: 'bottom',
+						title: 'Coachmark #1.6',
+						text: 'New page2!',
 						hasBack: true,
 						hasNext: false,
-						currentCM: 3,
-						totalCM: 3
+						currentCM: 6,
+						totalCM: 6
 					}
 				},
 				// 2nd notification
 				{
           element: 'foo1',
-          callback:'function (id) { console.log("Callback executed on exit #2 " + id);};',
+          callback:'function (id) { console.log("Callback executed on exit:  " + id);};',
+					uri: 'index.html',
           options: {
             id: 20,
             like: true,
@@ -75,7 +105,7 @@ module.exports = function() {
             hasBack: false,
             hasNext: false,
             currentCM: 1,
-            totalCM: 1
+            totalCM: 1,
           }
 				}];
 

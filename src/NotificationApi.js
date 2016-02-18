@@ -12,7 +12,7 @@ module.exports = function() {
 					link: "console-stg.pearson.com:8080/account/manage/account",
 					linkText:"Go to Profile Screen",
 					icon: "fa fa-cogs fa-2x",
-					cmId: [10,11,12,13]
+					cmId: [10,11,12,13,14,15]
 				},
 				{
 					id: "2",
