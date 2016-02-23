@@ -123,13 +123,20 @@ module.exports = React.createClass({
 			}.bind(this));
 
 		}.bind(this), function(error) {
-			console.log('Error: ', error);
+			console.log('Error: ', error); // TODO
 		});
 	},
 
 	redirectIfNewUri: function(uri, cmIds, index) {
 		if (!uri) {
 			return false;
+		}
+		// String.startsWith pollyfill for Safari
+		if (!String.prototype.startsWith) {
+    	String.prototype.startsWith = function(searchString, position){
+      	position = position || 0;
+      	return this.substr(position, searchString.length) === searchString;
+  		};
 		}
 		// if relative, change to absolute using current domain
 		let currentUri = window.location.href;
