@@ -36,12 +36,12 @@ module.exports = React.createClass({
 	},
 
 	// Launches a CM if cmId and cmIndex exist, otherwise falls through and does nothing
-	launchCoachmarkFromNewUrl: function() {
-		let cmIndex = localStorage.getItem('coachmark.index');
-		localStorage.removeItem('coachmark.index');
+	launchCoachmarkIfFromNewUrl: function() {
+		let cmIndex = localStorage.getItem('notifications.coachmark.index');
+		localStorage.removeItem('notifications.coachmark.index');
 
-		let cmIds = localStorage.getItem('coachmark.cmIds');
-		localStorage.removeItem('coachmark.cmIds');
+		let cmIds = localStorage.getItem('notifications.coachmark.cmIds');
+		localStorage.removeItem('notifications.coachmark.cmIds');
 		cmIds = cmIds ? cmIds.split(',') : null;
 
 		if (cmIds && cmIndex) {
@@ -64,9 +64,9 @@ module.exports = React.createClass({
 
 		// Back/Next event listener
 		document.addEventListener('o-cm-backNext-clicked', function(event) {
-			let eventIndex = this.getEventIndex(cmIds, event);
+			let eventIndex = cmIds.indexOf(event.data.id);
 			if (eventIndex < 0) {
-				return;
+				return; // event wasn't meant for this instance of this listener
 			}
 			// Delete the current coachmark from the dom
 			this.closeCoachmark(event.target.nextSibling);
@@ -83,8 +83,8 @@ module.exports = React.createClass({
 		// Like event listener
 		document.addEventListener('o-cm-like-clicked', function(event) {
 			// Don't trigger if this event isn't part of the list of IDs we're looking for
-			if (this.getEventIndex(cmIds, event) < 0) {
-				return;
+			if (cmIds.indexOf(event.data.id) < 0) {
+				return; // event wasn't meant for this instance of this listener
 			}
 			console.log("Like event: log to API"); // TODO
 		}.bind(this));
@@ -92,8 +92,8 @@ module.exports = React.createClass({
 		// Submit event listener
 		document.addEventListener('o-cm-submit-clicked', function(event) {
 			// Don't trigger if this event isn't part of the list of IDs we're looking for
-			if (this.getEventIndex(cmIds, event) < 0) {
-				return;
+			if (cmIds.indexOf(event.data.id) < 0) {
+				return; // event wasn't meant for this instance of this listener
 			}
 			console.log("Submit event: log to API"); // TODO
 			console.log('Mark as READ in the API'); // TODO
@@ -103,8 +103,8 @@ module.exports = React.createClass({
 		// Cancel event listener
 		document.addEventListener('o-cm-cancel-clicked', function(event) {
 			// Don't trigger if this event isn't part of the list of IDs we're looking for
-			if (this.getEventIndex(cmIds, event) < 0) {
-				return;
+			if (cmIds.indexOf(event.data.id) < 0) {
+				return; // event wasn't meant for this instance of this listener
 			}
 			console.log("Cancel event. What's supposed to happen here?"); // TODO
 		}.bind(this));
@@ -114,21 +114,17 @@ module.exports = React.createClass({
 	getDisplayCoachmark: function(cmIds, index) {
 		let coachmarkData = cmApi.getCoachmark(+cmIds[index]);
 		coachmarkData.then(function(result) {
-			let isRedirecting = this.redirectIfNewUri(result.uri, cmIds, index);
-			if (!isRedirecting) {
-				let cm = new Coachmark(document.getElementById(result.element), result.options, function(){
-					console.log('Mark as READ in the API'); // TODO
-					this.closeCoachmark(cm.element.nextSibling);
-				}.bind(this));
+			if (this.redirectIfNewUri(result.uri, cmIds, index)) {
+				return;
 			}
+			let cm = new Coachmark(document.getElementById(result.element), result.options, function(){
+				console.log('Mark as READ in the API'); // TODO
+				this.closeCoachmark(cm.element.nextSibling);
+			}.bind(this));
+
 		}.bind(this), function(error) {
 			console.log('Error: ', error);
 		});
-	},
-
-	getEventIndex: function(cmIds, event) {
-		let eventIndex = cmIds.indexOf(event.data.id);
-		return eventIndex;
 	},
 
 	redirectIfNewUri: function(uri, cmIds, index) {
@@ -147,25 +143,22 @@ module.exports = React.createClass({
 			return false;
 		}
 		// Set local storage
-		localStorage.setItem('coachmark.cmIds', cmIds);
-		localStorage.setItem('coachmark.index', index);
+		localStorage.setItem('notifications.coachmark.cmIds', cmIds);
+		localStorage.setItem('notifications.coachmark.index', index);
 		window.location.href = uri;
 		return true;
 	},
 
 	// Removes a coachmark associated with the target node
 	closeCoachmark: function(coachmarkNode) {
-		// Verify the node. This is important because we don't want to delete random nodes.
+		// Verify the node. This is important because we don't want to delete the wrong node.
 		if (coachmarkNode === coachmarkNode.getElementsByClassName('o-coach-mark__container')[0].parentNode) {
 			coachmarkNode.parentNode.removeChild(coachmarkNode);
-		} else {
-			throw new Error('No coachmark to remove')
 		}
 	},
 
 	render: function() {
-		// Will launch a CM if query params for one exist.
-		this.launchCoachmarkFromNewUrl();
+		this.launchCoachmarkIfFromNewUrl();
 
 		if(!this.state.isDetails) {
 			let notificationNodeList = this.props.list.map((notification) => {
