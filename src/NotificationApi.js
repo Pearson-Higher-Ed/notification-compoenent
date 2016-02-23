@@ -23,7 +23,7 @@ module.exports = function() {
 					icon: "fa fa-cogs fa-2x",
 					cmId: [20]
 				}]);
-			}, 2000);
+			}, 200);
 		});
 
 		return async;

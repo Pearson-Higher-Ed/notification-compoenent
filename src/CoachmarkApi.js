@@ -93,7 +93,7 @@ module.exports = function() {
 				},
 				// 2nd notification
 				{
-          element: 'foo1',
+          element: 'bar1',
           callback:'function (id) { console.log("Callback executed on exit:  " + id);};',
 					uri: 'index.html',
           options: {
@@ -117,7 +117,7 @@ module.exports = function() {
 					}
 				}
 				resolve(result);
-			}, 2000);
+			}, 200);
 		});
 
 		return async;
