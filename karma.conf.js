@@ -43,7 +43,7 @@ module.exports = function(config) {
 
 		browsers: [
 			// Run tests using PhantomJS
-			"PhantomJS"
+			"PhantomJS", 'Chrome'
 		],
 
 		singleRun: true,
@@ -59,7 +59,7 @@ module.exports = function(config) {
 				loaders: [
 					{ 
 						test: /\.jsx?$/, 
-						exclude: /(node_modules|bower_components)/,
+						exclude: /(node_modules)/,
 						loader: "babel-loader" 
 					},
 					{
