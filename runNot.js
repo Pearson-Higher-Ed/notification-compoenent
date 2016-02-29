@@ -1,9 +1,21 @@
+var pt = '1.0|idm|idm|piid=ffffffff53da3cb3e4b0eaaddd576877&sessid=a8adc653ac924734a485b3d1041fde4b|2016-02-29T21:29:19+00:00|2016-03-01T00:29:19+00:00|a42840da7da949718741b7a4ba2a9f20';
+
 var AppHeaderConfig = {
+    // NotificationAPI
     UserNotificationURL: "https://notifications-api.stg-prsn.com/usernotifications/recipientid",
     AcceptHeader: "*/*",
     ContentTypeHeader: "application/json",
-    RecipientId: "ffffffff5482258ce4b05a12806d3b14",
-    PiToken: "1.0|idm|idm|piid=ffffffff53da3cb3e4b0eaaddd576877&sessid=17f1320d5356459480f91a624bd9a3af|2016-02-24T17:23:21+00:00|2016-02-24T20:23:22+00:00|eb4c3e9828d961c2dbe2c086e19f2868"
-}
+    RecipientId: "ffffffff560c1a1ee4b04ebf43118c60",
+    PiToken: pt,
+
+    // CoachmarkAPI
+    cmApiUrl: "http://localhost:8080/coachmark",
+    cmAcceptHeader: "*/*",
+    cmContentTypeHeader: "application/json",
+    cmPiToken: pt
+
+
+};
+
 var not = NotificationComponent.getInstance(AppHeaderConfig);
 not.attachComponent("#notification");

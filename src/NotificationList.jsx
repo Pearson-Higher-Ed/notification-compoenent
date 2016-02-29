@@ -1,10 +1,10 @@
+import Coachmark from 'o-coach-mark';
+
 let React = require("react");
 let NotificationNode = require("./NotificationNode");
 let classNames = require("classnames");
 let NotificationDetails = require("./NotificationDetails");
-import Coachmark from 'o-coach-mark';
 let CoachmarkApi = require("./CoachmarkApi");
-let cmApi = new CoachmarkApi();
 
 module.exports = React.createClass({
 	getInitialState: function() {
@@ -29,6 +29,12 @@ module.exports = React.createClass({
 
 	// Entry point for user interaction with the UI, launches first CM in the series
 	launchCoachmark: function(cmIds) {
+		cmIds = cmIds ? cmIds.split(',') : null;
+		if (!cmIds) {
+			return;
+		}
+		cmIds = cmIds.map((param) => +param);
+
 		this.showList(); // toggles the list
 		this.props.notificationCloseDropdown();
 		this.cmListenerSetup(cmIds);
@@ -64,6 +70,7 @@ module.exports = React.createClass({
 
 		// Back/Next event listener
 		document.addEventListener('o-cm-backNext-clicked', function(event) {
+			console.log('increment count in cmapi for cmId: ', event.data.id); // TODO
 			let eventIndex = cmIds.indexOf(event.data.id);
 			if (eventIndex < 0) {
 				return; // event wasn't meant for this instance of this listener
@@ -112,7 +119,7 @@ module.exports = React.createClass({
 
 	// Gets data from the API and displays a coachmark on the correct page
 	getDisplayCoachmark: function(cmIds, index) {
-		let coachmarkData = cmApi.getCoachmark(+cmIds[index]);
+		let coachmarkData = CoachmarkApi.getInstance().getCoachmark(+cmIds[index]);
 		coachmarkData.then(function(result) {
 			if (this.redirectIfNewUri(result.uri, cmIds, index)) {
 				return;
@@ -181,7 +188,7 @@ module.exports = React.createClass({
 		} else {
 			return (
 				<div className="notification-container">
-					<button onClick={this.launchCoachmark.bind(this, this.state.notificationDetails.cmId)}>Launch Coachmark</button>
+					<button onClick={this.launchCoachmark.bind(this, this.state.notificationDetails.cmIds)}>Launch Coachmark</button>
 					<NotificationDetails title={this.state.notificationDetails.title} body={this.state.notificationDetails.body} previousClick={this.showList}/>
 				</div>
 			)

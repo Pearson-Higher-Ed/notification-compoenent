@@ -2,6 +2,7 @@ let React = require("react");
 let ReactDOM = require("react-dom");
 let NotificationDropdown = require("./NotificationDropdown");
 let NotificationApi = require("./NotificationApi");
+let CoachmarkApi = require("./CoachmarkApi");
 require("./style/main.scss");
 
 
@@ -13,7 +14,7 @@ require("./style/main.scss");
  *		into it.
  */
 function NotificationComponent(config) {
-
+	CoachmarkApi.getInstance(config);
 	let notApi = new NotificationApi();
 	let userNotifications = notApi.getNotifications(config);
 
