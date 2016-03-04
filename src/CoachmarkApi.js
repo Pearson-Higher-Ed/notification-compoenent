@@ -7,9 +7,12 @@ function CoachmarkApi(config) {
 	let contentType = config.cmContentTypeHeader;
 
 	this.getCoachmark = function(cmId) {
+
 		let responseIs = new Promise(function(resolve, reject) {
+			console.log('xAuth: ', xAuth);
+
 			xhr({
-				url: `${url}/${cmId}`,
+				url: url + '/coachmark/' + cmId,
 				headers: {
 					'X-Authorization': xAuth,
 					'Accept': acceptHeader,
@@ -19,11 +22,12 @@ function CoachmarkApi(config) {
 					resolve(parseResponse(request.responseText));
 				},
 				onError: function(request) {
-					console.log(request.responseText);
-					reject(request.responseText || new Error('Network Error'));
+					console.log('onError: ', request);
+					reject(request.responseText || new Error('Network Error: ', request));
 				}
 			});
 		});
+		console.log('Response: ', responseIs);
 		return responseIs;
 	};
 

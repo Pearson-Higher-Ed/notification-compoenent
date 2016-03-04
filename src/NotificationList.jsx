@@ -120,7 +120,9 @@ module.exports = React.createClass({
 	// Gets data from the API and displays a coachmark on the correct page
 	getDisplayCoachmark: function(cmIds, index) {
 		let coachmarkData = CoachmarkApi.getInstance().getCoachmark(+cmIds[index]);
+		console.log('coachmarkData: ', coachmarkData);
 		coachmarkData.then(function(result) {
+			console.log('result: ', result);
 			if (this.redirectIfNewUri(result.uri, cmIds, index)) {
 				return;
 			}

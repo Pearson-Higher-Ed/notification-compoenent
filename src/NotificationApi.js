@@ -3,11 +3,11 @@ module.exports = function() {
 	this.getNotifications = function(headerConfig) {
 		let responseIs = new Promise(function(resolve, reject) {
 			xhr({
-				url: `${headerConfig.UserNotificationURL}/${headerConfig.RecipientId}`,
+				url: `${headerConfig.nfUrl}/${headerConfig.nfRecipientId}`,
 				headers: {
-					'X-Authorization': headerConfig.PiToken,
-					'Accept': headerConfig.AcceptHeader,
-					'Content-Type': headerConfig.ContentTypeHeader
+					'X-Authorization': headerConfig.nfPiToken,
+					'Accept': headerConfig.nfAcceptHeader,
+					'Content-Type': headerConfig.nfContentTypeHeader
 				},
 				onSuccess: function(request) {
 					resolve(parseResponse(request.responseText));
@@ -19,7 +19,7 @@ module.exports = function() {
 			});
 		});
 		return responseIs;
-	}
+	};
 
 	 function parseResponse(response) {
 		let userNotifications = JSON.parse(response)._embedded.usernotifications;

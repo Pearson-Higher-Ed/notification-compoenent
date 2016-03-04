@@ -1,20 +1,24 @@
-var pt = '1.0|idm|idm|piid=ffffffff53da3cb3e4b0eaaddd576877&sessid=a8adc653ac924734a485b3d1041fde4b|2016-02-29T21:29:19+00:00|2016-03-01T00:29:19+00:00|a42840da7da949718741b7a4ba2a9f20';
+var pt = '1.0|idm|idm|piid=ffffffff53da3cb3e4b0eaaddd576877&sessid=29a56b62eeba48ee8409098936d76788|2016-03-03T21:10:19+00:00|2016-03-04T00:10:19+00:00|007874b4c41af5edd23af17134d8a1fc';
 
 var AppHeaderConfig = {
     // NotificationAPI
-    UserNotificationURL: "https://notifications-api.stg-prsn.com/usernotifications/recipientid",
-    AcceptHeader: "*/*",
-    ContentTypeHeader: "application/json",
-    RecipientId: "ffffffff560c1a1ee4b04ebf43118c60",
-    PiToken: pt,
+    nfUrl: "https://notifications-api.stg-prsn.com/usernotifications/recipientid",
+    nfAcceptHeader: "*/*",
+    nfContentTypeHeader: "application/json",
+    nfPiToken: pt,
+    nfRecipientId: "ffffffff560c1a1ee4b04ebf43118c60",
 
     // CoachmarkAPI
-    cmApiUrl: "http://localhost:8080/coachmark",
+    cmApiUrl: "http://localhost:8080",
     cmAcceptHeader: "*/*",
     cmContentTypeHeader: "application/json",
-    cmPiToken: pt
+    cmPiToken: pt,
 
-
+    // FeedbackAPI
+    fbApiUrl: "http://localhost:8080",
+    fbAcceptHeader: "*/*",
+    fbContentTypeHeader: "application/json",
+    fbPiToken: pt
 };
 
 var not = NotificationComponent.getInstance(AppHeaderConfig);
