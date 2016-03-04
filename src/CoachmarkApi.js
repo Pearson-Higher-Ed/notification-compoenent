@@ -9,8 +9,6 @@ function CoachmarkApi(config) {
 	this.getCoachmark = function(cmId) {
 
 		let responseIs = new Promise(function(resolve, reject) {
-			console.log('xAuth: ', xAuth);
-
 			xhr({
 				url: url + '/coachmark/' + cmId,
 				headers: {
@@ -19,7 +17,7 @@ function CoachmarkApi(config) {
 					'Content-Type': contentType
 				},
 				onSuccess: function(request) {
-					resolve(parseResponse(request.responseText));
+					resolve(parseResponse(request.responseText, cmId));
 				},
 				onError: function(request) {
 					console.log('onError: ', request);
@@ -27,18 +25,20 @@ function CoachmarkApi(config) {
 				}
 			});
 		});
-		console.log('Response: ', responseIs);
 		return responseIs;
 	};
 
-	 function parseResponse(response) {
-		let userNotifications = JSON.parse(response)._embedded.usernotifications;
-		let userNotificationsList = userNotifications.filter((notification) => {
-			return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser');
-		}).map((notification) => {
-			return JSON.parse(notification.payload.message);
-		});
-		return userNotificationsList;
+	function parseResponse(response, cmId) {
+		let responseObj = JSON.parse(response);
+		let coachmark = JSON.parse(responseObj.json);
+		
+		if (!coachmark.options.id) {
+			coachmark.options.id = cmId;
+		}
+
+		console.log('returning coachmark: ', coachmark);
+
+		return coachmark;
 	}
 }
 
