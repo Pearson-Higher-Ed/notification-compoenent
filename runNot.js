@@ -1,8 +1,8 @@
-var pt = '1.0|idm|idm|piid=ffffffff53da3cb3e4b0eaaddd576877&sessid=ef69bea1fc81446abf0aaae460f7552b|2016-03-04T20:46:10+00:00|2016-03-04T23:46:10+00:00|ef95faae6d45808a9f827598e4040dec';
+var pt = '1.0|idm|idm|piid=ffffffff53da3cb3e4b0eaaddd576877&sessid=3fba6ede817b4366ad6246d9bf710aab|2016-03-10T16:46:36+00:00|2016-03-10T19:46:36+00:00|4bc82dad9a22da118322d92f3a8491e9';
 
 var AppHeaderConfig = {
     // NotificationAPI
-    nfUrl: "https://notifications-api.stg-prsn.com/usernotifications/recipientid",
+    nfApiUrl: "https://notifications-api.stg-prsn.com/usernotifications/recipientid",
     nfAcceptHeader: "*/*",
     nfContentTypeHeader: "application/json",
     nfPiToken: pt,

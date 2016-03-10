@@ -7,8 +7,7 @@ function CoachmarkApi(config) {
 	let contentType = config.cmContentTypeHeader;
 
 	this.getCoachmark = function(cmId) {
-
-		let responseIs = new Promise(function(resolve, reject) {
+		let response = new Promise(function(resolve, reject) {
 			xhr({
 				url: url + '/coachmark/' + cmId,
 				headers: {
@@ -25,19 +24,29 @@ function CoachmarkApi(config) {
 				}
 			});
 		});
-		return responseIs;
+		return response;
+	};
+
+	/**
+	 * Tracks how many times a coachmark has been viewed
+	 **/
+	this.incrementViewCount = function(cmId) {
+		let response = new Promise(function(resolve, reject) {
+			let cmCount = +(localStorage.getItem('cmId' + cmId)) + 1;
+			localStorage.setItem('cmId' + cmId, cmCount);
+			console.log('STUB: CoachmarkApi.incrementCount for cmId: ' + cmId + ' Count: ' + cmCount); // TODO
+			resolve();
+		});
+		return response;
 	};
 
 	function parseResponse(response, cmId) {
 		let responseObj = JSON.parse(response);
 		let coachmark = JSON.parse(responseObj.json);
-		
+
 		if (!coachmark.options.id) {
 			coachmark.options.id = cmId;
 		}
-
-		console.log('returning coachmark: ', coachmark);
-
 		return coachmark;
 	}
 }

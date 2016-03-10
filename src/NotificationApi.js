@@ -1,13 +1,20 @@
 import xhr from 'o-xhr';
-module.exports = function() {
-	this.getNotifications = function(headerConfig) {
-		let responseIs = new Promise(function(resolve, reject) {
+
+function NotificationApi(config) {
+	let url = config.nfApiUrl;
+	let xAuth = config.nfPiToken;
+	let acceptHeader = config.nfAcceptHeader;
+	let contentType = config.nfContentTypeHeader;
+	let recipientId = config.nfRecipientId;
+
+	this.getNotifications = function() {
+		let response = new Promise(function(resolve, reject) {
 			xhr({
-				url: `${headerConfig.nfUrl}/${headerConfig.nfRecipientId}`,
+				url: url + '/' + recipientId,
 				headers: {
-					'X-Authorization': headerConfig.nfPiToken,
-					'Accept': headerConfig.nfAcceptHeader,
-					'Content-Type': headerConfig.nfContentTypeHeader
+					'X-Authorization': xAuth,
+					'Accept': acceptHeader,
+					'Content-Type': contentType
 				},
 				onSuccess: function(request) {
 					resolve(parseResponse(request.responseText));
@@ -18,8 +25,13 @@ module.exports = function() {
 				}
 			});
 		});
-		return responseIs;
+		return response;
 	};
+
+	this.markAsRead = function(notificationId) {
+		console.log('STUB: NotificationApi.markAsRead with notificationId: ' + notificationId + ' for recipientId: ' + recipientId); // TODO
+	};
+
 
 	 function parseResponse(response) {
 		let userNotifications = JSON.parse(response)._embedded.usernotifications;
@@ -30,4 +42,29 @@ module.exports = function() {
 		});
 		return userNotificationsList;
 	}
-};
+}
+
+/**
+ * Singleton
+ **/
+module.exports = (function() {
+	var instance;
+
+	function createInstance(config) {
+		if (!config) {
+			throw new Error('Config is required when initializing this singleton, yet none was provided.');
+		}
+		var object = new NotificationApi(config);
+		return object;
+	}
+
+	return {
+		getInstance: function(config) {
+			if (!instance) {
+				instance = createInstance(config);
+			}
+			return instance;
+		}
+	};
+
+})();

@@ -5,8 +5,15 @@ let NotificationNode = require("./NotificationNode");
 let classNames = require("classnames");
 let NotificationDetails = require("./NotificationDetails");
 let CoachmarkApi = require("./CoachmarkApi");
+let FeedbackApi = require("./FeedbackApi");
+let NotificationApi = require("./NotificationApi");
+
+let cmState = {};
 
 module.exports = React.createClass({
+	/**
+	 *
+	 **/
 	getInitialState: function() {
 		return {
 			isDetails: false,
@@ -14,6 +21,9 @@ module.exports = React.createClass({
 		};
 	},
 
+	/**
+	 *
+	 **/
 	showDetails: function(notification) {
 		this.setState({
 			isDetails: true,
@@ -21,128 +31,189 @@ module.exports = React.createClass({
 		});
 	},
 
+	/**
+	 *
+	 **/
 	showList: function() {
 		this.setState({
 			isDetails: false,
 		});
 	},
 
-	// Entry point for user interaction with the UI, launches first CM in the series
-	launchCoachmark: function(cmIds) {
+	/**
+	 * Entry point from user interaction with the UI,
+	 * launches the first CM in the set contained in the triggering notification
+	 **/
+	launchCoachmark: function(notificationDetails) {
+		let cmIds = notificationDetails.cmIds;
 		cmIds = cmIds ? cmIds.split(',') : null;
 		if (!cmIds) {
 			return;
 		}
 		cmIds = cmIds.map((param) => +param);
+		let notificationId = +notificationDetails.id;
 
-		this.showList(); // toggles the list
+		cmState[notificationId] = {
+			notificationId: notificationId,
+			cmIds: cmIds,
+			index: 0,
+			isVisited: {},
+			likeCmSeries: '',
+			areListenersSet: false,
+		};
+
+		this.showList(); // toggles the list, which we assume this was triggered from
 		this.props.notificationCloseDropdown();
-		this.cmListenerSetup(cmIds);
-		this.getDisplayCoachmark(cmIds, 0);
+		this.cmListenerSetup(notificationId);
+		this.getDisplayCoachmark(notificationId);
 	},
 
-	// Launches a CM if cmId and cmIndex exist, otherwise falls through and does nothing
+	/**
+	 * If we placed details in local storage in order to keep state for a redirect to a new url,
+	 * this function will read those values and launch a coachmark right were we left off.
+	 * Otherwise, we return false and do nothing.
+	 **/
 	launchCoachmarkIfFromNewUrl: function() {
-		let cmIndex = localStorage.getItem('notifications.coachmark.index');
-		localStorage.removeItem('notifications.coachmark.index');
-
-		let cmIds = localStorage.getItem('notifications.coachmark.cmIds');
-		localStorage.removeItem('notifications.coachmark.cmIds');
-		cmIds = cmIds ? cmIds.split(',') : null;
-
-		if (cmIds && cmIndex) {
-			cmIds = cmIds.map((param) => +param);
-			cmIndex = (+cmIndex);
-			this.cmListenerSetup(cmIds);
-			this.getDisplayCoachmark(cmIds, cmIndex);
+		let fromLocal = localStorage.getItem('notifications.coachmark.stateObject');
+		localStorage.removeItem('notifications.coachmark.stateObject');
+		if (!fromLocal) {
+			return false;
 		}
+		try {
+			fromLocal = JSON.parse(fromLocal);
+		} catch (e) {
+			console.log('Exception parsing JSON from local storage: ', e);
+		}
+
+		if (!fromLocal.notificationId) {
+			return false; // We aren't here because of a redirect
+		}
+
+		fromLocal.notificationId = +fromLocal.notificationId;
+		fromLocal.cmIds = fromLocal.cmIds.map((param) => +param);
+		fromLocal.index = +fromLocal.index;
+
+		cmState[fromLocal.notificationId] = fromLocal;
+
+		this.cmListenerSetup(fromLocal.notificationId);
+		this.getDisplayCoachmark(fromLocal.notificationId);
 	},
 
-	cmListenerSetup: function(cmIds) {
-		// Test if we already have listeners set up for these cmIds
-		if (!this.notifications_coachmark_areCmListenersSetup) {
-			this.notifications_coachmark_areCmListenersSetup = {};
-		}
-		if (this.notifications_coachmark_areCmListenersSetup[cmIds]) {
-			return;
-		}
-		this.notifications_coachmark_areCmListenersSetup[cmIds] = true;
-
-		// Back/Next event listener
+	/**
+	 * Sets up the back/next listener
+	 **/
+	setupBackNextListener: function(notificationId) {
+		let cmIds = cmState[notificationId].cmIds;
 		document.addEventListener('o-cm-backNext-clicked', function(event) {
-			console.log('increment count in cmapi for cmId: ', event.data.id); // TODO
 			let eventIndex = cmIds.indexOf(event.data.id);
-			if (eventIndex < 0) {
+			if (eventIndex !== cmState[notificationId].index) {
 				return; // event wasn't meant for this instance of this listener
 			}
-			// Delete the current coachmark from the dom
-			this.closeCoachmark(event.target.nextSibling);
-			// use correct index based on navigation direction to create the new CM
-			if (eventIndex < cmIds.length && event.data.type === 'nextButton') {
-				return this.getDisplayCoachmark(cmIds, eventIndex + 1);
+			this.closeCoachmark(event.target.nextSibling); // close the current CM
+			if (eventIndex + 1 <= cmIds.length && event.data.type === 'nextButton') {
+				eventIndex++
 			}
 			if (eventIndex > 0 && event.data.type === 'backButton') {
-				return this.getDisplayCoachmark(cmIds, eventIndex - 1);
+				eventIndex--
 			}
-			return;
-		}.bind(this));
-
-		// Like event listener
-		document.addEventListener('o-cm-like-clicked', function(event) {
-			// Don't trigger if this event isn't part of the list of IDs we're looking for
-			if (cmIds.indexOf(event.data.id) < 0) {
-				return; // event wasn't meant for this instance of this listener
-			}
-			console.log("Like event: log to API"); // TODO
-		}.bind(this));
-
-		// Submit event listener
-		document.addEventListener('o-cm-submit-clicked', function(event) {
-			// Don't trigger if this event isn't part of the list of IDs we're looking for
-			if (cmIds.indexOf(event.data.id) < 0) {
-				return; // event wasn't meant for this instance of this listener
-			}
-			console.log("Submit event: log to API"); // TODO
-			console.log('Mark as READ in the API'); // TODO
-			this.closeCoachmark(event.target.nextSibling);
-		}.bind(this));
-
-		// Cancel event listener
-		document.addEventListener('o-cm-cancel-clicked', function(event) {
-			// Don't trigger if this event isn't part of the list of IDs we're looking for
-			if (cmIds.indexOf(event.data.id) < 0) {
-				return; // event wasn't meant for this instance of this listener
-			}
-			console.log("Cancel event. What's supposed to happen here?"); // TODO
+			cmState[notificationId].index = eventIndex;
+			this.getDisplayCoachmark(notificationId);
 		}.bind(this));
 	},
 
-	// Gets data from the API and displays a coachmark on the correct page
-	getDisplayCoachmark: function(cmIds, index) {
-		let coachmarkData = CoachmarkApi.getInstance().getCoachmark(+cmIds[index]);
-		console.log('coachmarkData: ', coachmarkData);
+	/**
+	 * Sets up the submit button listener
+	 **/
+	setupSubmitListener(notificationId) {
+		let cmIds = cmState[notificationId].cmIds;
+		document.addEventListener('o-cm-submit-clicked', function(event) {
+			if (cmIds.indexOf(event.data.id) !== cmState[notificationId].index) {
+				return; // event wasn't meant for this instance of this listener
+			}
+			FeedbackApi.getInstance().submitFeedback(notificationId, event.data.payload);
+			FeedbackApi.getInstance().likeCmSeries(notificationId, cmState[notificationId].likeCmSeries);
+			NotificationApi.getInstance().markAsRead(notificationId);
+			this.closeCoachmark(event.target.nextSibling);
+		}.bind(this));
+	},
+
+	/**
+	 * Sets up the like button listener
+	 **/
+	setupLikeListener: function(notificationId) {
+		let cmIds = cmState[notificationId].cmIds;
+		// Like event listener
+		document.addEventListener('o-cm-like-clicked', function(event) {
+			if (cmIds.indexOf(event.data.id) !== cmState[notificationId].index) {
+				return; // event wasn't meant for this instance of this listener
+			}
+			cmState[notificationId].likeCmSeries = event.data.type;
+		}.bind(this));
+	},
+
+	/**
+	 * Sets up the cancel (return to like/dislike button) listener
+	 **/
+	setupCancelListener(notificationId) {
+		let cmIds = cmState[notificationId].cmIds;
+		document.addEventListener('o-cm-cancel-clicked', function(event) {
+			if (cmIds.indexOf(event.data.id) !== cmState[notificationId].index) {
+				return; // event wasn't meant for this instance of this listener
+			}
+			cmState[notificationId].likeCmSeries = '';
+		}.bind(this));
+	},
+
+	/**
+	 * Sets up listeners for this series of coachmarks
+	 **/
+	cmListenerSetup: function(notificationId) {
+		if (cmState[notificationId].areListenersSet) {
+			return
+		}
+		this.setupBackNextListener(notificationId);
+		this.setupLikeListener(notificationId);
+		this.setupSubmitListener(notificationId);
+		this.setupCancelListener(notificationId);
+
+		cmState[notificationId].areListenersSet = true;
+	},
+
+	/**
+	 * Gets data from the API and displays a coachmark on the correct page
+	 **/
+	getDisplayCoachmark: function(notificationId) {
+		let cmId = +cmState[notificationId].cmIds[cmState[notificationId].index];
+
+		let coachmarkData = CoachmarkApi.getInstance().getCoachmark(cmId);
 		coachmarkData.then(function(result) {
-			console.log('result: ', result);
-			if (this.redirectIfNewUri(result.uri, cmIds, index)) {
+			if (this.redirectIfNewUri(result.uri, notificationId)) {
 				return;
 			}
-			let cm = new Coachmark(document.getElementById(result.element), result.options, function(){
-				console.log('Mark as READ in the API'); // TODO
+			let cm = new Coachmark(document.getElementById(result.element), result.options, function() {
+				NotificationApi.getInstance().markAsRead(notificationId);
 				this.closeCoachmark(cm.element.nextSibling);
 			}.bind(this));
-
+			if (!cmState[notificationId].isVisited[cmId]) {
+				CoachmarkApi.getInstance().incrementViewCount(cmId);
+				cmState[notificationId].isVisited[cmId] = true;
+			}
 		}.bind(this), function(error) {
-			console.log('Error: ', error); // TODO
+			console.log('Error: ', error);
 		});
 	},
 
-	redirectIfNewUri: function(uri, cmIds, index) {
+	/**
+	 * if the current uri and the uri passed in do not match,
+	 * store state in local storage and redirect to the new uri
+	 **/
+	redirectIfNewUri: function(uri, notificationId) {
 		if (!uri) {
 			return false;
 		}
 		// String.startsWith pollyfill for Safari
 		if (!String.prototype.startsWith) {
-    	String.prototype.startsWith = function(searchString, position){
+    	String.prototype.startsWith = function(searchString, position) {
       	position = position || 0;
       	return this.substr(position, searchString.length) === searchString;
   		};
@@ -159,13 +230,16 @@ module.exports = React.createClass({
 			return false;
 		}
 		// Set local storage
-		localStorage.setItem('notifications.coachmark.cmIds', cmIds);
-		localStorage.setItem('notifications.coachmark.index', index);
+		cmState[notificationId].areListenersSet = false;
+		localStorage.setItem('notifications.coachmark.stateObject', JSON.stringify(cmState[notificationId]));
+
 		window.location.href = uri;
 		return true;
 	},
 
-	// Removes a coachmark associated with the target node
+	/**
+	 * Removes a coachmark associated with the target node from the DOM
+	 **/
 	closeCoachmark: function(coachmarkNode) {
 		// Verify the node. This is important because we don't want to delete the wrong node.
 		if (coachmarkNode === coachmarkNode.getElementsByClassName('o-coach-mark__container')[0].parentNode) {
@@ -173,6 +247,9 @@ module.exports = React.createClass({
 		}
 	},
 
+	/**
+	 * Render
+	 **/
 	render: function() {
 		this.launchCoachmarkIfFromNewUrl();
 
@@ -190,7 +267,7 @@ module.exports = React.createClass({
 		} else {
 			return (
 				<div className="notification-container">
-					<button onClick={this.launchCoachmark.bind(this, this.state.notificationDetails.cmIds)}>Launch Coachmark</button>
+					<button onClick={this.launchCoachmark.bind(this, this.state.notificationDetails)}>Launch Coachmark</button>
 					<NotificationDetails title={this.state.notificationDetails.title} body={this.state.notificationDetails.body} previousClick={this.showList}/>
 				</div>
 			)
