@@ -11,9 +11,7 @@ let NotificationApi = require("./NotificationApi");
 let cmState = {};
 
 module.exports = React.createClass({
-	/**
-	 *
-	 **/
+
 	getInitialState: function() {
 		return {
 			isDetails: false,
@@ -21,9 +19,6 @@ module.exports = React.createClass({
 		};
 	},
 
-	/**
-	 *
-	 **/
 	showDetails: function(notification) {
 		this.setState({
 			isDetails: true,
@@ -31,9 +26,6 @@ module.exports = React.createClass({
 		});
 	},
 
-	/**
-	 *
-	 **/
 	showList: function() {
 		this.setState({
 			isDetails: false,
@@ -59,16 +51,18 @@ module.exports = React.createClass({
 			index: 0,
 			isVisited: {},
 			likeCmSeries: '',
-			areListenersSet: false,
+			areListenersSet: false
 		};
 
 		this.showList(); // toggles the list, which we assume this was triggered from
 		this.props.notificationCloseDropdown();
+
 		this.cmListenerSetup(notificationId);
 		this.getDisplayCoachmark(notificationId);
 	},
 
 	/**
+	 * Entry point if details in local storage. Runs on each page load.
 	 * If we placed details in local storage in order to keep state for a redirect to a new url,
 	 * this function will read those values and launch a coachmark right were we left off.
 	 * Otherwise, we return false and do nothing.
@@ -122,6 +116,19 @@ module.exports = React.createClass({
 	},
 
 	/**
+	 * Sets up the like button listener
+	 **/
+	setupLikeListener: function(notificationId) {
+		let cmIds = cmState[notificationId].cmIds;
+		document.addEventListener('o-cm-like-clicked', function(event) {
+			if (cmIds.indexOf(event.data.id) !== cmState[notificationId].index) {
+				return; // event wasn't meant for this instance of this listener
+			}
+			cmState[notificationId].likeCmSeries = event.data.type;
+		}.bind(this));
+	},
+
+	/**
 	 * Sets up the submit button listener
 	 **/
 	setupSubmitListener(notificationId) {
@@ -134,20 +141,6 @@ module.exports = React.createClass({
 			FeedbackApi.getInstance().likeCmSeries(notificationId, cmState[notificationId].likeCmSeries);
 			NotificationApi.getInstance().markAsRead(notificationId);
 			this.closeCoachmark(event.target.nextSibling);
-		}.bind(this));
-	},
-
-	/**
-	 * Sets up the like button listener
-	 **/
-	setupLikeListener: function(notificationId) {
-		let cmIds = cmState[notificationId].cmIds;
-		// Like event listener
-		document.addEventListener('o-cm-like-clicked', function(event) {
-			if (cmIds.indexOf(event.data.id) !== cmState[notificationId].index) {
-				return; // event wasn't meant for this instance of this listener
-			}
-			cmState[notificationId].likeCmSeries = event.data.type;
 		}.bind(this));
 	},
 
