@@ -8,7 +8,12 @@ let CoachmarkApi = require("./CoachmarkApi");
 let FeedbackApi = require("./FeedbackApi");
 let NotificationApi = require("./NotificationApi");
 
+// Empty objects to be created on load
 let cmState = {};
+let notApi; // use getNotificationApi()
+let cmApi; // use getCoachmarkApi()
+let fbApi; // use getFeedbackApi()
+
 
 module.exports = React.createClass({
 
@@ -33,6 +38,36 @@ module.exports = React.createClass({
 	},
 
 	/**
+	 * Lazy load notificationApi
+	 **/
+	getNotificationApi: function() {
+		if (!notApi && this.props.apiConfig) {
+			notApi = new NotificationApi(this.props.apiConfig)
+		}
+		return notApi;
+	},
+
+	/**
+	 * Lazy load coachmarkApi
+	 **/
+	getCoachmarkApi: function() {
+		if (!cmApi && this.props.apiConfig) {
+			cmApi = new CoachmarkApi(this.props.apiConfig)
+		}
+		return cmApi;
+	},
+
+	/**
+	 * Lazy load feedbackApi
+	 **/
+	getFeedbackApi: function() {
+		if (!fbApi && this.props.apiConfig) {
+			fbApi = new FeedbackApi(this.props.apiConfig)
+		}
+		return fbApi;
+	},
+
+	/**
 	 * Entry point from user interaction with the UI,
 	 * launches the first CM in the set contained in the triggering notification
 	 **/
@@ -42,8 +77,8 @@ module.exports = React.createClass({
 		if (!cmIds) {
 			return;
 		}
-		cmIds = cmIds.map((param) => +param);
-		let notificationId = +notificationDetails.id;
+		cmIds = cmIds.map((param) => parseInt(param));
+		let notificationId = parseInt(notificationDetails.id);
 
 		cmState[notificationId] = {
 			notificationId: notificationId,
@@ -83,8 +118,8 @@ module.exports = React.createClass({
 			return false; // We aren't here because of a redirect
 		}
 
-		fromLocal.notificationId = +fromLocal.notificationId;
-		fromLocal.cmIds = fromLocal.cmIds.map((param) => +param);
+		fromLocal.notificationId = parseInt(fromLocal.notificationId);
+		fromLocal.cmIds = fromLocal.cmIds.map((param) => parseInt(param));
 		fromLocal.index = +fromLocal.index;
 
 		cmState[fromLocal.notificationId] = fromLocal;
@@ -105,10 +140,10 @@ module.exports = React.createClass({
 			}
 			this.closeCoachmark(event.target.nextSibling); // close the current CM
 			if (eventIndex + 1 <= cmIds.length && event.data.type === 'nextButton') {
-				eventIndex++
+				eventIndex++;
 			}
 			if (eventIndex > 0 && event.data.type === 'backButton') {
-				eventIndex--
+				eventIndex--;
 			}
 			cmState[notificationId].index = eventIndex;
 			this.getDisplayCoachmark(notificationId);
@@ -137,9 +172,9 @@ module.exports = React.createClass({
 			if (cmIds.indexOf(event.data.id) !== cmState[notificationId].index) {
 				return; // event wasn't meant for this instance of this listener
 			}
-			FeedbackApi.getInstance().submitFeedback(notificationId, event.data.payload);
-			FeedbackApi.getInstance().likeCmSeries(notificationId, cmState[notificationId].likeCmSeries);
-			NotificationApi.getInstance().markAsRead(notificationId);
+			this.getFeedbackApi().submitFeedback(notificationId, event.data.payload);
+			this.getFeedbackApi().likeCmSeries(notificationId, cmState[notificationId].likeCmSeries);
+			this.getNotificationApi().markAsRead(notificationId);
 			this.closeCoachmark(event.target.nextSibling);
 		}.bind(this));
 	},
@@ -176,19 +211,19 @@ module.exports = React.createClass({
 	 * Gets data from the API and displays a coachmark on the correct page
 	 **/
 	getDisplayCoachmark: function(notificationId) {
-		let cmId = +cmState[notificationId].cmIds[cmState[notificationId].index];
+		let cmId = parseInt(cmState[notificationId].cmIds[cmState[notificationId].index]);
 
-		let coachmarkData = CoachmarkApi.getInstance().getCoachmark(cmId);
+		let coachmarkData = this.getCoachmarkApi().getCoachmark(cmId);
 		coachmarkData.then(function(result) {
 			if (this.redirectIfNewUri(result.uri, notificationId)) {
 				return;
 			}
 			let cm = new Coachmark(document.getElementById(result.element), result.options, function() {
-				NotificationApi.getInstance().markAsRead(notificationId);
+				this.getNotificationApi().markAsRead(notificationId);
 				this.closeCoachmark(cm.element.nextSibling);
 			}.bind(this));
 			if (!cmState[notificationId].isVisited[cmId]) {
-				CoachmarkApi.getInstance().incrementViewCount(cmId);
+				this.getCoachmarkApi().incrementViewCount(cmId);
 				cmState[notificationId].isVisited[cmId] = true;
 			}
 		}.bind(this), function(error) {

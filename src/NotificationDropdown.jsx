@@ -32,7 +32,7 @@ module.exports = React.createClass({
 							Notifications
 							<i className="fa fa-remove close-dropdown pointer" onClick={this.closeDropdown}></i>
 						</div>
-						<NotificationList list={this.props.notificationList} notificationCloseDropdown={this.closeDropdown}/>
+						<NotificationList list={this.props.notificationList} notificationCloseDropdown={this.closeDropdown} apiConfig={this.props.apiConfig}/>
 					</div>
 				</div>
 			</div>

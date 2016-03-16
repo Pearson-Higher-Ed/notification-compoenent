@@ -1,6 +1,6 @@
 import xhr from 'o-xhr';
 
-function NotificationApi(config) {
+module.exports = function NotificationApi(config) {
 	let url = config.nfApiUrl;
 	let xAuth = config.nfPiToken;
 	let acceptHeader = config.nfAcceptHeader;
@@ -42,29 +42,4 @@ function NotificationApi(config) {
 		});
 		return userNotificationsList;
 	}
-}
-
-/**
- * Singleton
- **/
-module.exports = (function() {
-	var instance;
-
-	function createInstance(config) {
-		if (!config) {
-			throw new Error('Config is required when initializing this singleton, yet none was provided.');
-		}
-		var object = new NotificationApi(config);
-		return object;
-	}
-
-	return {
-		getInstance: function(config) {
-			if (!instance) {
-				instance = createInstance(config);
-			}
-			return instance;
-		}
-	};
-
-})();
+};

@@ -1,11 +1,14 @@
 import xhr from 'o-xhr';
 
-function CoachmarkApi(config) {
+module.exports = function CoachmarkApi(config) {
 	let url = config.cmApiUrl;
 	let xAuth = config.cmPiToken;
 	let acceptHeader = config.cmAcceptHeader;
 	let contentType = config.cmContentTypeHeader;
 
+	/**
+	 * Gets a coachmark by id
+	 **/
 	this.getCoachmark = function(cmId) {
 		let response = new Promise(function(resolve, reject) {
 			xhr({
@@ -40,6 +43,9 @@ function CoachmarkApi(config) {
 		return response;
 	};
 
+	/**
+	 * Helper function
+	 **/
 	function parseResponse(response, cmId) {
 		let responseObj = JSON.parse(response);
 		let coachmark = JSON.parse(responseObj.json);
@@ -49,29 +55,4 @@ function CoachmarkApi(config) {
 		}
 		return coachmark;
 	}
-}
-
-/**
- * Singleton
- **/
-module.exports = (function() {
-	var instance;
-
-	function createInstance(config) {
-		if (!config) {
-			throw new Error('Config is required when initializing this singleton, yet none was provided.');
-		}
-		var object = new CoachmarkApi(config);
-		return object;
-	}
-
-	return {
-		getInstance: function(config) {
-			if (!instance) {
-				instance = createInstance(config);
-			}
-			return instance;
-		}
-	};
-
-})();
+};

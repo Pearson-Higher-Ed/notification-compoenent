@@ -2,8 +2,6 @@ let React = require("react");
 let ReactDOM = require("react-dom");
 let NotificationDropdown = require("./NotificationDropdown");
 let NotificationApi = require("./NotificationApi");
-let CoachmarkApi = require("./CoachmarkApi");
-let FeedbackApi = require("./FeedbackApi");
 require("./style/main.scss");
 
 
@@ -15,10 +13,7 @@ require("./style/main.scss");
  *		into it.
  */
 function NotificationComponent(config) {
-	// Configure API singletons for later use
-	CoachmarkApi.getInstance(config);
-	FeedbackApi.getInstance(config);
-	let userNotifications = NotificationApi.getInstance(config).getNotifications();
+	let userNotifications = new NotificationApi(config).getNotifications();
 
 	//this is only here because it is possible for promise to come back before the consumer has placed the react component into a dom
 	this.notificationList = [];
@@ -47,7 +42,7 @@ function NotificationComponent(config) {
 		render: function() {
 			return (
 				<div>
-					<NotificationDropdown notificationList={this.state.notificationList}/>
+					<NotificationDropdown notificationList={this.state.notificationList} apiConfig={config}/>
 				</div>
 			);
 		}
