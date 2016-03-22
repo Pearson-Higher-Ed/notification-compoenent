@@ -29,7 +29,10 @@ module.exports = function NotificationApi(config) {
 	};
 
 	this.markAsRead = function(notificationId) {
-		console.log('STUB: NotificationApi.markAsRead with notificationId: ' + notificationId + ' for recipientId: ' + recipientId); // TODO
+		let response = new Promise(function(resolve, reject) {
+			console.log('STUB: NotificationApi.markAsRead with notificationId: ' + notificationId + ' for recipientId: ' + recipientId); // TODO
+		});
+		return response;
 	};
 
 

@@ -38,3 +38,8 @@ webpack-dev-server
 ```
 
 The demo will be served from http://localhost:8080/index.html and can be debugged using firebug or similar.
+
+## Running tests
+```
+npm test
+```
