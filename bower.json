@@ -20,7 +20,6 @@
     "tests"
   ],
   "dependencies": {
-    "o-xhr": "~2.0.1",
     "o-coach-mark": "~1.0.2"
   }
 }

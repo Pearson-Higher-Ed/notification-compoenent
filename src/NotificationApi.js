@@ -1,4 +1,4 @@
-import xhr from 'o-xhr';
+import xhr from 'xhr';
 
 module.exports = function NotificationApi(config) {
 	let url = config.nfApiUrl;

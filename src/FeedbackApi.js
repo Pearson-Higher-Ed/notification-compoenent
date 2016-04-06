@@ -1,4 +1,4 @@
-import xhr from 'o-xhr';
+import xhr from 'xhr';
 
 module.exports = function FeedbackApi(config) {
 	let url = config.fbApiUrl;
