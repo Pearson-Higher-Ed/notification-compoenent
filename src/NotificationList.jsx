@@ -2,7 +2,6 @@ import Coachmark from 'o-coach-mark';
 
 let React = require("react");
 let NotificationNode = require("./NotificationNode");
-let classNames = require("classnames");
 let NotificationDetails = require("./NotificationDetails");
 let CoachmarkApi = require("./CoachmarkApi");
 let FeedbackApi = require("./FeedbackApi");
@@ -77,11 +76,20 @@ module.exports = React.createClass({
 		if (!cmIds) {
 			return;
 		}
-		cmIds = cmIds.map((param) => parseInt(param));
-		let notificationId = parseInt(notificationDetails.id);
 
-		cmState[notificationId] = {
-			notificationId: notificationId,
+		let masterpieceId = notificationDetails.masterpieceId;
+		if (!masterpieceId) {
+			return;
+		}
+
+		cmIds = cmIds.map((param) => parseInt(param));
+		masterpieceId = parseInt(notificationDetails.masterpieceId);
+
+		cmState[masterpieceId] = {
+			userNotificationId: notificationDetails.userNotificationId,
+			userId: notificationDetails.userId,
+			targetUserRole: notificationDetails.targetUserRole ? notificationDetails.targetUserRole : 'N/A',
+			masterpieceId: masterpieceId,
 			cmIds: cmIds,
 			index: 0,
 			isVisited: {},
@@ -92,8 +100,8 @@ module.exports = React.createClass({
 		this.showList(); // toggles the list, which we assume this was triggered from
 		this.props.notificationCloseDropdown();
 
-		this.cmListenerSetup(notificationId);
-		this.getDisplayCoachmark(notificationId);
+		this.cmListenerSetup(masterpieceId);
+		this.getDisplayCoachmark(masterpieceId);
 	},
 
 	/**
@@ -114,28 +122,28 @@ module.exports = React.createClass({
 			console.log('Exception parsing JSON from local storage: ', e);
 		}
 
-		if (!fromLocal.notificationId) {
+		if (!fromLocal.masterpieceId) {
 			return false; // We aren't here because of a redirect
 		}
 
-		fromLocal.notificationId = parseInt(fromLocal.notificationId);
+		fromLocal.masterpieceId = parseInt(fromLocal.masterpieceId);
 		fromLocal.cmIds = fromLocal.cmIds.map((param) => parseInt(param));
-		fromLocal.index = +fromLocal.index;
+		fromLocal.index = parseInt(fromLocal.index);
 
-		cmState[fromLocal.notificationId] = fromLocal;
+		cmState[fromLocal.masterpieceId] = fromLocal;
 
-		this.cmListenerSetup(fromLocal.notificationId);
-		this.getDisplayCoachmark(fromLocal.notificationId);
+		this.cmListenerSetup(fromLocal.masterpieceId);
+		this.getDisplayCoachmark(fromLocal.masterpieceId);
 	},
 
 	/**
 	 * Sets up the back/next listener
 	 **/
-	setupBackNextListener: function(notificationId) {
-		let cmIds = cmState[notificationId].cmIds;
+	setupBackNextListener: function(masterpieceId) {
+		let cmIds = cmState[masterpieceId].cmIds;
 		document.addEventListener('o-cm-backNext-clicked', function(event) {
 			let eventIndex = cmIds.indexOf(event.data.id);
-			if (eventIndex !== cmState[notificationId].index) {
+			if (eventIndex !== cmState[masterpieceId].index) {
 				return; // event wasn't meant for this instance of this listener
 			}
 			this.closeCoachmark(event.target.nextSibling); // close the current CM
@@ -145,36 +153,39 @@ module.exports = React.createClass({
 			if (eventIndex > 0 && event.data.type === 'backButton') {
 				eventIndex--;
 			}
-			cmState[notificationId].index = eventIndex;
-			this.getDisplayCoachmark(notificationId);
+			cmState[masterpieceId].index = eventIndex;
+			this.getDisplayCoachmark(masterpieceId);
 		}.bind(this));
 	},
 
 	/**
 	 * Sets up the like button listener
 	 **/
-	setupLikeListener: function(notificationId) {
-		let cmIds = cmState[notificationId].cmIds;
+	setupLikeListener: function(masterpieceId) {
+		let cmIds = cmState[masterpieceId].cmIds;
 		document.addEventListener('o-cm-like-clicked', function(event) {
-			if (cmIds.indexOf(event.data.id) !== cmState[notificationId].index) {
+			if (cmIds.indexOf(event.data.id) !== cmState[masterpieceId].index) {
 				return; // event wasn't meant for this instance of this listener
 			}
-			cmState[notificationId].likeCmSeries = event.data.type;
+			cmState[masterpieceId].likeCmSeries = event.data.type;
 		}.bind(this));
 	},
 
 	/**
 	 * Sets up the submit button listener
 	 **/
-	setupSubmitListener(notificationId) {
-		let cmIds = cmState[notificationId].cmIds;
+	setupSubmitListener(masterpieceId) {
+		let cmIds = cmState[masterpieceId].cmIds;
 		document.addEventListener('o-cm-submit-clicked', function(event) {
-			if (cmIds.indexOf(event.data.id) !== cmState[notificationId].index) {
+			if (cmIds.indexOf(event.data.id) !== cmState[masterpieceId].index) {
 				return; // event wasn't meant for this instance of this listener
 			}
-			this.getFeedbackApi().submitFeedback(notificationId, event.data.payload);
-			this.getFeedbackApi().likeCmSeries(notificationId, cmState[notificationId].likeCmSeries);
-			this.getNotificationApi().markAsRead(notificationId);
+			this.getFeedbackApi().submitFeedback( masterpieceId,
+																					  cmState[masterpieceId].userId,
+																					  cmState[masterpieceId].targetUserRole,
+																					  event.data.payload,
+																					  cmState[masterpieceId].likeCmSeries );
+			this.getNotificationApi().markAsRead(cmState[masterpieceId].userNotificationId);
 			this.closeCoachmark(event.target.nextSibling);
 		}.bind(this));
 	},
@@ -182,49 +193,49 @@ module.exports = React.createClass({
 	/**
 	 * Sets up the cancel (return to like/dislike button) listener
 	 **/
-	setupCancelListener(notificationId) {
-		let cmIds = cmState[notificationId].cmIds;
+	setupCancelListener(masterpieceId) {
+		let cmIds = cmState[masterpieceId].cmIds;
 		document.addEventListener('o-cm-cancel-clicked', function(event) {
-			if (cmIds.indexOf(event.data.id) !== cmState[notificationId].index) {
+			if (cmIds.indexOf(event.data.id) !== cmState[masterpieceId].index) {
 				return; // event wasn't meant for this instance of this listener
 			}
-			cmState[notificationId].likeCmSeries = '';
+			cmState[masterpieceId].likeCmSeries = '';
 		}.bind(this));
 	},
 
 	/**
 	 * Sets up listeners for this series of coachmarks
 	 **/
-	cmListenerSetup: function(notificationId) {
-		if (cmState[notificationId].areListenersSet) {
+	cmListenerSetup: function(masterpieceId) {
+		if (cmState[masterpieceId].areListenersSet) {
 			return
 		}
-		this.setupBackNextListener(notificationId);
-		this.setupLikeListener(notificationId);
-		this.setupSubmitListener(notificationId);
-		this.setupCancelListener(notificationId);
+		this.setupBackNextListener(masterpieceId);
+		this.setupLikeListener(masterpieceId);
+		this.setupSubmitListener(masterpieceId);
+		this.setupCancelListener(masterpieceId);
 
-		cmState[notificationId].areListenersSet = true;
+		cmState[masterpieceId].areListenersSet = true;
 	},
 
 	/**
 	 * Gets data from the API and displays a coachmark on the correct page
 	 **/
-	getDisplayCoachmark: function(notificationId) {
-		let cmId = parseInt(cmState[notificationId].cmIds[cmState[notificationId].index]);
+	getDisplayCoachmark: function(masterpieceId) {
+		let cmId = parseInt(cmState[masterpieceId].cmIds[cmState[masterpieceId].index]);
 
 		let coachmarkData = this.getCoachmarkApi().getCoachmark(cmId);
 		coachmarkData.then(function(result) {
-			if (this.redirectIfNewUri(result.uri, notificationId)) {
+			if (this.redirectIfNewUri(result.uri, masterpieceId)) {
 				return;
 			}
 			let cm = new Coachmark(document.getElementById(result.element), result.options, function() {
-				this.getNotificationApi().markAsRead(notificationId);
+				this.getNotificationApi().markAsRead(cmState[masterpieceId].userNotificationId);
 				this.closeCoachmark(cm.element.nextSibling);
 			}.bind(this));
-			if (!cmState[notificationId].isVisited[cmId]) {
+			if (!cmState[masterpieceId].isVisited[cmId]) {
 				this.getCoachmarkApi().incrementViewCount(cmId);
-				cmState[notificationId].isVisited[cmId] = true;
+				cmState[masterpieceId].isVisited[cmId] = true;
 			}
 		}.bind(this), function(error) {
 			console.log('Error: ', error);
@@ -235,7 +246,7 @@ module.exports = React.createClass({
 	 * if the current uri and the uri passed in do not match,
 	 * store state in local storage and redirect to the new uri
 	 **/
-	redirectIfNewUri: function(uri, notificationId) {
+	redirectIfNewUri: function(uri, masterpieceId) {
 		if (!uri) {
 			return false;
 		}
@@ -258,8 +269,8 @@ module.exports = React.createClass({
 			return false;
 		}
 		// Set local storage
-		cmState[notificationId].areListenersSet = false;
-		localStorage.setItem('notifications.coachmark.stateObject', JSON.stringify(cmState[notificationId]));
+		cmState[masterpieceId].areListenersSet = false;
+		localStorage.setItem('notifications.coachmark.stateObject', JSON.stringify(cmState[masterpieceId]));
 
 		window.location.href = uri;
 		return true;

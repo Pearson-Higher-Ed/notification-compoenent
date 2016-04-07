@@ -1,8 +1,8 @@
-var pt = 'eyJhbGciOiJSUzUxMiIsImtpZCI6ImsxMDY5NDgxOTAifQ.eyJleHAiOjE0NTg2NzY0NjUsInN1YiI6ImZmZmZmZmZmNTNkYTNjYjNlNGIwZWFhZGRkNTc2ODc3Iiwic2Vzc2lkIjoiZWY4ZjY3ODU3NjY0NDc5YmE1Y2ViYWI1MDNlYzMyMjMiLCJ0eXBlIjoiYXQiLCJpYXQiOjE0NTg2NjU2NjR9.bDjJ_YPlOpv7H4jb3wxlC1zpMI_ZowFPbFzxydYRyes2Z7UPHysMXJxzysoRJO3IlUv8a2BE25Zpmzmg7yUeEgkzNnYCXpNVr3WHhyc5DvMLktWvlnW21rkZT43blll_Hd1jdnnj6zmNLeNQ1V-3nYpB-gbrhREEFRZu6y1Szjc';
+var pt = 'eyJhbGciOiJSUzUxMiIsImtpZCI6ImsxMDY5NDgxOTAifQ.eyJleHAiOjE0NjAwNjkzMDUsInN1YiI6ImZmZmZmZmZmNTNkYTNjYjNlNGIwZWFhZGRkNTc2ODc3Iiwic2Vzc2lkIjoiMzM3MzRhYjRmNmFlNDZhYjhlN2RkMmE2MGQwN2IxOWEiLCJ0eXBlIjoiYXQiLCJpYXQiOjE0NjAwNTg1MDR9.AAz_AY3XM_D7Qcqp19FPCOB7qtXpxgBm93AgUVibj-vHE0e_QgApVuBEKKVv3NEKqbY3K-8varJT7uNYkhSQieLNhU-JeyvnEFB8XuDOhgBeNWdYiE9P74SaHGrlxaZdaG8CRDTWPG3Tx1br-hO_47lErLRjamkJmKJqZ7ZkDt0';
 
 var AppHeaderConfig = {
   // NotificationAPI
-  nfApiUrl: "https://notifications-api.stg-prsn.com/usernotifications/recipientid",
+  nfApiUrl: "https://notifications-api.stg-prsn.com",
   nfAcceptHeader: "*/*",
   nfContentTypeHeader: "application/json",
   nfPiToken: pt,

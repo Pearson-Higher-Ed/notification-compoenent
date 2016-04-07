@@ -48,7 +48,7 @@ module.exports = function CoachmarkApi(config) {
 	 **/
 	function parseResponse(response, cmId) {
 		let responseObj = JSON.parse(response);
-		let coachmark = JSON.parse(responseObj.json);
+		let coachmark = responseObj.json;
 
 		if (!coachmark.options.id) {
 			coachmark.options.id = cmId;

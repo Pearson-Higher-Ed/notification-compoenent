@@ -15,12 +15,6 @@ describe("FeedbackApi", () => {
         api = new FeedbackApi(AppHeaderConfig);
     });
 
-    it("should call the Feedback API - likeCmSeries", () => {
-        feedback = api.likeCmSeries(10, 'like');
-        feedback.then((result) => {
-        });
-    });
-
     it("should call the Feedback API - submitFeedback", () => {
         feedback = api.submitFeedback(10, 'some feedback');
         feedback.then((result) => {

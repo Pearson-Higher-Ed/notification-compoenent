@@ -10,7 +10,7 @@ module.exports = function NotificationApi(config) {
 	this.getNotifications = function() {
 		let response = new Promise(function(resolve, reject) {
 			xhr({
-				url: url + '/' + recipientId,
+				url: url + '/usernotifications/recipientid/' + recipientId,
 				headers: {
 					'X-Authorization': xAuth,
 					'Accept': acceptHeader,
@@ -28,9 +28,24 @@ module.exports = function NotificationApi(config) {
 		return response;
 	};
 
-	this.markAsRead = function(notificationId) {
+	this.markAsRead = function(userNotificationId) {
 		let response = new Promise(function(resolve, reject) {
-			console.log('STUB: NotificationApi.markAsRead with notificationId: ' + notificationId + ' for recipientId: ' + recipientId); // TODO
+			xhr({
+				method: 'PUT',
+				url: url + '/readusernotifications/' + userNotificationId + '/true',
+				headers: {
+					'X-Authorization': xAuth,
+					'Accept': acceptHeader,
+					'Content-Type': contentType
+				},
+				onSuccess: function(request) {
+					resolve(request.responseText);
+				},
+				onError: function(request) {
+					console.log(request.responseText);
+					reject(request.responseText || new Error('Network Error'));
+				}
+			});
 		});
 		return response;
 	};
@@ -41,7 +56,10 @@ module.exports = function NotificationApi(config) {
 		let userNotificationsList = userNotifications.filter((notification) => {
 			return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser');
 		}).map((notification) => {
-			return JSON.parse(notification.payload.message);
+			let result = JSON.parse(notification.payload.message);
+			result.userNotificationId = notification.id;
+			result.userId = notification.recipientId;
+			return result;
 		});
 		return userNotificationsList;
 	}
