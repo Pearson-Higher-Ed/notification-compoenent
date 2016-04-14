@@ -48,7 +48,7 @@ npm test
 The coachmark route of the feedback API can accept any valid JSON, so care must be taken when posting to this route.
 Be sure that the spelling of the "options" elements match those of the o-choach-mark component contract's options.
 
-An example <feedbackApi>/coachmark payload:
+An example [feedbackApi]/coachmark payload:
 ```
 {
 	"json": {
@@ -73,7 +73,7 @@ be sure to include the masterpieceId element and a list of coachmark IDs in the 
 The targetUserRole should also be included, this is used by the FeedbackApi as the groupAuthType search field.
 If it's missing, the default will be 'N/A'
 
-An example <notificationApi>/events payload:
+An example [notificationApi]/events payload:
 ```
 {
 	"appType": "aegisTestApp",
