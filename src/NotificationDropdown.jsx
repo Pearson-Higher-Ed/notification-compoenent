@@ -1,6 +1,5 @@
 let React = require("react");
 let NotificationList = require("./NotificationList");
-require("./style/notificationDropdown.scss");
 
 module.exports = React.createClass({
 
@@ -22,7 +21,7 @@ module.exports = React.createClass({
 		this.setState({showDropdown: true});
 
 	},
-	
+
 	render: function() {
 		return (
 			<div>
@@ -33,7 +32,7 @@ module.exports = React.createClass({
 							Notifications
 							<i className="fa fa-remove close-dropdown pointer" onClick={this.closeDropdown}></i>
 						</div>
-						<NotificationList list={this.props.notificationList}/>
+						<NotificationList list={this.props.notificationList} notificationCloseDropdown={this.closeDropdown} apiConfig={this.props.apiConfig}/>
 					</div>
 				</div>
 			</div>

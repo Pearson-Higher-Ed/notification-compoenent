@@ -1,32 +1,62 @@
-import xhr from 'o-xhr';
-module.exports = function() {
-	this.getNotifications = function(headerConfig) {
-		let responseIs = new Promise(function(resolve, reject) {
-			xhr({
-				url: `${headerConfig.UserNotificationURL}/${headerConfig.RecipientId}`,
+
+module.exports = function NotificationApi(config) {
+	let url = config.nfApiUrl;
+	let xAuth = config.nfPiToken;
+	let contentType = config.nfContentTypeHeader;
+	let recipientId = config.nfRecipientId;
+
+	this.getNotifications = function() {
+		let response = new Promise(function(resolve, reject) {
+			let request = new Request(url + '/usernotifications/recipientid/' + recipientId, {
+				method: 'GET',
+				mode: 'cors',
 				headers: {
-					'X-Authorization': headerConfig.PiToken,
-					'Accept': headerConfig.AcceptHeader,
-					'Content-Type': headerConfig.ContentTypeHeader
-				},
-				onSuccess: function(request) {
-					resolve(parseResponse(request.responseText));
-				},
-				onError: function(request) {
-					console.log(request.responseText);
-					reject(request.responseText || new Error('Network Error'));
+					'X-Authorization': xAuth,
+					'Content-Type': contentType
 				}
 			});
+			fetch(request).then(function(response) {
+				return response.json();
+			}).then(function(j) {
+				resolve(parseResponse(j));
+			}).catch(function(error) {
+				console.log('onError: ', error);
+				reject(error);
+			});
 		});
-		return responseIs;
-	}
+		return response;
+	};
+
+	this.markAsRead = function(userNotificationId) {
+		let response = new Promise(function(resolve, reject) {
+			let request = new Request(url + '/readusernotifications/' + userNotificationId + '/true', {
+				method: 'PUT',
+				mode: 'cors',
+				headers: {
+					'X-Authorization': xAuth,
+					'Content-Type': contentType
+				}
+			});
+			fetch(request).then(function(response) {
+				resolve(response);
+			}).catch(function(error) {
+				console.log('onError: ', error);
+				reject(error);
+			});
+		});
+		return response;
+	};
+
 
 	 function parseResponse(response) {
-		let userNotifications = JSON.parse(response)._embedded.usernotifications;
+		let userNotifications = response._embedded.usernotifications;
 		let userNotificationsList = userNotifications.filter((notification) => {
 			return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser');
 		}).map((notification) => {
-			return JSON.parse(notification.payload.message);
+			let result = JSON.parse(notification.payload.message);
+			result.userNotificationId = notification.id;
+			result.userId = notification.recipientId;
+			return result;
 		});
 		return userNotificationsList;
 	}

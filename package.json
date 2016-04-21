@@ -1,6 +1,6 @@
 {
   "name": "prsn.notification-component",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Component for new feature notifications",
   "main": "./notification.min.js",
   "scripts": {
@@ -42,6 +42,7 @@
     "react-dom": "^0.14.6",
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",
-    "webpack": "^1.12.10"
+    "webpack": "^1.12.10",
+    "whatwg-fetch": "^0.11.0"
   }
 }

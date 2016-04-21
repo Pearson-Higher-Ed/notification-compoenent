@@ -1,9 +1,7 @@
-import xhr from './xhr';
 
 module.exports = function CoachmarkApi(config) {
 	let url = config.cmApiUrl;
 	let xAuth = config.cmPiToken;
-	let acceptHeader = config.cmAcceptHeader;
 	let contentType = config.cmContentTypeHeader;
 
 	/**
@@ -11,20 +9,24 @@ module.exports = function CoachmarkApi(config) {
 	 **/
 	this.getCoachmark = function(cmId) {
 		let response = new Promise(function(resolve, reject) {
-			xhr({
-				url: url + '/coachmark/' + cmId,
+			let request = new Request(url + '/coachmark/' + cmId, {
+				method: 'GET',
+				mode: 'cors',
 				headers: {
 					'X-Authorization': xAuth,
-					'Accept': acceptHeader,
 					'Content-Type': contentType
-				},
-				onSuccess: function(request) {
-					resolve(parseResponse(request.responseText, cmId));
-				},
-				onError: function(request) {
-					console.log('onError: ', request);
-					reject(request.responseText || new Error('Network Error: ', request));
 				}
+			});
+			fetch(request).then(function(response) {
+				return response.json();
+			}).then(function(coachmark) {
+				if (!coachmark.options.id) {
+					coachmark.options.id = cmId;
+				}
+				resolve(coachmark);
+			}).catch(function(error) {
+				console.log('onError: ', error);
+				reject(error);
 			});
 		});
 		return response;
@@ -35,35 +37,22 @@ module.exports = function CoachmarkApi(config) {
 	 **/
 	this.incrementViewCount = function(cmId) {
 		let response = new Promise(function(resolve, reject) {
-			xhr({
+			let request = new Request(url + '/coachmark/' + cmId + '/increment', {
 				method: 'PUT',
-				url: url + '/coachmark/' + cmId+'/increment',
-				headers: {
+				mode: 'cors',
+				headers: new Headers({
 					'X-Authorization': xAuth,
-					'Accept': acceptHeader,
 					'Content-Type': contentType
-				},
-				onSuccess: function(request) {
-					resolve(request.responseText);
-				},
-				onError: function(request) {
-					console.log('onError: ', request);
-					reject(request.responseText || new Error('Network Error: ', request));
-				}
+				})
+			});
+			fetch(request).then(function(response) {
+				resolve(response);
+			}).catch(function(error) {
+				console.log('onError: ', error);
+				reject(error);
 			});
 		});
 		return response;
 	};
 
-	/**
-	 * Helper function
-	 **/
-	function parseResponse(response, cmId) {
-		let coachmark = JSON.parse(response);
-
-		if (!coachmark.options.id) {
-			coachmark.options.id = cmId;
-		}
-		return coachmark;
-	}
 };
