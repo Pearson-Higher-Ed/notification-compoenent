@@ -1,13 +1,15 @@
+import 'whatwg-fetch';
 
-module.exports = function FeedbackApi(config) {
-	let url = config.fbApiUrl;
-	let xAuth = config.fbPiToken;
-	let acceptHeader = config.fbAcceptHeader;
-	let contentType = config.fbContentTypeHeader;
-	require('whatwg-fetch');
-
-	this.submitFeedback = function(masterpieceId, userId, targetUserRole, comment, likeDislike) {
-		let response = new Promise(function(resolve, reject) {
+export default class FeedbackApi {
+	constructor(config) {
+		this.url = config.fbApiUrl;
+		this.xAuth = config.fbPiToken;
+		this.acceptHeader = config.fbAcceptHeader;
+		this.contentType = config.fbContentTypeHeader;
+	}
+	
+	submitFeedback(masterpieceId, userId, targetUserRole, comment, likeDislike) {
+		let response = new Promise((resolve, reject) => {
 			let payload = {
 				masterpieceId: masterpieceId,
 				userId: userId,
@@ -15,13 +17,13 @@ module.exports = function FeedbackApi(config) {
 				comment: comment,
 				like: (likeDislike === 'like' ? 'L' : 'D')
 			};
-			let request = new Request(url + '/feedback', {
+			let request = new Request(this.url + '/feedback', {
 				method: 'POST',
 				mode: 'cors',
 				body: JSON.stringify(payload),
 				headers: {
-					'X-Authorization': xAuth,
-					'Content-Type': contentType
+					'X-Authorization': this.xAuth,
+					'Content-Type': this.contentType
 				}
 			});
 			fetch(request).then(function(response) {
@@ -32,5 +34,5 @@ module.exports = function FeedbackApi(config) {
 			});
 		});
 		return response;
-	};
-};
+	}
+}

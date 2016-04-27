@@ -1,19 +1,35 @@
+import 'whatwg-fetch';
 
-module.exports = function NotificationApi(config) {
-	let url = config.nfApiUrl;
-	let xAuth = config.nfPiToken;
-	let contentType = config.nfContentTypeHeader;
-	let recipientId = config.nfRecipientId;
-	require('whatwg-fetch');
 
-	this.getNotifications = function() {
-		let response = new Promise(function(resolve, reject) {
-			let request = new Request(url + '/usernotifications/recipientid/' + recipientId, {
+ function parseResponse(response) {
+	let userNotifications = response._embedded.usernotifications;
+	let userNotificationsList = userNotifications.filter((notification) => {
+		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser');
+	}).map((notification) => {
+		let result = JSON.parse(notification.payload.message);
+		result.userNotificationId = notification.id;
+		result.userId = notification.recipientId;
+		return result;
+	});
+	return userNotificationsList;
+}
+
+export default class NotificationApi {
+	constructor(config) {
+		this.url = config.nfApiUrl;
+		this.xAuth = config.nfPiToken;
+		this.contentType = config.nfContentTypeHeader;
+		this.recipientId = config.nfRecipientId;
+	}
+	
+	getNotifications() {
+		let response = new Promise((resolve, reject) => {
+			let request = new Request(this.url + '/usernotifications/recipientid/' + this.recipientId, {
 				method: 'GET',
 				mode: 'cors',
 				headers: {
-					'X-Authorization': xAuth,
-					'Content-Type': contentType
+					'X-Authorization': this.xAuth,
+					'Content-Type': this.contentType
 				}
 			});
 			fetch(request).then(function(response) {
@@ -26,16 +42,16 @@ module.exports = function NotificationApi(config) {
 			});
 		});
 		return response;
-	};
+	}
 
-	this.markAsRead = function(userNotificationId) {
-		let response = new Promise(function(resolve, reject) {
-			let request = new Request(url + '/readusernotifications/' + userNotificationId + '/true', {
+	marAsRead(userNotificationId) {
+		let response = new Promise((resolve, reject) => {
+			let request = new Request(this.url + '/readusernotifications/' + userNotificationId + '/true', {
 				method: 'PUT',
 				mode: 'cors',
 				headers: {
-					'X-Authorization': xAuth,
-					'Content-Type': contentType
+					'X-Authorization': this.xAuth,
+					'Content-Type': this.contentType
 				}
 			});
 			fetch(request).then(function(response) {
@@ -46,19 +62,5 @@ module.exports = function NotificationApi(config) {
 			});
 		});
 		return response;
-	};
-
-
-	 function parseResponse(response) {
-		let userNotifications = response._embedded.usernotifications;
-		let userNotificationsList = userNotifications.filter((notification) => {
-			return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser');
-		}).map((notification) => {
-			let result = JSON.parse(notification.payload.message);
-			result.userNotificationId = notification.id;
-			result.userId = notification.recipientId;
-			return result;
-		});
-		return userNotificationsList;
 	}
-};
+}

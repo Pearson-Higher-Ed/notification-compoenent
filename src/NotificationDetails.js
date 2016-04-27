@@ -1,8 +1,11 @@
-let React = require("react");
+import React from 'react';
 
-module.exports = React.createClass({
+class NotificationDetails extends React.component {
+	constructor(props) {
+		super(props);
+	}
 
-	render: function() {
+	render() {
 		return (
 			<div className="notification-details">
 				<div className="notification-details__title">
@@ -17,4 +20,6 @@ module.exports = React.createClass({
 			</div>
 		);
 	}
-});
+}
+
+export default NotificationDetails;

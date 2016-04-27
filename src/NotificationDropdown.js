@@ -1,5 +1,5 @@
-let React = require("react");
-let NotificationList = require("./NotificationList");
+import React from 'react';
+import NotificationList from './NotificationList';
 
 module.exports = React.createClass({
 

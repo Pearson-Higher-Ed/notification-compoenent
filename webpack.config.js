@@ -4,7 +4,7 @@ var BowerWebpackPlugin = require("bower-webpack-plugin");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-	entry: "./src/NotificationComponent.jsx",
+	entry: "./runNot.js",
 	output: {
 		path: __dirname,
 		publicPath: "./",
@@ -15,7 +15,7 @@ module.exports = {
 	module: {
 		loaders: [
 			{
-				test: /\.jsx?$/,
+				test: /\.js?$/,
 				exclude: /(node_modules)/,
 				loader: "babel-loader"
 			},
@@ -28,7 +28,7 @@ module.exports = {
 	},
 	plugins: [
 		// uncomment to minify
-		new webpack.optimize.UglifyJsPlugin({minimize: true}),
+		// new webpack.optimize.UglifyJsPlugin({minimize: true}),
 
 		// bowerwebpackplugin makes it so that it searches the bower.json file for which file to add
 		new BowerWebpackPlugin({

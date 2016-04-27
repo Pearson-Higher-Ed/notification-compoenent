@@ -1,11 +1,11 @@
 import Coachmark from 'o-coach-mark';
+import React from 'react';
 
-let React = require("react");
-let NotificationNode = require("./NotificationNode");
-let NotificationDetails = require("./NotificationDetails");
-let CoachmarkApi = require("./CoachmarkApi");
-let FeedbackApi = require("./FeedbackApi");
-let NotificationApi = require("./NotificationApi");
+import NotificationDetails from './NotificationDetails';
+import NotificationNode from './NotificationNode';
+import CoachmarkApi from './CoachmarkApi';
+import FeedbackApi from './FeedbackApi';
+import NotificationApi from './NotificationApi';
 
 // Empty objects to be created on load
 let cmState = {};
@@ -295,7 +295,7 @@ module.exports = React.createClass({
 		if(!this.state.isDetails) {
 			let notificationNodeList = this.props.list.map((notification) => {
 				return (
-					<NotificationNode detailsClick={this.showDetails.bind(this, notification)} title={notification.title} icon={notification.icon} key={notification.id} summary={notification.body.substring(0, 30) + "..."}/>
+					<NotificationNode detailsClick={this.showDetails.bind(this, notification)} title={notification.title} icon={notification.icon} key={notification.id} summary={notification.body.substring(0, 30) + '...'}/>
 				);
 			});
 			return (

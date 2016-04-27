@@ -1,4 +1,6 @@
-var pt = 'eyJhbGciOiJSUzUxMiIsImtpZCI6ImsxMDY5NDgxOTAifQ.eyJleHAiOjE0NjE3MTU3NjgsInN1YiI6ImZmZmZmZmZmNTNkYTNjYjNlNGIwZWFhZGRkNTc2ODc3Iiwic2Vzc2lkIjoiYzRmNWNhMWQxMjI1NDA4Y2FhNWM3MzMzY2VhMDhlMTkiLCJ0eXBlIjoiYXQiLCJpYXQiOjE0NjE3MDQ5Njh9.JPfrwfyYSfWQEu1bYyV3KmxnZPLPHnVDVmndV_qy-MOcPlAgRLBEWZwfCanPKj6iPMCQ4leP_NFuKoahAReNDlSuIsQMnwdoiNrWPCt85-1VyW5fbo1oVXd4ULzUuR0QvmuqV1Nq4Iu1U0VHQv_nm8l_L6UbSGJavVbb42UQ1PQ';
+import NotificationComponent from './src/NotificationComponent';
+
+var pt = 'eyJhbGciOiJSUzUxMiIsImtpZCI6ImsxMDY5NDgxOTAifQ.eyJleHAiOjE0NjE3OTYzODUsInN1YiI6ImZmZmZmZmZmNTNkYTNjYjNlNGIwZWFhZGRkNTc2ODc3Iiwic2Vzc2lkIjoiYTVjMmZjNjBmNDNhNDAyZjk5MTRiYjhjYmM4NmU1ZmIiLCJ0eXBlIjoiYXQiLCJpYXQiOjE0NjE3ODU1ODR9.eZf29K-4-6X08P0-LXsdijTANrivHhFVmqwIvjF_OYTti2M8zKXyadk9padCLvG2XI9_-SDeP4oxKW0M020dyQc7HsdQ1gsRU6rw7-gE4O9kz0NH3f2ax4znhD_xOYr9or0lOckIAzeBirAqwTr9T5EecDrcfwoTCqgWC7_bDmQ';
 
 var AppHeaderConfig = {
   // NotificationAPI
@@ -18,5 +20,4 @@ var AppHeaderConfig = {
   fbPiToken: pt
 };
 
-var not = NotificationComponent.getInstance(AppHeaderConfig);
-not.attachComponent("#notification");
+var not = new NotificationComponent(AppHeaderConfig, "notification");

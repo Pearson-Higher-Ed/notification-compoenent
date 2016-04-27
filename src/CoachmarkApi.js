@@ -1,21 +1,23 @@
+import 'whatwg-fetch';
 
-module.exports = function CoachmarkApi(config) {
-	let url = config.cmApiUrl;
-	let xAuth = config.cmPiToken;
-	let contentType = config.cmContentTypeHeader;
-	require('whatwg-fetch');
-
+export default class CoachmarkApi {
+	constructor(config) {
+		this.url = config.cmApiUrl;
+		this.xAuth = config.cmPiToken;
+		this.contentType = config.cmContentTypeHeader;
+	}
+	
 	/**
 	 * Gets a coachmark by id
 	 **/
-	this.getCoachmark = function(cmId) {
-		let response = new Promise(function(resolve, reject) {
-			let request = new Request(url + '/coachmark/' + cmId, {
+	getCoachmark(cmId) {
+		let response = new Promise((resolve, reject) => {
+			let request = new Request(this.url + '/coachmark/' + cmId, {
 				method: 'GET',
 				mode: 'cors',
 				headers: {
-					'X-Authorization': xAuth,
-					'Content-Type': contentType
+					'X-Authorization': this.xAuth,
+					'Content-Type': this.contentType
 				}
 			});
 			fetch(request).then(function(response) {
@@ -31,19 +33,19 @@ module.exports = function CoachmarkApi(config) {
 			});
 		});
 		return response;
-	};
+	}
 
 	/**
 	 * Tracks how many times a coachmark has been viewed
 	 **/
-	this.incrementViewCount = function(cmId) {
-		let response = new Promise(function(resolve, reject) {
-			let request = new Request(url + '/coachmark/' + cmId + '/increment', {
+	incrementViewCount(cmId) {
+		let response = new Promise((resolve, reject) => {
+			let request = new Request(this.url + '/coachmark/' + cmId + '/increment', {
 				method: 'PUT',
 				mode: 'cors',
 				headers: new Headers({
-					'X-Authorization': xAuth,
-					'Content-Type': contentType
+					'X-Authorization': this.xAuth,
+					'Content-Type': this.contentType
 				})
 			});
 			fetch(request).then(function(response) {
@@ -54,6 +56,5 @@ module.exports = function CoachmarkApi(config) {
 			});
 		});
 		return response;
-	};
-
-};
+	}
+}
