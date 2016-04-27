@@ -4,6 +4,7 @@ module.exports = function NotificationApi(config) {
 	let xAuth = config.nfPiToken;
 	let contentType = config.nfContentTypeHeader;
 	let recipientId = config.nfRecipientId;
+	require('whatwg-fetch');
 
 	this.getNotifications = function() {
 		let response = new Promise(function(resolve, reject) {

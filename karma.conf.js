@@ -3,13 +3,13 @@
 var BowerWebpackPlugin = require("bower-webpack-plugin");
 var webpack = require("webpack");
 
-"use strict";
-
 module.exports = function(config) {
+	"use strict";
 	config.set({
 		frameworks: [
 			// Reference: https://github.com/karma-runner/karma-jasmine
 			// Set framework to jasmine
+			"sinon",
 			"mocha"
 		],
 
@@ -18,7 +18,8 @@ module.exports = function(config) {
 			"karma-webpack",
 			"karma-sourcemap-loader",
 			"karma-phantomjs-launcher",
-			"karma-spec-reporter"
+			"karma-spec-reporter",
+			"karma-sinon"
 		],
 
 		reporters: [
@@ -57,10 +58,10 @@ module.exports = function(config) {
 		webpack: {
 			module: {
 				loaders: [
-					{ 
-						test: /\.jsx?$/, 
+					{
+						test: /\.jsx?$/,
 						exclude: /(node_modules)/,
-						loader: "babel-loader" 
+						loader: "babel-loader"
 					},
 					{
 						// sass-loader for the origami pieces

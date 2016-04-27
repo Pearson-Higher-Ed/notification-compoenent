@@ -4,6 +4,7 @@ module.exports = function FeedbackApi(config) {
 	let xAuth = config.fbPiToken;
 	let acceptHeader = config.fbAcceptHeader;
 	let contentType = config.fbContentTypeHeader;
+	require('whatwg-fetch');
 
 	this.submitFeedback = function(masterpieceId, userId, targetUserRole, comment, likeDislike) {
 		let response = new Promise(function(resolve, reject) {

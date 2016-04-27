@@ -1,5 +1,4 @@
 let FeedbackApi = require("../src/FeedbackApi");
-import xhr from 'o-xhr';
 let AppHeaderConfig = {
 
   fbApiUrl: "http://localhost:8080",

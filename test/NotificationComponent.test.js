@@ -25,6 +25,6 @@ describe("Notificationcomponent", () => {
 		notificationComponent.attachComponent(element);
 
 		expect(element.childNodes.length).to.be.above(0);
-	});	
+	});
 
 });

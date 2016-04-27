@@ -3,6 +3,7 @@ module.exports = function CoachmarkApi(config) {
 	let url = config.cmApiUrl;
 	let xAuth = config.cmPiToken;
 	let contentType = config.cmContentTypeHeader;
+	require('whatwg-fetch');
 
 	/**
 	 * Gets a coachmark by id

@@ -1,40 +1,94 @@
 let CoachmarkApi = require("../src/CoachmarkApi");
-import xhr from 'o-xhr';
-let AppHeaderConfig = {
+var goodAppHeaderConfig, goodResponseObj, cmApi;
 
-  cmApiUrl: "http://localhost:8080",
-  cmAcceptHeader: "*/*",
-  cmContentTypeHeader: "application/json",
-  cmPiToken: "eyJhbGciOiJSUzUxMiIsImtpZCI6ImsxMDY5NDgxOTAifQ.eyJleHAiOjE0NTg1ODU2NTIsInN1YiI6ImZmZmZmZmZmNTNkYTNjYjNlNGIwZWFhZGRkNTc2ODc3Iiwic2Vzc2lkIjoiZWY1NDE5YTUwMmM4NDdjNGJkNjdiMjk2MmFmOGE5NTciLCJ0eXBlIjoiYXQiLCJpYXQiOjE0NTg1NzQ4NTJ9.UpmltPrDwA_OTcoEKgj7YMJgnOKLQO1ByiTlCBJZiowtiw-knIN7tvLXrVIaXbXZV0Ox3NbVQctuafy44OyUsH6CfBDMafIhYEXc32-IxU8KpAzPqGQo6QyHGiUQ1U_iCV7HDxB-KcebB89lh31vMRfi-BIcAllI3_jllnfkA3s"
-};
 describe("CoachmarkApi", () => {
-    let cmApi = null;
-    let coachmark = null;
 
-    beforeEach(() => {
-        cmApi = new CoachmarkApi(AppHeaderConfig);
+  before(() => {
+    goodAppHeaderConfig = {
+      cmApiUrl: "http://localhost:8080",
+      cmContentTypeHeader: "application/json",
+      cmPiToken: "pi"
+    };
+
+    goodResponseObj = {
+      "element": "fromTest",
+      "uri": "index.html",
+      "options": {
+        "title": "Stubbed Coachmark Reply",
+        "text": "From the Test",
+        "hasBack": false,
+        "hasNext": true,
+        "like": false,
+        "currentCM": 1,
+        "totalCM": 6
+      }
+    };
+
+    cmApi = new CoachmarkApi(goodAppHeaderConfig);
+  });
+
+  beforeEach(() => {
+    sinon.stub(window, 'fetch');
+
+    let res = new window.Response(JSON.stringify(goodResponseObj), {
+      status: 200,
+      headers: {
+        'Content-type': 'application/json'
+      }
     });
 
-    it("should call the Coachmark API - get Coachmark", () => {
-        coachmark = cmApi.getCoachmark(10);
-        coachmark.then((result) => {
-            let response = result;
-            expect(response).not.to.be(null);
+    window.fetch.returns(Promise.resolve(res));
+  });
+
+    afterEach(() => {
+      window.fetch.restore();
+    });
+
+    it("should call the Coachmark API - get Coachmark", (done) => {
+      cmApi.getCoachmark(25)
+        .catch(done)
+        .then((result) => {
+            expect(result).not.to.be(null);
+            expect(result.length).not.to.be(0);
+            done();
         });
     });
 
-    it("should parse the response body and return the coachmark", () => {
-        coachmark = cmApi.getCoachmark(10);
-        coachmark.then((result) => {
-            let coachmark = cmApi.parseResponse(result);
-            expect(coachmark.length).not.to.be(0);
+    it("should parse the response body and return the coachmark", (done) => {
+      cmApi.getCoachmark(25)
+        .catch(done)
+        .then((result) => {
+          expect(result.element).to.be(goodResponseObj.element);
+          expect(result.uri).to.be(goodResponseObj.uri);
+          expect(result.options.title).to.be(goodResponseObj.options.title);
+          expect(result.options.text).to.be(goodResponseObj.options.text);
+          expect(result.options.hasBack).to.be(goodResponseObj.options.hasBack);
+          expect(result.options.hasNext).to.be(goodResponseObj.options.hasNext);
+          expect(result.options.like).to.be(goodResponseObj.options.like);
+          expect(result.options.currentCM).to.be(goodResponseObj.options.currentCM);
+          expect(result.options.totalCM).to.be(goodResponseObj.options.totalCM);
+          done();
         });
     });
 
-    it("should call the Coachmark API - incrementViewCount", () => {
-        coachmark = cmApi.incrementViewCount(10);
-        coachmark.then((result) => {
+    it("should hydrate the id if the id is missing", (done) => {
+      if (goodResponseObj.options.id) {
+        goodResponseObj.options.id = undefined;
+      }
+
+      cmApi.getCoachmark(25)
+        .catch(done)
+        .then((result) => {
+          expect(result.options.id).to.be(25);
+          done();
         });
     });
 
+    it("should call the Coachmark API - incrementViewCount", (done) => {
+        cmApi.incrementViewCount(25)
+          .catch(done)
+          .then((result) => {
+            done();
+          });
+    });
 });

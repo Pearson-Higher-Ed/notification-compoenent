@@ -1,5 +1,4 @@
 let NotificationApi = require("../src/NotificationApi");
-import xhr from 'o-xhr';
 let AppHeaderConfig = {
 
   nfApiUrl: "https://notifications-api.stg-prsn.com/usernotifications/recipientid",

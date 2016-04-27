@@ -51,18 +51,16 @@ Be sure that the spelling of the "options" elements match those of the o-choach-
 An example [feedbackApi]/coachmark payload:
 ```
 {
-	"json": {
-		"element": "foo6",
-		"uri": "index2.html",
-		"options": {
-			"title": "Coachmark",
-			"text": "Some text for a coachmark",
-			"hasBack": true,
-			"hasNext": false,
-			"like": true,
-			"currentCM": 6,
-			"totalCM": 6
-		}
+	"element": "foo1",
+	"uri": "index.html",
+	"options": {
+		"title": "Coachmark",
+		"text": "Some text for a coachmark",
+		"hasBack": false,
+		"hasNext": true,
+		"like": false,
+		"currentCM": 1,
+		"totalCM": 6
 	}
 }
 ```
