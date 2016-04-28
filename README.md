@@ -1,95 +1,181 @@
-# Notification-Component
+/////////////////////////////////////  REMOVE  /////////////////////////////////////
 
-This is for getting notifications from notification-api onto the screen.  It is assumed eventually it will be added to the o-app-header and show a bell at the top of the header bar with a number of notifications it has brought in.
+CONTRIBUTORS: DELETE THIS SECTION FROM README AFTER COMPLETING THE STEPS
 
-## Building
+**Assumption**: You understand how to use Git and have the git CLI correctly installed in your development environment.
 
-```
-	npm install
-	bower install
-	webpack
-```
+1. Follow these [directions](https://help.github.com/articles/caching-your-github-password-in-git/#platform-all) to remove 
+the need to manually authenticate to GitHub on every network request. This enables the use of any automated npm scripts.
 
-Include the notification.min.js file as well as notification.css (skip this if you're just running the demo).
+2. Create your new repository in GitHub (open source - default) or, if necessary, Pearson BitBucket (private source). In
+order to be able to create a GitHub repo, send a request to pearson-design-accelerator@pearson.com to be invited to 
+github.com/Pearson-Higher-Ed.
 
-## Running the demo
+3. Perform these steps in your development environment:
 
-You will need to replace the expired pi token found in runNot.js with a current token before running the demo.
-Next, build as above, then start the server:
 
-```
-webpack-dev-server
-```
-The demo will be served from http://localhost:8080/index.html
+    git clone https://github.com/Pearson-Higher-Ed/component-archetype.git [name_of_your_new_component]
+    
+    cd [name_of_your_new_component]
+    
+    git remote set-url origin [url_of_new_component_repository]
+    
+    git remote -v
+    
+    
+Once you've verified that the remote origin now looks correct for your repo, do the initial push:
 
-## Running in debug mode
+    git push -u origin master
 
-To run the demo in debug mode, open webpack.config.js and comment out the following line:
+//////////////////////////////////// ^ REMOVE ^ ////////////////////////////////////
 
-```
-new webpack.optimize.UglifyJsPlugin({minimize: true}),
-```
+# New Component Name
 
-Then, include the -d argument on the webpack command and start the server:
+## Summary
 
-```
-webpack -d
-webpack-dev-server
-```
+This is an executive summary of why my component exists and what it does.
 
-The demo will be served from http://localhost:8080/index.html and can be debugged using firebug or similar.
+## External Dependencies
 
-## Running tests
-```
-npm test
-```
+React and ReactDOM (v0.14 or v15) are external dependencies required to use this component.
 
-## Deployment Notes
-The coachmark route of the feedback API can accept any valid JSON, so care must be taken when posting to this route.
-Be sure that the spelling of the "options" elements match those of the o-choach-mark component contract's options.
+This component targets the styling in the Pearson Elements SDK.
 
-An example [feedbackApi]/coachmark payload:
-```
-{
-	"element": "foo1",
-	"uri": "index.html",
-	"options": {
-		"title": "Coachmark",
-		"text": "Some text for a coachmark",
-		"hasBack": false,
-		"hasNext": true,
-		"like": false,
-		"currentCM": 1,
-		"totalCM": 6
-	}
-}
-```
+## Usage for Consuming Application
 
-When creating a notification event that will trigger a coachmark,
-be sure to include the masterpieceId element and a list of coachmark IDs in the cmIds element.
+See the demo directory for example usage.
+     
+### Bundle (Simplest)
 
-The targetUserRole should also be included, this is used by the FeedbackApi as the groupAuthType search field.
-If it's missing, the default will be 'N/A'
+**NOTE: If you choose to use the native CustomEvent for eventing, you must 
+[polyfill](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) for Internet Explorer!**
 
-An example [notificationApi]/events payload:
-```
-{
-	"appType": "aegisTestApp",
-	"productType": "aegisTestProduct",
-	"eventType": "all",
-	"recipientIds": ["ffffffff560c1a1ee4b04ebf43118c60"],
-	"eventModel": {
-		"id": 5001,
-		"title": "CMs 24-29 with masterpieceId",
-		"body": "Some body text. Click to open up some coachmarks!",
-		"link": "console-stg.pearson.com:8080/account/manage/account",
-		"linkText":"Go to Profile Screen",
-		"icon": "fa fa-cogs fa-2x",
-		"cmIds":"24,25,26,27,28,29",
-		"masterpieceId":"200",
-		"targetUserRole":"stud"
-	}
-}
-```
-Note that the "id" value in the eventModel object must be unique for each notification,
-or else the notification component will only display the first notification with that ID.
+The transpiled, minified bundle will be available in /node_modules in the component /build directory.
+
+### or Build
+
+There are use cases where you might need to roll the component into your application's build process.
+
+CommonJS example:
+
+    COMMONJS EXAMPLE GOES HERE
+        
+Example webpack configuration (requires correct configuration and installation of loader dependencies):
+
+    EXAMPLE GOES HERE
+        
+### Component Configuration
+
+Example:
+
+    {
+        elementId: 'dom-node',
+        locale: 'fr-CA'
+    }
+   
+### Eventing
+
+<table>
+    <tr>
+        <th>Event</th><th>detail</th>
+    </tr
+    <tr>
+        <td></td><td></td>
+    </tr>
+</table>
+
+## Contributing
+
+### Overview
+
+This component is constructed using [React](https://facebook.github.io/react/) written in ES6 (ES2015) and styled with 
+SCSS, all transpiled by [Babel](http://babeljs.io/).
+
+The project is also set up for unit testing with code coverage, i18n with 
+[React Intl](https://github.com/yahoo/react-intl/wiki), and hot reloading.
+
+### Continuous Integration
+
+To hook up your project to Origami continuous integration, a one-time manual process is currently required. Please send 
+the request to pearson-design-accelerator@pearson.com.
+
+### Development Toolchain
+
+**Note: Bower is disallowed in Origami v2**
+
+- [Node.js](http://nodejs.org) v4+
+- [Ruby](https://www.ruby-lang.org/en/) for SCSS (Macs typically ship with Ruby by default)
+- [webpack](https://webpack.github.io/)
+    - Babel 6 transpiles ES6 and JSX
+    - Bundle javascript, styles and icon
+    - ESLint configured with .eslintrc
+
+Recommendation: If you are using different node versions on your machine, use [nvm](https://github.com/creationix/nvm) 
+to manage them.
+
+#### Can I see the project working before I change anything?
+
+In your local repo:
+
+    npm install
+    npm run dev
+
+Navigate to **localhost:8081/demo** - the bundle is served in memory, which is why you may not see the file in /build.
+
+#### Hot Reload
+
+Hot module replacement is activated in the webpack dev server; saved changes to src are automatically reloaded in the 
+browser.
+
+#### Build
+
+Build the bundle manually at any time.
+
+    npm run build
+
+#### Test
+
+The project is wired to unit test with the [Jest framework](https://facebook.github.io/jest/) and 
+[Enzyme](http://airbnb.io/enzyme/), a JavaScript testing utility for React that makes it easier to assert, manipulate, 
+and traverse your component's output.
+
+Linting will run automatically prior to executing the test suite.
+
+    npm test    
+
+#### Code Coverage
+
+On GitHub, there is integration with the code coverage service [Coveralls](https://coveralls.io/github/Pearson-Higher-Ed).
+To see the coverage results locally, execute:
+
+    npm run test-cov
+    
+Shoot for 100% code coverage.
+
+#### Governance
+
+Determine if your component passes a series of checks for Origami v2 compliance.
+
+    npm run verify
+
+#### Translations
+
+It is expected that applications will pass in translated text for dynamic content.
+
+For text inherent to the component (e.g. button text or input placeholder), add JSON translations for each supported 
+locale to the translations folder. 
+
+Retain the `locale` configuration parameter.
+
+#### Publish to Pearson Public Registry
+
+Do not manually version or tag your project. Instead, when you are ready to publish an update to npm, manually invoke the
+release script in the master branch. It handles all of that and invokes CI publishing to npm on behalf of the pearson-ux
+ npm account. 
+ 
+Additionally, there is no need to manually maintain a change log - if you follow the 
+[commitizen](https://commitizen.github.io/cz-cli/) conventions for commit messages, a change log will automatically be 
+generated correctly during the release process.
+
+    npm run release
+    

@@ -1,14 +1,15 @@
 import 'whatwg-fetch';
 
 export default class FeedbackApi {
+
 	constructor(config) {
 		this.url = config.fbApiUrl;
 		this.xAuth = config.fbPiToken;
 		this.acceptHeader = config.fbAcceptHeader;
 		this.contentType = config.fbContentTypeHeader;
 	}
-	
-	submitFeedback(masterpieceId, userId, targetUserRole, comment, likeDislike) {
+
+	submitFeedback (masterpieceId, userId, targetUserRole, comment, likeDislike) {
 		let response = new Promise((resolve, reject) => {
 			let payload = {
 				masterpieceId: masterpieceId,

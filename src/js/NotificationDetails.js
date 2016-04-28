@@ -1,9 +1,6 @@
 import React from 'react';
 
-class NotificationDetails extends React.component {
-	constructor(props) {
-		super(props);
-	}
+export default class NotificationDetails extends React.Component {
 
 	render() {
 		return (
@@ -21,5 +18,3 @@ class NotificationDetails extends React.component {
 		);
 	}
 }
-
-export default NotificationDetails;

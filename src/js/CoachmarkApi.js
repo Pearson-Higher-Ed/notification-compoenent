@@ -1,12 +1,14 @@
 import 'whatwg-fetch';
 
 export default class CoachmarkApi {
+
 	constructor(config) {
 		this.url = config.cmApiUrl;
-		this.xAuth = config.cmPiToken;
+		this.auth = config.cmPiToken;
 		this.contentType = config.cmContentTypeHeader;
 	}
-	
+
+
 	/**
 	 * Gets a coachmark by id
 	 **/

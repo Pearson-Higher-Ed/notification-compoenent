@@ -1,8 +1,8 @@
 import React from 'react';
 
-module.exports = React.createClass({
+export default class NotificationNode extends React.Component {
 
-	render: function() {
+	render() {
 		return (
 			<div className="notification-node">
 				<div className="notification-node--details-click" onClick={this.props.detailsClick}>
@@ -20,4 +20,5 @@ module.exports = React.createClass({
 			</div>
 		);
 	}
-});
+};
+

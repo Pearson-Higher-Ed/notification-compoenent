@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
 
-
- function parseResponse(response) {
+function parseResponse(response) {
+	'use strict';
 	let userNotifications = response._embedded.usernotifications;
 	let userNotificationsList = userNotifications.filter((notification) => {
 		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser');
@@ -15,13 +15,14 @@ import 'whatwg-fetch';
 }
 
 export default class NotificationApi {
+
 	constructor(config) {
 		this.url = config.nfApiUrl;
 		this.xAuth = config.nfPiToken;
 		this.contentType = config.nfContentTypeHeader;
 		this.recipientId = config.nfRecipientId;
 	}
-	
+
 	getNotifications() {
 		let response = new Promise((resolve, reject) => {
 			let request = new Request(this.url + '/usernotifications/recipientid/' + this.recipientId, {
@@ -44,7 +45,7 @@ export default class NotificationApi {
 		return response;
 	}
 
-	marAsRead(userNotificationId) {
+	markAsRead(userNotificationId) {
 		let response = new Promise((resolve, reject) => {
 			let request = new Request(this.url + '/readusernotifications/' + userNotificationId + '/true', {
 				method: 'PUT',
@@ -63,4 +64,5 @@ export default class NotificationApi {
 		});
 		return response;
 	}
-}
+
+};

@@ -1,51 +1,58 @@
-var webpack = require("webpack");
-var path = require("path");
-var BowerWebpackPlugin = require("bower-webpack-plugin");
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
-
+// [name] under the output section denotes the entry prop names
 module.exports = {
-	entry: "./runNot.js",
-	output: {
-		path: __dirname,
-		publicPath: "./",
-		filename: "notification.min.js",
-		libraryTarget: "umd",
-		library: "NotificationComponent"
-	},
-	module: {
-		loaders: [
-			{
-				test: /\.js?$/,
-				exclude: /(node_modules)/,
-				loader: "babel-loader"
-			},
-			{
-				// sass-loader for the origami pieces
-				test: /\.scss$/,
-				loader: ExtractTextPlugin.extract("style", "css!sass")
-			}
-		]
-	},
-	plugins: [
-		// uncomment to minify
-		// new webpack.optimize.UglifyJsPlugin({minimize: true}),
-
-		// bowerwebpackplugin makes it so that it searches the bower.json file for which file to add
-		new BowerWebpackPlugin({
-			modulesDirectories: ["bower_components"],
-			manifestFiles: "bower.json",
-			includes: /.*/,
-			excludes: [],
-			searchResolveModulesDirectories: true
-		}),
-
-		// css bundles....
-		new ExtractTextPlugin("notification.css", {})
-	],
-
-	//resolve bower_components
-	resolve: {
-		modulesDirectories: ["node_modules", "bower_components"],
-		extensions: ["", ".js", ".jsx"]
-	}
+  entry: {
+   dev: ['webpack/hot/dev-server', './main.js', './demo/demo.js'],
+   dist: ['./main.js']
+  },
+  output: {
+    path: './',
+    filename: 'build/[name].component-name.js',
+    libraryTarget: "umd"
+  },
+  externals: [
+    {
+      'react': {
+        root: 'React',
+        commonjs2: 'react',
+        commonjs: 'react',
+        amd: 'react'
+      }
+    },
+    {
+      'react-dom': {
+        root: 'ReactDOM',
+        commonjs2: 'react-dom',
+        commonjs: 'react-dom',
+        amd: 'react-dom'
+      }
+    }
+  ],
+  contentBase: "./demo", // for webpack dev server
+  module: {
+    preLoaders: [
+      {
+        test: /\.js$/,
+        loader: 'eslint',
+        exclude: /node_modules/
+      }
+    ],
+    loaders: [
+      {
+        test: /\.scss$/,
+        loader: 'style!css!sass' // sass -> css -> javascript -> inline style
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel',
+        query: {
+          cacheDirectory: true,
+          presets: ['es2015', 'react', 'stage-0']
+        }
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
+      }
+    ]
+  }
 };

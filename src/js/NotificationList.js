@@ -1,76 +1,80 @@
-import Coachmark from 'o-coach-mark';
-import React from 'react';
+// import Coachmark from 'o-coach-mark';
 
-import NotificationDetails from './NotificationDetails';
+import React from 'react';
 import NotificationNode from './NotificationNode';
+import NotificationDetails from './NotificationDetails';
 import CoachmarkApi from './CoachmarkApi';
 import FeedbackApi from './FeedbackApi';
 import NotificationApi from './NotificationApi';
 
-// Empty objects to be created on load
-let cmState = {};
-let notApi; // use getNotificationApi()
-let cmApi; // use getCoachmarkApi()
-let fbApi; // use getFeedbackApi()
+function Coachmark() {
+
+}
 
 
-module.exports = React.createClass({
+export default class NotificationList extends React.Component {
 
-	getInitialState: function() {
-		return {
+	constructor(props) {
+		super(props);
+		this.state = {
 			isDetails: false,
 			notificationDetails: null
 		};
-	},
+		// Empty objects to be created on load
+		this.cmState = {};
+		this.notApi; // use getNotificationApi()
+		this.cmApi; // use getCoachmarkApi()
+		this.fbApi; // use getFeedbackApi()
+	}
 
-	showDetails: function(notification) {
+	showDetails(notification) {
 		this.setState({
 			isDetails: true,
 			notificationDetails : notification
 		});
-	},
+	}
 
-	showList: function() {
+	showList() {
 		this.setState({
-			isDetails: false,
+			isDetails: false
 		});
-	},
+	}
 
 	/**
 	 * Lazy load notificationApi
 	 **/
-	getNotificationApi: function() {
-		if (!notApi && this.props.apiConfig) {
-			notApi = new NotificationApi(this.props.apiConfig)
+	getNotificationApi() {
+		if (!this.notApi && this.props.apiConfig) {
+			this.notApi = new NotificationApi(this.props.apiConfig)
 		}
-		return notApi;
-	},
+		return this.notApi;
+	}
 
 	/**
 	 * Lazy load coachmarkApi
 	 **/
-	getCoachmarkApi: function() {
-		if (!cmApi && this.props.apiConfig) {
-			cmApi = new CoachmarkApi(this.props.apiConfig)
+	getCoachmarkApi() {
+		if (!this.cmApi && this.props.apiConfig) {
+			this.cmApi = new CoachmarkApi(this.props.apiConfig)
 		}
-		return cmApi;
-	},
+		return this.cmApi;
+	}
 
 	/**
 	 * Lazy load feedbackApi
 	 **/
-	getFeedbackApi: function() {
-		if (!fbApi && this.props.apiConfig) {
-			fbApi = new FeedbackApi(this.props.apiConfig)
+	getFeedbackApi() {
+		if (!this.fbApi && this.props.apiConfig) {
+			this.fbApi = new FeedbackApi(this.props.apiConfig)
 		}
-		return fbApi;
-	},
+		return this.fbApi;
+	}
 
 	/**
 	 * Entry point from user interaction with the UI,
 	 * launches the first CM in the set contained in the triggering notification
 	 **/
-	launchCoachmark: function(notificationDetails) {
+	launchCoachmark(notificationDetails) {
 		let cmIds = notificationDetails.cmIds;
 		cmIds = cmIds ? cmIds.split(',') : null;
 		if (!cmIds) {
@@ -85,7 +89,7 @@ module.exports = React.createClass({
 		cmIds = cmIds.map((param) => parseInt(param));
 		masterpieceId = parseInt(notificationDetails.masterpieceId);
 
-		cmState[masterpieceId] = {
+		this.cmState[masterpieceId] = {
 			userNotificationId: notificationDetails.userNotificationId,
 			userId: notificationDetails.userId,
 			targetUserRole: notificationDetails.targetUserRole ? notificationDetails.targetUserRole : 'N/A',
@@ -102,7 +106,7 @@ module.exports = React.createClass({
 
 		this.cmListenerSetup(masterpieceId);
 		this.getDisplayCoachmark(masterpieceId);
-	},
+	}
 
 	/**
 	 * Entry point if details in local storage. Runs on each page load.
@@ -110,7 +114,7 @@ module.exports = React.createClass({
 	 * this function will read those values and launch a coachmark right were we left off.
 	 * Otherwise, we return false and do nothing.
 	 **/
-	launchCoachmarkIfFromNewUrl: function() {
+	launchCoachmarkIfFromNewUrl() {
 		let fromLocal = localStorage.getItem('notifications.coachmark.stateObject');
 		localStorage.removeItem('notifications.coachmark.stateObject');
 		if (!fromLocal) {
@@ -130,20 +134,20 @@ module.exports = React.createClass({
 		fromLocal.cmIds = fromLocal.cmIds.map((param) => parseInt(param));
 		fromLocal.index = parseInt(fromLocal.index);
 
-		cmState[fromLocal.masterpieceId] = fromLocal;
+		this.cmState[fromLocal.masterpieceId] = fromLocal;
 
 		this.cmListenerSetup(fromLocal.masterpieceId);
 		this.getDisplayCoachmark(fromLocal.masterpieceId);
-	},
+	}
 
 	/**
 	 * Sets up the back/next listener
 	 **/
-	setupBackNextListener: function(masterpieceId) {
-		let cmIds = cmState[masterpieceId].cmIds;
+	setupBackNextListener(masterpieceId) {
+		let cmIds = this.cmState[masterpieceId].cmIds;
 		document.addEventListener('o-cm-backNext-clicked', function(event) {
 			let eventIndex = cmIds.indexOf(event.data.id);
-			if (eventIndex !== cmState[masterpieceId].index) {
+			if (eventIndex !== this.cmState[masterpieceId].index) {
 				return; // event wasn't meant for this instance of this listener
 			}
 			this.closeCoachmark(event.target.nextSibling); // close the current CM
@@ -153,61 +157,63 @@ module.exports = React.createClass({
 			if (eventIndex > 0 && event.data.type === 'backButton') {
 				eventIndex--;
 			}
-			cmState[masterpieceId].index = eventIndex;
+			this.cmState[masterpieceId].index = eventIndex;
 			this.getDisplayCoachmark(masterpieceId);
 		}.bind(this));
-	},
+	}
 
 	/**
 	 * Sets up the like button listener
 	 **/
-	setupLikeListener: function(masterpieceId) {
-		let cmIds = cmState[masterpieceId].cmIds;
+	setupLikeListener(masterpieceId) {
+		let cmIds = this.cmState[masterpieceId].cmIds;
 		document.addEventListener('o-cm-like-clicked', function(event) {
-			if (cmIds.indexOf(event.data.id) !== cmState[masterpieceId].index) {
+			if (cmIds.indexOf(event.data.id) !== this.cmState[masterpieceId].index) {
 				return; // event wasn't meant for this instance of this listener
 			}
-			cmState[masterpieceId].likeCmSeries = event.data.type;
+			this.cmState[masterpieceId].likeCmSeries = event.data.type;
 		}.bind(this));
-	},
+	}
 
 	/**
 	 * Sets up the submit button listener
 	 **/
 	setupSubmitListener(masterpieceId) {
-		let cmIds = cmState[masterpieceId].cmIds;
+		let cmIds = this.cmState[masterpieceId].cmIds;
 		document.addEventListener('o-cm-submit-clicked', function(event) {
-			if (cmIds.indexOf(event.data.id) !== cmState[masterpieceId].index) {
+			if (cmIds.indexOf(event.data.id) !== this.cmState[masterpieceId].index) {
 				return; // event wasn't meant for this instance of this listener
 			}
-			this.getFeedbackApi().submitFeedback( masterpieceId,
-																					  cmState[masterpieceId].userId,
-																					  cmState[masterpieceId].targetUserRole,
-																					  event.data.payload,
-																					  cmState[masterpieceId].likeCmSeries );
-			this.getNotificationApi().markAsRead(cmState[masterpieceId].userNotificationId);
+			this.getFeedbackApi().submitFeedback(
+				masterpieceId,
+				this.cmState[masterpieceId].userId,
+				this.cmState[masterpieceId].targetUserRole,
+				event.data.payload,
+				this.cmState[masterpieceId].likeCmSeries
+			);
+			this.getNotificationApi().markAsRead(this.cmState[masterpieceId].userNotificationId);
 			this.closeCoachmark(event.target.nextSibling);
 		}.bind(this));
-	},
+	}
 
 	/**
 	 * Sets up the cancel (return to like/dislike button) listener
 	 **/
 	setupCancelListener(masterpieceId) {
-		let cmIds = cmState[masterpieceId].cmIds;
+		let cmIds = this.cmState[masterpieceId].cmIds;
 		document.addEventListener('o-cm-cancel-clicked', function(event) {
-			if (cmIds.indexOf(event.data.id) !== cmState[masterpieceId].index) {
+			if (cmIds.indexOf(event.data.id) !== this.cmState[masterpieceId].index) {
 				return; // event wasn't meant for this instance of this listener
 			}
-			cmState[masterpieceId].likeCmSeries = '';
+			this.cmState[masterpieceId].likeCmSeries = '';
 		}.bind(this));
-	},
+	}
 
 	/**
 	 * Sets up listeners for this series of coachmarks
 	 **/
-	cmListenerSetup: function(masterpieceId) {
-		if (cmState[masterpieceId].areListenersSet) {
+	cmListenerSetup(masterpieceId) {
+		if (this.cmState[masterpieceId].areListenersSet) {
 			return
 		}
 		this.setupBackNextListener(masterpieceId);
@@ -215,14 +221,14 @@ module.exports = React.createClass({
 		this.setupSubmitListener(masterpieceId);
 		this.setupCancelListener(masterpieceId);
 
-		cmState[masterpieceId].areListenersSet = true;
-	},
+		this.cmState[masterpieceId].areListenersSet = true;
+	}
 
 	/**
 	 * Gets data from the API and displays a coachmark on the correct page
 	 **/
-	getDisplayCoachmark: function(masterpieceId) {
-		let cmId = parseInt(cmState[masterpieceId].cmIds[cmState[masterpieceId].index]);
+	getDisplayCoachmark(masterpieceId) {
+		let cmId = parseInt(this.cmState[masterpieceId].cmIds[this.cmState[masterpieceId].index]);
 
 		let coachmarkData = this.getCoachmarkApi().getCoachmark(cmId);
 		coachmarkData.then(function(result) {
@@ -230,32 +236,32 @@ module.exports = React.createClass({
 				return;
 			}
 			let cm = new Coachmark(document.getElementById(result.element), result.options, function() {
-				this.getNotificationApi().markAsRead(cmState[masterpieceId].userNotificationId);
+				this.getNotificationApi().markAsRead(this.cmState[masterpieceId].userNotificationId);
 				this.closeCoachmark(cm.element.nextSibling);
 			}.bind(this));
-			if (!cmState[masterpieceId].isVisited[cmId]) {
+			if (!this.cmState[masterpieceId].isVisited[cmId]) {
 				this.getCoachmarkApi().incrementViewCount(cmId);
-				cmState[masterpieceId].isVisited[cmId] = true;
+				this.cmState[masterpieceId].isVisited[cmId] = true;
 			}
 		}.bind(this), function(error) {
 			console.log('Error: ', error);
 		});
-	},
+	}
 
 	/**
 	 * if the current uri and the uri passed in do not match,
 	 * store state in local storage and redirect to the new uri
 	 **/
-	redirectIfNewUri: function(uri, masterpieceId) {
+	redirectIfNewUri(uri, masterpieceId) {
 		if (!uri) {
 			return false;
 		}
 		// String.startsWith pollyfill for Safari
 		if (!String.prototype.startsWith) {
-    	String.prototype.startsWith = function(searchString, position) {
-      	position = position || 0;
-      	return this.substr(position, searchString.length) === searchString;
-  		};
+    		String.prototype.startsWith = function(searchString, position) {
+	      		position = position || 0;
+	      		return this.substr(position, searchString.length) === searchString;
+  			};
 		}
 		// if relative, change to absolute using current domain
 		let currentUri = window.location.href;
@@ -269,33 +275,34 @@ module.exports = React.createClass({
 			return false;
 		}
 		// Set local storage
-		cmState[masterpieceId].areListenersSet = false;
-		localStorage.setItem('notifications.coachmark.stateObject', JSON.stringify(cmState[masterpieceId]));
+		this.cmState[masterpieceId].areListenersSet = false;
+		localStorage.setItem('notifications.coachmark.stateObject', JSON.stringify(this.cmState[masterpieceId]));
 
 		window.location.href = uri;
 		return true;
-	},
+	}
 
 	/**
 	 * Removes a coachmark associated with the target node from the DOM
 	 **/
-	closeCoachmark: function(coachmarkNode) {
+	closeCoachmark(coachmarkNode) {
 		// Verify the node. This is important because we don't want to delete the wrong node.
 		if (coachmarkNode === coachmarkNode.getElementsByClassName('o-coach-mark__container')[0].parentNode) {
 			coachmarkNode.parentNode.removeChild(coachmarkNode);
 		}
-	},
+	}
 
 	/**
 	 * Render
 	 **/
-	render: function() {
+	render() {
 		this.launchCoachmarkIfFromNewUrl();
 
-		if(!this.state.isDetails) {
+		if (!this.state.isDetails) {
 			let notificationNodeList = this.props.list.map((notification) => {
 				return (
-					<NotificationNode detailsClick={this.showDetails.bind(this, notification)} title={notification.title} icon={notification.icon} key={notification.id} summary={notification.body.substring(0, 30) + '...'}/>
+					<NotificationNode detailsClick={this.showDetails.bind(this, notification)} title={notification.title} icon={notification.icon} key={notification.id}
+					summary={notification.body.substring(0, 30) + "..."}/>
 				);
 			});
 			return (
@@ -312,4 +319,4 @@ module.exports = React.createClass({
 			)
 		}
 	}
-});
+};
