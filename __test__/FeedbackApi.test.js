@@ -1,4 +1,4 @@
-let FeedbackApi = require("../src/FeedbackApi");
+let FeedbackApi = require("../src/js/FeedbackApi");
 let AppHeaderConfig = {
 
   fbApiUrl: "http://localhost:8080",

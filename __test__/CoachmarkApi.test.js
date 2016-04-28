@@ -1,4 +1,4 @@
-let CoachmarkApi = require("../src/CoachmarkApi");
+let CoachmarkApi = require("../src/js/CoachmarkApi");
 var goodAppHeaderConfig, goodResponseObj, cmApi;
 
 describe("CoachmarkApi", () => {

@@ -1,4 +1,4 @@
-let NotificationApi = require("../src/NotificationApi");
+let NotificationApi = require("../src/js/NotificationApi");
 let AppHeaderConfig = {
 
   nfApiUrl: "https://notifications-api.stg-prsn.com/usernotifications/recipientid",

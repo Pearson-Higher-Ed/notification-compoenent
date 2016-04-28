@@ -1,6 +1,6 @@
 let React = require("react");
 let expect = require("expect.js");
-let NotificationComponent = require("../src/NotificationComponent");
+let NotificationComponent = require("../src/js/NotificationComponent");
 let config = {
     UserNotificationURL: "https://notifications-api.stg-prsn.com/usernotifications/recipientid",
     AcceptHeader: "*/*",

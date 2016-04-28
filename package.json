@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "version": "0.0.0",
+  "name": "NotificationComponent",
+  "version": "0.0.1",
   "description": "",
   "main": "./main.js",
   "scripts": {
