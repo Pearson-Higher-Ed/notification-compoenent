@@ -1,4 +1,5 @@
-let NotificationApi = require("../src/js/NotificationApi");
+jest.unmock('../src/js/NotificationApi');
+
 let AppHeaderConfig = {
 
   nfApiUrl: "https://notifications-api.stg-prsn.com/usernotifications/recipientid",
