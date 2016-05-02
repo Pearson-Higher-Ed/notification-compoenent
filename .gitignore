@@ -1,8 +1,9 @@
-node_modules
-bower_components
 .DS_Store
 .idea
 build/*.js
 coverage
+node_modules
 fonts
 demo/elements.css
+npm-debug.log
+*.iml
