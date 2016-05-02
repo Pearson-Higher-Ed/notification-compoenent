@@ -55,4 +55,4 @@ class NotificationComponent {
 
 export default NotificationComponent;
 
-document.body.addEventListener('o.InitMyComponent', e => new NotificationComponent(e.detail.config, e.detail.elementId));
+document.body.addEventListener('o.InitNotificationComponent', e => new NotificationComponent(e.detail.config, e.detail.elementId));

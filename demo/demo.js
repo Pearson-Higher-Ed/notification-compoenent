@@ -24,7 +24,7 @@ const AppHeaderConfig = {
 function init() {
 
 	// Demo eventing API
-	document.body.dispatchEvent(new CustomEvent('o.InitMyComponent', {
+	document.body.dispatchEvent(new CustomEvent('o.InitNotificationComponent', {
 			detail: {
 				config: AppHeaderConfig,
 				elementId: 'demo-target1'
