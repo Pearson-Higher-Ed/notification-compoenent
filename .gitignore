@@ -1,4 +1,8 @@
 node_modules
 bower_components
-.npmrc
+.DS_Store
+.idea
 build/*.js
+coverage
+fonts
+demo/elements.css
