@@ -13,8 +13,8 @@ export default class CoachmarkApi {
 	 * Gets a coachmark by id
 	 **/
 	getCoachmark(cmId) {
-		let response = new Promise((resolve, reject) => {
-			let request = new Request(this.url + '/coachmark/' + cmId, {
+		const response = new Promise((resolve, reject) => {
+			const request = new Request(this.url + '/coachmark/' + cmId, {
 				method: 'GET',
 				mode: 'cors',
 				headers: {
@@ -41,8 +41,8 @@ export default class CoachmarkApi {
 	 * Tracks how many times a coachmark has been viewed
 	 **/
 	incrementViewCount(cmId) {
-		let response = new Promise((resolve, reject) => {
-			let request = new Request(this.url + '/coachmark/' + cmId + '/increment', {
+		const response = new Promise((resolve, reject) => {
+			const request = new Request(this.url + '/coachmark/' + cmId + '/increment', {
 				method: 'PUT',
 				mode: 'cors',
 				headers: new Headers({

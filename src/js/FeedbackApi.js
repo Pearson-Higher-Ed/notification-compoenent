@@ -10,15 +10,15 @@ export default class FeedbackApi {
 	}
 
 	submitFeedback (masterpieceId, userId, targetUserRole, comment, likeDislike) {
-		let response = new Promise((resolve, reject) => {
-			let payload = {
+		const response = new Promise((resolve, reject) => {
+			const payload = {
 				masterpieceId: masterpieceId,
 				userId: userId,
 				groupAuthType: targetUserRole,
 				comment: comment,
 				like: (likeDislike === 'like' ? 'L' : 'D')
 			};
-			let request = new Request(this.url + '/feedback', {
+			const request = new Request(this.url + '/feedback', {
 				method: 'POST',
 				mode: 'cors',
 				body: JSON.stringify(payload),

@@ -144,7 +144,7 @@ export default class NotificationList extends React.Component {
 	 * Sets up the back/next listener
 	 **/
 	setupBackNextListener(masterpieceId) {
-		let cmIds = this.cmState[masterpieceId].cmIds;
+		const cmIds = this.cmState[masterpieceId].cmIds;
 		document.addEventListener('o-cm-backNext-clicked', function(event) {
 			let eventIndex = cmIds.indexOf(event.data.id);
 			if (eventIndex !== this.cmState[masterpieceId].index) {
@@ -166,7 +166,7 @@ export default class NotificationList extends React.Component {
 	 * Sets up the like button listener
 	 **/
 	setupLikeListener(masterpieceId) {
-		let cmIds = this.cmState[masterpieceId].cmIds;
+		const cmIds = this.cmState[masterpieceId].cmIds;
 		document.addEventListener('o-cm-like-clicked', function(event) {
 			if (cmIds.indexOf(event.data.id) !== this.cmState[masterpieceId].index) {
 				return; // event wasn't meant for this instance of this listener
@@ -179,7 +179,7 @@ export default class NotificationList extends React.Component {
 	 * Sets up the submit button listener
 	 **/
 	setupSubmitListener(masterpieceId) {
-		let cmIds = this.cmState[masterpieceId].cmIds;
+		const cmIds = this.cmState[masterpieceId].cmIds;
 		document.addEventListener('o-cm-submit-clicked', function(event) {
 			if (cmIds.indexOf(event.data.id) !== this.cmState[masterpieceId].index) {
 				return; // event wasn't meant for this instance of this listener
@@ -200,7 +200,7 @@ export default class NotificationList extends React.Component {
 	 * Sets up the cancel (return to like/dislike button) listener
 	 **/
 	setupCancelListener(masterpieceId) {
-		let cmIds = this.cmState[masterpieceId].cmIds;
+		const cmIds = this.cmState[masterpieceId].cmIds;
 		document.addEventListener('o-cm-cancel-clicked', function(event) {
 			if (cmIds.indexOf(event.data.id) !== this.cmState[masterpieceId].index) {
 				return; // event wasn't meant for this instance of this listener
@@ -228,14 +228,14 @@ export default class NotificationList extends React.Component {
 	 * Gets data from the API and displays a coachmark on the correct page
 	 **/
 	getDisplayCoachmark(masterpieceId) {
-		let cmId = parseInt(this.cmState[masterpieceId].cmIds[this.cmState[masterpieceId].index]);
+		const cmId = parseInt(this.cmState[masterpieceId].cmIds[this.cmState[masterpieceId].index]);
 
-		let coachmarkData = this.getCoachmarkApi().getCoachmark(cmId);
+		const coachmarkData = this.getCoachmarkApi().getCoachmark(cmId);
 		coachmarkData.then(function(result) {
 			if (this.redirectIfNewUri(result.uri, masterpieceId)) {
 				return;
 			}
-			let cm = new Coachmark(document.getElementById(result.element), result.options, function() {
+			const cm = new Coachmark(document.getElementById(result.element), result.options, function() {
 				this.getNotificationApi().markAsRead(this.cmState[masterpieceId].userNotificationId);
 				this.closeCoachmark(cm.element.nextSibling);
 			}.bind(this));
@@ -264,10 +264,10 @@ export default class NotificationList extends React.Component {
   			};
 		}
 		// if relative, change to absolute using current domain
-		let currentUri = window.location.href;
+		const currentUri = window.location.href;
 		if (!uri.toLowerCase().startsWith('http')) {
-			let arr = (currentUri).split('/');
-			let domain = arr[0] + '//' + arr[2];
+			const arr = (currentUri).split('/');
+			const domain = arr[0] + '//' + arr[2];
 			uri = domain + '/' + uri;
 		}
 		// Redirect only if the target url and current url don't match
@@ -299,10 +299,10 @@ export default class NotificationList extends React.Component {
 		this.launchCoachmarkIfFromNewUrl();
 
 		if (!this.state.isDetails) {
-			let notificationNodeList = this.props.list.map((notification) => {
+			const notificationNodeList = this.props.list.map((notification) => {
 				return (
 					<NotificationNode detailsClick={this.showDetails.bind(this, notification)} title={notification.title} icon={notification.icon} key={notification.id}
-					summary={notification.body.substring(0, 30) + "..."}/>
+					summary={notification.body.substring(0, 30) + '...'}/>
 				);
 			});
 			return (

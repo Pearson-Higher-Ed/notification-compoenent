@@ -48,16 +48,6 @@ class NotificationComponent {
 			}
 		});
 
-		// if (!elementId) {
-		// 	throw new TypeError('missing required argument: element');
-		// }
-		// if (typeof elementId === 'string') {
-		// 	elementId = document.querySelector(elementId);
-		// }
-		// if (!elementId) {
-		// 	throw new Error('Element could not be found');
-		// }
-
 		this.reactComponent = ReactDOM.render(<this.reactClass/>, document.getElementById(elementId));
 
 	}

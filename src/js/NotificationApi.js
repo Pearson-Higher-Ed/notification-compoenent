@@ -2,8 +2,8 @@ import 'whatwg-fetch';
 
 function parseResponse(response) {
 	'use strict';
-	let userNotifications = response._embedded.usernotifications;
-	let userNotificationsList = userNotifications.filter((notification) => {
+	const userNotifications = response._embedded.usernotifications;
+	const userNotificationsList = userNotifications.filter((notification) => {
 		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser');
 	}).map((notification) => {
 		let result = JSON.parse(notification.payload.message);
@@ -24,8 +24,8 @@ export default class NotificationApi {
 	}
 
 	getNotifications() {
-		let response = new Promise((resolve, reject) => {
-			let request = new Request(this.url + '/usernotifications/recipientid/' + this.recipientId, {
+		const response = new Promise((resolve, reject) => {
+			const request = new Request(this.url + '/usernotifications/recipientid/' + this.recipientId, {
 				method: 'GET',
 				mode: 'cors',
 				headers: {
@@ -46,8 +46,8 @@ export default class NotificationApi {
 	}
 
 	markAsRead(userNotificationId) {
-		let response = new Promise((resolve, reject) => {
-			let request = new Request(this.url + '/readusernotifications/' + userNotificationId + '/true', {
+		const response = new Promise((resolve, reject) => {
+			const request = new Request(this.url + '/readusernotifications/' + userNotificationId + '/true', {
 				method: 'PUT',
 				mode: 'cors',
 				headers: {
