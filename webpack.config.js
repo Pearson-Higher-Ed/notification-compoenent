@@ -6,7 +6,7 @@ module.exports = {
   },
   output: {
     path: './',
-    filename: 'build/[name].notificationcomponent.js',
+    filename: 'build/[name].notification.js',
     libraryTarget: "umd"
   },
   externals: [
