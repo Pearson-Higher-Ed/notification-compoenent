@@ -6,11 +6,11 @@ import NotificationDetails from './NotificationDetails';
 import CoachmarkApi from './CoachmarkApi';
 import FeedbackApi from './FeedbackApi';
 import NotificationApi from './NotificationApi';
+import DateParser from './DateParser';
 
 function Coachmark() {
 
 }
-
 
 export default class NotificationList extends React.Component {
 
@@ -300,9 +300,10 @@ export default class NotificationList extends React.Component {
 
 		if (!this.state.isDetails) {
 			const notificationNodeList = this.props.list.map((notification) => {
+				let time = DateParser.getFormatDateString(new Date(notification.updatedAt))
 				return (
 					<NotificationNode detailsClick={this.showDetails.bind(this, notification)} title={notification.title} icon={notification.icon} key={notification.id}
-					summary={notification.body.substring(0, 30) + '...'}/>
+					summary={notification.body.substring(0, 30) + '...'} time={time}/>
 				);
 			});
 			return (

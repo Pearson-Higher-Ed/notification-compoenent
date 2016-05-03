@@ -26,7 +26,7 @@ export default class NotificationDropdown extends React.Component {
 	render() {
 		return (
 			<div>
-				<i className="fa fa-lg fa-bell pointer" onClick={this.toggle.bind(this)}></i>
+				<i className="pe-icon--envelope pointer" onClick={this.toggle.bind(this)}></i>
 				<div className={this.state.showDropdown ? '' : 'hide'}>
 					<div className="notification-dropdown">
 						<div className="dropdown-title">

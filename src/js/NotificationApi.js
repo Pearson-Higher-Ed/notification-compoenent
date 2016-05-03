@@ -7,6 +7,8 @@ function parseResponse(response) {
 		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser');
 	}).map((notification) => {
 		let result = JSON.parse(notification.payload.message);
+		result.updatedAt = notification.updatedAt;
+		result.createdAt = notification.createdAt;
 		result.userNotificationId = notification.id;
 		result.userId = notification.recipientId;
 		return result;

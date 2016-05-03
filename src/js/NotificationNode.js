@@ -17,6 +17,9 @@ export default class NotificationNode extends React.Component {
 				<div className="notification-node__dismiss">
 					<i className="fa fa-trash"></i>
 				</div>
+				<div className="notification-node__time">
+					{this.props.time}
+				</div>
 			</div>
 		);
 	}
