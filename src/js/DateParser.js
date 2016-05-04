@@ -8,11 +8,11 @@ module.exports = {
         
         let difference = (new Date() - updatedAt) / 1000 / 60;// in minutes
         
-        if (difference > 60) {
+        if (difference >= 60) {
 
             difference = difference / 60;
 
-            if (difference > 24) {
+            if (difference >= 24) {
                 return dayOfWeek[updatedAt.getDay()] + ' ' + month[updatedAt.getMonth()] + ' ' + updatedAt.getDate() + ' ' + updatedAt.getFullYear();
             }
 
