@@ -20,27 +20,9 @@ class NotificationComponent {
 		const notApi = new NotificationApi(config);
 		const userNotifications = notApi.getNotifications(config);
 
-		// it is possible for promise to come back before the consumer has placed the react component into a dom
-		this.notificationList = [];
-		userNotifications.then((result) => {
-			
-			if (this.reactComponent) {
-				this.reactComponent.setState({
-					notificationList: result
-				});
-				this.listComponent.setState({
-					notificationList: result
-				});
-			} else {
-				this.notificationList = result;
-			}
-
-		}, function(error) {
-				console.log(error);
-		});
-
-		this.createBellReactClass();
-		this.createListReactClass(config);
+		// create the react classes for reference later
+		this._createBellReactClass();
+		this._createListReactClass(config);
 
 		// Connect up the drawer component here.  
 		const dom = document.createElement('div');
@@ -49,41 +31,38 @@ class NotificationComponent {
 		this.listDrawer = new Drawer(dom);
 		document.body.appendChild(dom);
 		
-		// Keep reference to the components to set state later
-		this.listComponent = ReactDOM.render(<this.listClass/>, dom);
-		this.reactComponent = ReactDOM.render(<this.bellClass/>, document.getElementById(elementId));
+		this.notificationList = [];
+		userNotifications.then((result) => {
+			this.notificationList = result;
+			// Keep reference to the components to set state later and render the react components now that we have the data
+			this.listComponent = ReactDOM.render(<this.listClass/>, dom);
+			this.reactComponent = ReactDOM.render(<this.bellClass/>, document.getElementById(elementId));
+
+		}, function(error) {
+				console.log(error);
+		});
 
 	}
 
-	createBellReactClass() {
+	_createBellReactClass() {
 		//  Keep track of the parent react class
 		const _this = this;//i'm not happy i need to do this....but it would be really complicated since i don't want to actually pass context down to the child except for the notificationList property.
 		
 		this.bellClass = React.createClass({
-			getInitialState: function() {
-				return {
-					notificationList: _this.notificationList
-				}
-			},
 			render: function() {
 				return (
 					<div>
-						<NotificationDropdown toggleList={_this.toggleList.bind(_this)}/>
+						<NotificationDropdown list={_this.notificationList} toggleList={_this.toggleList.bind(_this)}/>
 					</div>
 				);
 			}
 		});
 	}
 
-	createListReactClass(config) {
+	_createListReactClass(config) {
 
 		const _this = this;
 		this.listClass = React.createClass({
-			getInitialState: function() {
-				return {
-					notificationList: _this.notificationList
-				}
-			},
 			render: function() {
 				return (
 					<div>
@@ -91,7 +70,7 @@ class NotificationComponent {
 							Notifications
 							<i className="pe-icon--times close-dropdown pointer" onClick={_this.closeDrawer.bind(_this)}></i>
 						</div>
-						<NotificationList list={this.state.notificationList} notificationCloseDropdown={_this.closeDrawer.bind(_this)} apiConfig={config}/>
+						<NotificationList list={_this.notificationList} notificationCloseDropdown={_this.closeDrawer.bind(_this)} apiConfig={config}/>
 					</div>
 				);
 			}
