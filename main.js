@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NotificationDropdown from './src/js/NotificationDropdown';
+import NotificationDropdown from './src/js/NotificationBell';
 import NotificationApi from './src/js/NotificationApi';
 import './main.scss';
+import NotificationList from './src/js/NotificationList';
+import Drawer from '@pearson-components/drawer/main';
 
 
 /**
@@ -18,22 +20,46 @@ class NotificationComponent {
 		const notApi = new NotificationApi(config);
 		const userNotifications = notApi.getNotifications(config);
 
-		//this is only here because it is possible for promise to come back before the consumer has placed the react component into a dom
+		// it is possible for promise to come back before the consumer has placed the react component into a dom
 		this.notificationList = [];
 		userNotifications.then((result) => {
-					if (this.reactComponent) {
-							this.reactComponent.setState({
-									notificationList: result
-							});
-					} else {
-							this.notificationList = result;
-					}
-			}, function(error) {
-					console.log(error);
-			});
-			//  Keep track of the parent react class
+			
+			if (this.reactComponent) {
+				this.reactComponent.setState({
+					notificationList: result
+				});
+				this.listComponent.setState({
+					notificationList: result
+				});
+			} else {
+				this.notificationList = result;
+			}
+
+		}, function(error) {
+				console.log(error);
+		});
+
+		this.createBellReactClass();
+		this.createListReactClass(config);
+
+		// Connect up the drawer component here.  
+		const dom = document.createElement('div');
+		dom.setAttribute('data-o-component', 'o-drawer');
+		dom.classList.add('o-drawer-right', 'o-drawer-animated');
+		this.listDrawer = new Drawer(dom);
+		document.body.appendChild(dom);
+		
+		// Keep reference to the components to set state later
+		this.listComponent = ReactDOM.render(<this.listClass/>, dom);
+		this.reactComponent = ReactDOM.render(<this.bellClass/>, document.getElementById(elementId));
+
+	}
+
+	createBellReactClass() {
+		//  Keep track of the parent react class
 		const _this = this;//i'm not happy i need to do this....but it would be really complicated since i don't want to actually pass context down to the child except for the notificationList property.
-		this.reactClass = React.createClass({
+		
+		this.bellClass = React.createClass({
 			getInitialState: function() {
 				return {
 					notificationList: _this.notificationList
@@ -42,14 +68,42 @@ class NotificationComponent {
 			render: function() {
 				return (
 					<div>
-						<NotificationDropdown notificationList={this.state.notificationList}/>
+						<NotificationDropdown toggleList={_this.toggleList.bind(_this)}/>
 					</div>
 				);
 			}
 		});
+	}
 
-		this.reactComponent = ReactDOM.render(<this.reactClass/>, document.getElementById(elementId));
+	createListReactClass(config) {
 
+		const _this = this;
+		this.listClass = React.createClass({
+			getInitialState: function() {
+				return {
+					notificationList: _this.notificationList
+				}
+			},
+			render: function() {
+				return (
+					<div>
+						<div className="dropdown-title">
+							Notifications
+							<i className="pe-icon--times close-dropdown pointer" onClick={_this.closeDrawer.bind(_this)}></i>
+						</div>
+						<NotificationList list={this.state.notificationList} notificationCloseDropdown={_this.closeDrawer.bind(_this)} apiConfig={config}/>
+					</div>
+				);
+			}
+		});
+	}
+
+	toggleList() {
+		this.listDrawer.toggle();
+	}
+
+	closeDrawer() {
+		this.listDrawer.close();
 	}
 }
 
