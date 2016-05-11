@@ -66,7 +66,7 @@ class NotificationComponent {
 			render: function() {
 				return (
 					<div>
-						<NotificationContainer list={_this.notificationList} notificationCloseDropdown={_this.closeDrawer.bind(_this)} config={config}/>
+						<NotificationContainer list={_this.notificationList} closeDrawer={_this.closeDrawer.bind(_this)} config={config}/>
 					</div>
 				);
 			}

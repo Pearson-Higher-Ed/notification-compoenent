@@ -7,11 +7,7 @@ export default class NotificationContainer extends React.Component {
 		super(props);
 		this.state = {
 			isArchive: false
-		};
-	}
-
-	changeHeading() {
-
+		}
 	}
 
 	render() {
