@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import NotificationDropdown from './src/js/NotificationBell';
 import NotificationApi from './src/js/NotificationApi';
 import './main.scss';
-import NotificationList from './src/js/NotificationList';
+import NotificationContainer from './src/js/NotificationContainer';
 import Drawer from '@pearson-components/drawer/main';
 
 
@@ -35,7 +35,7 @@ class NotificationComponent {
 		userNotifications.then((result) => {
 			this.notificationList = result;
 			// Keep reference to the components to set state later and render the react components now that we have the data
-			this.listComponent = ReactDOM.render(<this.listClass/>, dom);
+			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
 			this.reactComponent = ReactDOM.render(<this.bellClass/>, document.getElementById(elementId));
 
 		}, function(error) {
@@ -62,17 +62,11 @@ class NotificationComponent {
 	_createListReactClass(config) {
 
 		const _this = this;
-		this.listClass = React.createClass({
+		this.containerClass = React.createClass({
 			render: function() {
 				return (
 					<div>
-						<div className="notification-title">
-							<h1 className="notification-title--heading">
-								Notifications
-							</h1>
-							<i className="pe-icon--times close-dropdown pointer" onClick={_this.closeDrawer.bind(_this)}></i>
-						</div>
-						<NotificationList list={_this.notificationList} notificationCloseDropdown={_this.closeDrawer.bind(_this)} apiConfig={config}/>
+						<NotificationContainer list={_this.notificationList} notificationCloseDropdown={_this.closeDrawer.bind(_this)} config={config}/>
 					</div>
 				);
 			}
