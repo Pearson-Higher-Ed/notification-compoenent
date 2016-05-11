@@ -2,7 +2,7 @@
 
 import NotificationComponent from '../main'; // for direct API usage
 
-const pt = '1.0|idm|idm|piid=ffffffff53da3cb3e4b0eaaddd576877&sessid=93376b4abed34d778deb37ae54c8455b|2016-05-11T02:03:00+00:00|2016-05-11T05:03:00+00:00|fb0a009077eabec2c93fc5d2e1ff9099';
+const pt = '1.0|idm|idm|piid=ffffffff53da3cb3e4b0eaaddd576877&sessid=beeaa30c981b41fbbb52dc3937006aa2|2016-05-11T19:09:18+00:00|2016-05-11T22:09:18+00:00|823b1d93bedb555b4a89f9807fe01b51';
 
 const AppHeaderConfig = {
 	// NotificationAPI
