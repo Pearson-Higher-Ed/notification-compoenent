@@ -302,18 +302,18 @@ export default class NotificationList extends React.Component {
 			const notificationNodeList = this.props.list.map((notification) => {
 				const time = DateParser.getFormatDateString(new Date(notification.updatedAt))
 				return (
-					<NotificationNode detailsClick={this.showDetails.bind(this, notification)} title={notification.title} icon={notification.icon} key={notification.id}
+					<NotificationNode detailsClick={this.showDetails.bind(this, notification)} title={notification.title} key={notification.id}
 					summary={notification.body.substring(0, 30) + '...'} time={time}/>
 				);
 			});
 			return (
-				<div className="notification-container">
+				<div className="notification-list">
 					{notificationNodeList}
 				</div>
 			);
 		} else {
 			return (
-				<div className="notification-container">
+				<div className="notification-list">
 					<button onClick={this.launchCoachmark.bind(this, this.state.notificationDetails)}>Launch Coachmark</button>
 					<NotificationDetails title={this.state.notificationDetails.title} body={this.state.notificationDetails.body} previousClick={this.showList}/>
 				</div>

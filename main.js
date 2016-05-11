@@ -39,7 +39,7 @@ class NotificationComponent {
 			this.reactComponent = ReactDOM.render(<this.bellClass/>, document.getElementById(elementId));
 
 		}, function(error) {
-				console.log(error);
+			console.log(error);
 		});
 
 	}
@@ -66,8 +66,10 @@ class NotificationComponent {
 			render: function() {
 				return (
 					<div>
-						<div className="dropdown-title">
-							Notifications
+						<div className="notification-title">
+							<h1 className="notification-title--heading">
+								Notifications
+							</h1>
 							<i className="pe-icon--times close-dropdown pointer" onClick={_this.closeDrawer.bind(_this)}></i>
 						</div>
 						<NotificationList list={_this.notificationList} notificationCloseDropdown={_this.closeDrawer.bind(_this)} apiConfig={config}/>
