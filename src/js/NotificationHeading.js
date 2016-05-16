@@ -24,7 +24,7 @@ export default class NotificationHeading extends React.Component {
             return (
                 <div>
                     <h1 className="notification-title--heading notification-title--back" onClick={this.props.back}>
-                        %3C Back to Notifications
+                        &#60; Back to Notifications
                     </h1>
                 </div>
             );
