@@ -19,6 +19,6 @@ describe('DateParser', () => {
     it('should display 1 day before', () => {
         let now = new Date();
         now.setDate(now.getDate()-1);
-        expect(DateParser.getFormatDateString(now)).toMatch(/[a-zA-Z]{3}\s[a-zA-z]{3}\s\d\s\d{4}/);
+        expect(DateParser.getFormatDateString(now)).toMatch(/[a-zA-Z]{3}\s[a-zA-z]{3}\s\d{2}\s\d{4}/);
     });
 });
