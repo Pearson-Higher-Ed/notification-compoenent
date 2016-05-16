@@ -31,12 +31,6 @@ function init() {
 			}
 	 }));
 
-	// Demo direct API
-	// new NotificationComponent(
-	// 		AppHeaderConfig,
-	// 		'demo-target2'
-	//  );
-
 }
 
 window.onload = init;
