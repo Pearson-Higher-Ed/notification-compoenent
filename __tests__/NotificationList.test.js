@@ -8,7 +8,7 @@ import './localStoragePolyfill';
 
 
 
-describe('Notificationcomponent', () => {
+describe('NotificationList', () => {
 	let list = [{
 		id: '1',
 		title: 'Introducing Profile Options',
@@ -17,15 +17,11 @@ describe('Notificationcomponent', () => {
 		linkText:'Go to Profile Screen',
 		icon: 'fa fa-cogs fa-2x'
 	}];
+	
 	let container = null;
+	
 	beforeEach(() => {
 		container = ReactTestUtils.renderIntoDocument(<NotificationList list={list}/>);
-	})
-
-	it('should change state when a notification node is clicked', () => {
-		let node = ReactTestUtils.scryRenderedDOMComponentsWithClass(container, 'notification-node--details-click');
-		ReactTestUtils.Simulate.click(node[0]);
-		expect(container.state.isDetails).toBe(true);
 	});
 
 	

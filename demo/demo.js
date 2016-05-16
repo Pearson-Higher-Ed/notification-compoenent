@@ -2,7 +2,7 @@
 
 import NotificationComponent from '../main'; // for direct API usage
 
-const pt = '1.0|idm|idm|piid=ffffffff53da3cb3e4b0eaaddd576877&sessid=15a330c3edc1421f80676f8e38792ede|2016-05-04T19:25:47+00:00|2016-05-04T22:25:48+00:00|b39ad11472fd606d2485a9d6a6ecd46a';
+const pt = '1.0|idm|idm|piid=ffffffff53da3cb3e4b0eaaddd576877&sessid=beeaa30c981b41fbbb52dc3937006aa2|2016-05-11T19:09:18+00:00|2016-05-11T22:09:18+00:00|823b1d93bedb555b4a89f9807fe01b51';
 
 const AppHeaderConfig = {
 	// NotificationAPI
@@ -30,12 +30,6 @@ function init() {
 				elementId: 'demo-target1'
 			}
 	 }));
-
-	// Demo direct API
-	new NotificationComponent(
-			AppHeaderConfig,
-			'demo-target2'
-	 );
 
 }
 

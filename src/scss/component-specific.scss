@@ -19,12 +19,23 @@
     background-color: white;
 }
 
-.dropdown-title {
-	text-align: center;
-	padding-bottom: 10px;
+.notification-title {
+    border-bottom: 1px solid #B3B3B3;
+    overflow: auto;
+    .notification-title--heading {
+        float:left;
+        border-bottom: none;
+        font-size: 16px;
+        margin: 20px 0px 20px 20px;
+    }
 	.close-dropdown {
 		float:right;
+        margin: 25px 13px 20px 20px;
 	}
+}
+
+.notification-list {
+    
 }
 
 .pointer:hover{
@@ -32,41 +43,50 @@
 }
 
 .notification-node {
-    height: 52px;
-	border: solid 1px #ddd;
-	margin-bottom: 10px;
+    height: 134px;
+    border-bottom: solid 1px #B3B3B3;
 
-    .notification-node--details-click {
+    .notification-node--details {
     	cursor: pointer;
-    	height:100%;
-    	float: left;
+        float: left;
+        width: 277px;
+        height: 96px;
+
+        .notification-node__summary {
+            float:left;
+
+            h1 {
+                font-size: 16px;
+                margin-left: 20px;
+                margin-top: 20px;
+                border-bottom: none;
+                color: #0D65A6;
+                line-height: normal;
+                font-weight: bold;
+            }
+            .notification-node__summary-description {
+                margin-left: 20px;
+            }
+        }
     }
 
-	.notification-node__icon {
-	    float: left;
-	    border-right: 1px solid #ddd;
-	    padding: 10px;
-	}
+    .notification-node__dismiss {
+        float: right;
+        margin: 10px;
+        cursor: pointer;
+    }
 
-	.notification-node__summary {
-		float:left;
-		height: 100%;
+    .notification-node__meta {
+        font-size: 14px;
 
-		h1 {
-		    font-size: 16px;
-		    padding-left: 10px;
-		    margin-bottom: 0;
-		    margin-top: 10px;
-		    font-weight: bold;
-		}
-		.notification-node__summary-description {
-			padding-left: 10px;
-		}
-	}
+        .notification-node__meta-course {
+            margin-left: 20px;
+            float:left;
+        }
 
-	.notification-node__dismiss {
-		float: right;
-    	margin: 10px;
-    	cursor: pointer;
-	}
+        .notification-node__meta-time {
+            float:right;
+            margin-right: 20px;
+        }
+    }
 }
