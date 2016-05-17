@@ -36,6 +36,7 @@
     "url": "https://github.com/Pearson-Higher-Ed/"
   },
   "dependencies": {
+    "@pearson-components/drawer": "^0.1.4",
     "react-intl": "~2.0.1"
   },
   "devDependencies": {
