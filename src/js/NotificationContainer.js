@@ -8,11 +8,12 @@ export default class NotificationContainer extends React.Component {
 	constructor(props) {
 		super(props);
 		console.log('contaier const'+props)
+
 		this.state = {
 			isArchive: false,
 			displayDetails: false,
-			archivedList:props.archivedList||[],
 			notificationDetails: {message:{}},
+			archivedList: props.archivedList || [],
 			list:props.list
 		};
 	}
@@ -31,9 +32,17 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	appendArchiveList(archivedNotif) {
-       const newArchivedList = this.state.archivedList.slice();    
-        newArchivedList.push(archivedNotif);  
-        this.setState({ archivedList: newArchivedList });
+		const newList = this.state.list.filter(function(notification) {
+			if (notification.id !== archivedNotif.id) {
+				return notification;
+			}
+		});
+		const newArchiveList = this.state.archivedList;
+		newArchiveList.push(archivedNotif);
+		this.setState({
+			list: newList,
+			archivedList: newArchiveList
+		});
     }
 
 	toggleArchive() { 

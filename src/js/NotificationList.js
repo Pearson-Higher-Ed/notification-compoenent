@@ -23,7 +23,7 @@ export default class NotificationList extends React.Component {
 	 * Render
 	 **/
 	render() {
-		console.log('notification list'+this.props.list);
+		console.log('notification list '+ this.props.list);
 		const notificationNodeList = this.props.list.map((notification) => {
 			const time = DateParser.getFormatDateString(new Date(notification.updatedAt))
 			return (
