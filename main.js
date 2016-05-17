@@ -34,6 +34,7 @@ class NotificationComponent {
 			this._createBellReactClass(result.newNotifications, result.unreadCount);
 			this._createListReactClass(config);
 			this.notificationList = result.list;
+			this.newNotifications = result.newNotifications;
 			// Keep reference to the components to set state later and render the react components now that we have the data
 			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
 			this.reactComponent = ReactDOM.render(<this.bellClass/>, document.getElementById(elementId));
@@ -75,6 +76,10 @@ class NotificationComponent {
 
 	toggleList() {
 		this.listDrawer.toggle();
+
+		if(this.newNotifications) {
+			// need to call the route that will change the status of all the notifications.  
+		}
 	}
 
 	closeDrawer() {

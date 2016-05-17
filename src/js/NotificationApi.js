@@ -79,4 +79,29 @@ export default class NotificationApi {
 		return response;
 	}
 
+	markAsViewed(userNotificationId) {
+		const response = new Promise((resolve, reject) => {
+			const payload = {
+				status: 'VIEWED'
+			};
+
+			const request = new Request(this.url + '/usernotifications/' + userNotificationId, {
+				method: 'PUT',
+				mode: 'cors',
+				headers: {
+					'X-Authorization': this.xAuth,
+					'Content-Type': this.contentType
+				},
+				body: JSON.stringify(payload)
+			});
+			fetch(request).then(function(response) {
+				resolve(response);
+			}).catch(function(error) {
+				console.log('onError: ', error);
+				reject(error);
+			});
+		});
+		return response;
+	}
+
 };
