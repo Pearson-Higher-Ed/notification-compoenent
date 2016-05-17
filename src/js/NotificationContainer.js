@@ -1,6 +1,7 @@
 import React from 'react';
 import NotificationList from './NotificationList';
 import NotificationDetails from './NotificationDetails';
+import NotificationHeading from './NotificationHeading';
 
 export default class NotificationContainer extends React.Component {
 
@@ -30,9 +31,8 @@ export default class NotificationContainer extends React.Component {
 		return (
 			<div>
 				<div className="notification-title">
-					<h1 className="notification-title--heading">
-						Notifications
-					</h1>
+					<NotificationHeading back={this.showList.bind(this)} isList={!this.state.isArchive && !this.state.displayDetails} 
+					isDetails={this.state.displayDetails} />
 					<i className="pe-icon--times close-dropdown pointer" onClick={this.props.closeDrawer}></i>
 				</div>
 				<div className={this.state.displayDetails ? 'hide' : ''}>
@@ -40,7 +40,7 @@ export default class NotificationContainer extends React.Component {
 				</div>
 				<div className={this.state.displayDetails ? '' : 'hide'}>
 					<div className="notification-list">
-						<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} previousClick={this.showList.bind(this)} apiConfig={this.props.config}/>
+						<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config}/>
 					</div>
 				</div>
 			</div>

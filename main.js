@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NotificationDropdown from './src/js/NotificationBell';
+import NotificationBell from './src/js/NotificationBell';
 import NotificationApi from './src/js/NotificationApi';
 import './main.scss';
 import NotificationContainer from './src/js/NotificationContainer';
@@ -52,7 +52,7 @@ class NotificationComponent {
 			render: function() {
 				return (
 					<div>
-						<NotificationDropdown list={_this.notificationList} toggleList={_this.toggleList.bind(_this)}/>
+						<NotificationBell list={_this.notificationList} toggleList={_this.toggleList.bind(_this)}/>
 					</div>
 				);
 			}
