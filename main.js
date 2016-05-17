@@ -28,12 +28,14 @@ class NotificationComponent {
 		document.body.appendChild(dom);
 		
 		this.notificationList = [];
+		this.archivedNotificationList = [];
 		userNotifications.then((result) => {
 
 			// create the react classes for reference later
 			this._createBellReactClass(result.newNotifications, result.unreadCount);
 			this._createListReactClass(config);
 			this.notificationList = result.list;
+			this.archivedNotificationList = result.archivedNotificationsList;
 			// Keep reference to the components to set state later and render the react components now that we have the data
 			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
 			this.reactComponent = ReactDOM.render(<this.bellClass/>, document.getElementById(elementId));
@@ -66,7 +68,7 @@ class NotificationComponent {
 			render: function() {
 				return (
 					<div>
-						<NotificationContainer list={_this.notificationList} closeDrawer={_this.closeDrawer.bind(_this)} config={config}/>
+						<NotificationContainer list={_this.notificationList}  archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} config={config}/>
 					</div>
 				);
 			}

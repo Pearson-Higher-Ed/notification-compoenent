@@ -4,20 +4,30 @@ export default class NotificationNode extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {
+			showNotification: true
+		};
+	}
+
+	setArchivedNotif() {
+		this.setState({
+			showNotification: false
+		});
+		this.props.archivedNotif();
 	}
 
 	render() {
 		return (
+		<div className={this.state.showNotification ? '' : 'hide'}>
 			<div className="notification-node">
 				<div className="notification-node--details" onClick={this.props.detailsClick}>
 					<div className="notification-node--summary">
 						<h1> {this.props.title}</h1>
 						<div className="notification-node--summary-description">{this.props.summary}</div>
-						
 					</div>
 				</div>
 				<div className="notification-node--dismiss">
-					<i className="pe-icon--trash-o"></i>
+					<i className="pe-icon--trash-o" onClick={this.setArchivedNotif.bind(this)}></i>
 				</div>
 				<div className="notification-node--meta">
 					<div className="notification-node--meta-course">
@@ -28,6 +38,7 @@ export default class NotificationNode extends React.Component {
 					</div>
 				</div>
 			</div>
+		</div>
 		);
 	}
 };

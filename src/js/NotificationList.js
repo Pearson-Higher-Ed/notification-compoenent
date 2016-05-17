@@ -12,20 +12,23 @@ export default class NotificationList extends React.Component {
 	}
 
 	showDetails(notification) {
-		console.log(notification);
 		this.props.showDetails(notification);
+	}
+
+	onArchived(notification) {
+		this.props.appendArchiveList(notification);
 	}
 
 	/**
 	 * Render
 	 **/
 	render() {
-
+		console.log('notification list'+this.props.list);
 		const notificationNodeList = this.props.list.map((notification) => {
 			const time = DateParser.getFormatDateString(new Date(notification.updatedAt))
 			return (
 				<NotificationNode key={notification.id} detailsClick={this.showDetails.bind(this, notification)} title={notification.message.title}
-				summary={notification.message.body.substring(0, 30) + '...'} time={time}/>
+				archivedNotif={this.onArchived.bind(this, notification)} summary={notification.message.body.substring(0, 30) + '...'} time={time}/>
 			);
 		});
 		return (

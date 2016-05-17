@@ -18,6 +18,14 @@ export default class NotificationHeading extends React.Component {
                     </h1>
                 </div>
             );
+        } else {
+            return (
+                <div>
+                    <h1 className="notification-title--heading">
+                        Notifications Archive
+                    </h1>
+                </div>
+            );
         }
 
         if (this.props.isDetails) {
