@@ -3,15 +3,15 @@ import 'whatwg-fetch';
 function parseResponse(response) {
 	'use strict';
 	const userNotifications = response._embedded.usernotifications;
+
+	// we are doing this simply to make it so that we flatten the object.  This is because the way notification works is
+	// it sends a payload message body which is a template which we made it a template of a json object.  
 	const userNotificationsList = userNotifications.filter((notification) => {
 		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser');
 	}).map((notification) => {
 		let result = JSON.parse(notification.payload.message);
-		result.updatedAt = notification.updatedAt;
-		result.createdAt = notification.createdAt;
-		result.userNotificationId = notification.id;
-		result.userId = notification.recipientId;
-		return result;
+		notification.message = result;
+		return notification;
 	});
 	return userNotificationsList;
 }

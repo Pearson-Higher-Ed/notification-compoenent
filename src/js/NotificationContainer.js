@@ -10,7 +10,7 @@ export default class NotificationContainer extends React.Component {
 		this.state = {
 			isArchive: false,
 			displayDetails: false,
-			notificationDetails: {}
+			notificationDetails: {message:{}}
 		};
 	}
 
@@ -28,6 +28,7 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	render() {
+		console.log(this.props.list);
 		return (
 			<div>
 				<div className="notification-title">

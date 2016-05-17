@@ -8,7 +8,7 @@ export default class NotificationBell extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div className="notification-bell">
 				<i className="pe-icon--bell-o pointer" onClick={this.props.toggleList}></i>
 			</div>
 		);

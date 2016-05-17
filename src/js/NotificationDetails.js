@@ -22,10 +22,10 @@ export default class NotificationDetails extends React.Component {
 		return (
 			<div className="notification-details">
 				<div className="notification-details__title">
-					<h1>{this.props.notification.title}</h1>
+					<h1>{this.props.notification.message.title}</h1>
 				</div>
 				<div className="notification-details__body">
-					{this.props.notification.body}
+					{this.props.notification.message.body}
 				</div>
 				<div className="notification-details__buttons">
 					<button onClick={this.launchCoachmark.bind(this)}>Launch Coachmark</button>
