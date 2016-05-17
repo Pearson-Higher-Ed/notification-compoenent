@@ -6,8 +6,30 @@
 }
 
 .notification-bell {
-    color: #CCCCCC;
     font-size: 16px;
+    .notification-bell--activate {
+        text-decoration: none;
+        color: #CCCCCC;
+
+        .notification-bell--count {
+            background-color: #FFFFFF;
+            color: #231F20;
+            font-size: 11px;
+            font-family: HelveticaNeue;
+            font-weight: bold;
+            min-width: 13px;
+            height: 14px;
+            padding-left: 5px;
+            position: relative;
+            bottom: 24px;
+            left: 8px;
+        }
+
+        .notification-bell--new {
+            background-color: #D2021B;
+            color: #FFFFFF;
+        }
+    }
 }
 
 .notification-title {
@@ -53,7 +75,7 @@
         width: 277px;
         height: 96px;
 
-        .notification-node__summary {
+        .notification-node--summary {
             float:left;
 
             h1 {
@@ -65,27 +87,27 @@
                 line-height: normal;
                 font-weight: bold;
             }
-            .notification-node__summary-description {
+            .notification-node--summary-description {
                 margin-left: 20px;
             }
         }
     }
 
-    .notification-node__dismiss {
+    .notification-node--dismiss {
         float: right;
         margin: 10px;
         cursor: pointer;
     }
 
-    .notification-node__meta {
+    .notification-node--meta {
         font-size: 14px;
 
-        .notification-node__meta-course {
+        .notification-node--meta-course {
             margin-left: 20px;
             float:left;
         }
 
-        .notification-node__meta-time {
+        .notification-node--meta-time {
             float:right;
             margin-right: 20px;
         }

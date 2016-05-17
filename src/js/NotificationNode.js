@@ -10,20 +10,20 @@ export default class NotificationNode extends React.Component {
 		return (
 			<div className="notification-node">
 				<div className="notification-node--details" onClick={this.props.detailsClick}>
-					<div className="notification-node__summary">
+					<div className="notification-node--summary">
 						<h1> {this.props.title}</h1>
-						<div className="notification-node__summary-description">{this.props.summary}</div>
+						<div className="notification-node--summary-description">{this.props.summary}</div>
 						
 					</div>
 				</div>
-				<div className="notification-node__dismiss">
+				<div className="notification-node--dismiss">
 					<i className="pe-icon--trash-o"></i>
 				</div>
-				<div className="notification-node__meta">
-					<div className="notification-node__meta-course">
+				<div className="notification-node--meta">
+					<div className="notification-node--meta-course">
 						US History
 					</div>
-					<div className="notification-node__meta-time">
+					<div className="notification-node--meta-time">
 						{this.props.time}
 					</div>
 				</div>

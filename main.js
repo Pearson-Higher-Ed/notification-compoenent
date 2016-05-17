@@ -20,10 +20,6 @@ class NotificationComponent {
 		const notApi = new NotificationApi(config);
 		const userNotifications = notApi.getNotifications(config);
 
-		// create the react classes for reference later
-		this._createBellReactClass();
-		this._createListReactClass(config);
-
 		// Connect up the drawer component here.  
 		const dom = document.createElement('div');
 		dom.setAttribute('data-o-component', 'o-drawer');
@@ -33,7 +29,11 @@ class NotificationComponent {
 		
 		this.notificationList = [];
 		userNotifications.then((result) => {
-			this.notificationList = result;
+
+			// create the react classes for reference later
+			this._createBellReactClass(result.newNotifications, result.unreadCount);
+			this._createListReactClass(config);
+			this.notificationList = result.list;
 			// Keep reference to the components to set state later and render the react components now that we have the data
 			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
 			this.reactComponent = ReactDOM.render(<this.bellClass/>, document.getElementById(elementId));
@@ -44,7 +44,7 @@ class NotificationComponent {
 
 	}
 
-	_createBellReactClass() {
+	_createBellReactClass(newNotifications, unreadCount) {
 		//  Keep track of the parent react class
 		const _this = this;//i'm not happy i need to do this....but it would be really complicated since i don't want to actually pass context down to the child except for the notificationList property.
 		
@@ -52,7 +52,7 @@ class NotificationComponent {
 			render: function() {
 				return (
 					<div>
-						<NotificationBell list={_this.notificationList} toggleList={_this.toggleList.bind(_this)}/>
+						<NotificationBell newNotifications={newNotifications} unreadCount={unreadCount} toggleList={_this.toggleList.bind(_this)}/>
 					</div>
 				);
 			}

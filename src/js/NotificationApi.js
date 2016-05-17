@@ -4,6 +4,8 @@ function parseResponse(response) {
 	'use strict';
 	const userNotifications = response._embedded.usernotifications;
 
+	let newNotifications = false;
+	let unreadCount = 0;
 	// we are doing this simply to make it so that we flatten the object.  This is because the way notification works is
 	// it sends a payload message body which is a template which we made it a template of a json object.  
 	const userNotificationsList = userNotifications.filter((notification) => {
@@ -11,9 +13,19 @@ function parseResponse(response) {
 	}).map((notification) => {
 		let result = JSON.parse(notification.payload.message);
 		notification.message = result;
+		if (notification.status === 'CREATED') {
+			newNotifications = true;
+		}
+		if (notification.isRead === false) {
+			unreadCount++;
+		}
 		return notification;
 	});
-	return userNotificationsList;
+	return {
+		list: userNotificationsList,
+		newNotifications: newNotifications,
+		unreadCount: unreadCount
+	};
 }
 
 export default class NotificationApi {
@@ -37,8 +49,8 @@ export default class NotificationApi {
 			});
 			fetch(request).then(function(response) {
 				return response.json();
-			}).then(function(j) {
-				resolve(parseResponse(j));
+			}).then(function(json) {
+				resolve(parseResponse(json));
 			}).catch(function(error) {
 				console.log('onError: ', error);
 				reject(error);
