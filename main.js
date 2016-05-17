@@ -38,9 +38,9 @@ class NotificationComponent {
 				item.createdAt = new Date(item.createdAt);
 				item.updatedAt = new Date(item.updatedAt);
 			});
-			// sort by updated field, newest first
+			// sort by created field, newest first
 			result.sort((x, y) => {
-				return y.updatedAt - x.updatedAt;
+				return y.createdAt - x.createdAt;
 			});
 			this.notificationList = result;
 			// Keep reference to the components to set state later and render the react components now that we have the data
