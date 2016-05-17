@@ -58,7 +58,7 @@
 }
 
 .notification-list {
-    
+    background-color: #f2f2f2;
 }
 
 .pointer:hover{
@@ -69,14 +69,16 @@
     height: 134px;
     border-bottom: solid 1px #b3b3b3;
     padding: 20px;
+    background-color: #ffffff;
+
     .notification-node--no-decoration {
         text-decoration: none;
     }
+
     .notification-node--details {
 	    cursor: pointer;
         float: left;
         width: 244px;
-        color: #231f20;
 
         .notification-node--summary {
             float: left;
@@ -91,6 +93,7 @@
                 font-weight: bold;
             }
             .notification-node--summary-description {
+                color: #565656;
             }
         }
     }
@@ -106,10 +109,38 @@
     .notification-node--meta {
         font-size: 12px;
         clear: left;
-
+        color: #565656;
         .notification-node--meta-course {
             float:left;
         }
 
+    }
+}
+
+.notification-node--unread {
+    background-color: #f2f2f2;
+}
+
+.notification-details {
+    background-color: #ffffff;
+    padding: 20px;
+
+    .notification-details--title {
+        margin-bottom: 40px;
+    }
+
+    .notification-details--body {
+        margin-bottom: 20px;
+    }
+
+    .notification-details--button {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .notification-details--archive {
+        text-decoration: none;
+    }
+    .notification-details--align {
+        text-align: center;
     }
 }

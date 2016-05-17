@@ -26,7 +26,7 @@ export default class NotificationList extends React.Component {
 			return (
 				<NotificationNode key={notification.id} detailsClick={this.showDetails.bind(this, notification)} 
 					title={notification.message.title.substring(0, 50) + '...'} summary={notification.message.body.substring(0, 30) + '...'}
-					time={time}/>
+					time={time} isRead={notification.isRead}/>
 			);
 		});
 		return (

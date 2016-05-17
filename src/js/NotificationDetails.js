@@ -21,14 +21,15 @@ export default class NotificationDetails extends React.Component {
 	render() {
 		return (
 			<div className="notification-details">
-				<div className="notification-details__title">
+				<div className="notification-details--title">
 					<h1>{this.props.notification.message.title}</h1>
 				</div>
-				<div className="notification-details__body">
+				<div className="notification-details--body">
 					{this.props.notification.message.body}
 				</div>
-				<div className="notification-details__buttons">
-					<button onClick={this.launchCoachmark.bind(this)}>Launch Coachmark</button>
+				<button onClick={this.launchCoachmark.bind(this)} className="notification-details--button">Take the tour</button>
+				<div className="notification-details--align">
+					<a href="javascript:void(0);" className="notification-details--archive"><i className="pe-icon--trash-o"></i> archive this notification </a>
 				</div>
 			</div>
 		);
