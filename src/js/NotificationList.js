@@ -20,11 +20,10 @@ export default class NotificationList extends React.Component {
 	 **/
 	render() {
 
-		const notificationNodeList = this.props.list.map((notification, idx) => {
-			const key = Math.random(idx);
+		const notificationNodeList = this.props.list.map((notification) => {
 			const time = DateParser.getFormatDateString(new Date(notification.updatedAt))
 			return (
-				<NotificationNode key={key} detailsClick={this.showDetails.bind(this, notification)} title={notification.title}
+				<NotificationNode key={notification.userNotificationId} detailsClick={this.showDetails.bind(this, notification)} title={notification.title}
 				summary={notification.body.substring(0, 30) + '...'} time={time}/>
 			);
 		});
