@@ -33,6 +33,9 @@ class NotificationComponent {
 		
 		this.notificationList = [];
 		userNotifications.then((result) => {
+			result.sort((x, y) => {
+				return x.createdAt - y.createdAt;
+			});
 			this.notificationList = result;
 			// Keep reference to the components to set state later and render the react components now that we have the data
 			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
