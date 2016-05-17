@@ -28,6 +28,16 @@
         font-size: 16px;
         margin: 20px 0px 20px 20px;
     }
+
+    .notification-title--back {
+        color: #0D65A6;
+        text-decoration: none;
+        .notification-title--back_align {
+            position: relative;
+            top: -2px;
+        }
+    }
+
 	.close-dropdown {
 		float:right;
         margin: 25px 13px 20px 20px;

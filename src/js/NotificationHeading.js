@@ -23,8 +23,10 @@ export default class NotificationHeading extends React.Component {
         if (this.props.isDetails) {
             return (
                 <div>
-                    <h1 className="notification-title--heading notification-title--back" onClick={this.props.back}>
-                        &#60; Back to Notifications
+                    <h1 className="notification-title--heading" onClick={this.props.back}>
+                        <a href="javascript:void(0);" className="notification-title--back">
+                            <i className="pe-icon--chevron-left"></i> <span className="notification-title--back_align">Back to Notifications</span>
+                        </a>
                     </h1>
                 </div>
             );

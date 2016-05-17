@@ -29,7 +29,6 @@ export default class NotificationDetails extends React.Component {
 				</div>
 				<div className="notification-details__buttons">
 					<button onClick={this.launchCoachmark.bind(this)}>Launch Coachmark</button>
-					<button onClick={this.props.previousClick}>go back</button>
 				</div>
 			</div>
 		);

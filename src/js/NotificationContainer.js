@@ -27,11 +27,6 @@ export default class NotificationContainer extends React.Component {
 		});
 	}
 
-	currentState() {
-
-	}
-
-
 	render() {
 		return (
 			<div>
@@ -45,7 +40,7 @@ export default class NotificationContainer extends React.Component {
 				</div>
 				<div className={this.state.displayDetails ? '' : 'hide'}>
 					<div className="notification-list">
-						<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} previousClick={this.showList.bind(this)} apiConfig={this.props.config}/>
+						<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config}/>
 					</div>
 				</div>
 			</div>
