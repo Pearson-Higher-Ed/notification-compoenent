@@ -18,7 +18,7 @@ export default class NotificationNode extends React.Component {
 			background += ' notification-node--unread';
 		}
 		return (
-		<div className={background}>
+			<div className={background}>
 				<a href="javascript:void(0)" className="notification-node--no-decoration" onClick={this.props.detailsClick}>
 					<div className="notification-node--details">
 						<div className="notification-node--summary">
