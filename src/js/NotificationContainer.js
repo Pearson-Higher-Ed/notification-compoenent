@@ -7,14 +7,15 @@ export default class NotificationContainer extends React.Component {
 
 	constructor(props) {
 		super(props);
-		console.log('contaier const'+props)
-
 		this.state = {
 			isArchive: false,
 			displayDetails: false,
-			notificationDetails: {message:{}},
+			notificationDetails: {
+				message: {}
+			},
 			archivedList: props.archivedList || [],
-			list:props.list
+			list: props.list,
+			notificationList: props.list
 		};
 	}
 
@@ -31,41 +32,46 @@ export default class NotificationContainer extends React.Component {
 		});
 	}
 
-	appendArchiveList(archivedNotif) {
+	appendArchiveList(archivedNotification) {
 		const newList = this.state.list.filter(function(notification) {
-			if (notification.id !== archivedNotif.id) {
+			if (notification.id !== archivedNotification.id) {
 				return notification;
 			}
 		});
 		const newArchiveList = this.state.archivedList;
-		newArchiveList.push(archivedNotif);
+		newArchiveList.push(archivedNotification);
 		this.setState({
+			archivedList: newArchiveList,
 			list: newList,
-			archivedList: newArchiveList
+			notificationList:newList
 		});
-    }
+	}
 
-	toggleArchive() { 
-        this.setState({ 
-        	list: this.state.archivedList,
-        	isArchive : true
-        });
-        console.log('list in toggle'+this.state.list)
+	toggleArchive() {
+		this.setState({
+			list: this.state.archivedList,
+			isArchive: true
+		});
+	}
+
+	updatedNotificationList() {
+		this.setState({
+			list: this.state.notificationList,
+			isArchive: false
+		});
 	}
 
 	render() {
-		console.log('in render'+this.state.list);
-		console.log('display details'+this.state.displayDetails)
 		return (
 			<div>
 				<div className="notification-title">
 					<NotificationHeading back={this.showList.bind(this)} isList={!this.state.isArchive && !this.state.displayDetails} 
 					isDetails={this.state.displayDetails} />
-					<i className="pe-icon--times close-dropdown pointer" onClick={this.props.closeDrawer}></i>
+					<i className={this.state.isArchive ? 'pe-icon--chevron-down pointer' : 'pe-icon--times close-dropdown pointer'} onClick={this.state.isArchive ? this.updatedNotificationList.bind(this) : this.props.closeDrawer}></i>
 				</div>
 				<div className={this.state.displayDetails ? 'hide' : ''}>
 					<NotificationList list={this.state.list}  closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} showDetails={this.showDetails.bind(this)}
-					 appendArchiveList={this.appendArchiveList.bind(this)}/>
+					 appendArchiveList={this.appendArchiveList.bind(this)} trashIconDisable={this.state.isArchive}/>
 				</div>
 				<div className={this.state.displayDetails ? '' : 'hide'}>
 					<div className="notification-list">
@@ -73,7 +79,7 @@ export default class NotificationContainer extends React.Component {
 					</div>
 				</div>
 				<div className="notification-title" onClick={this.toggleArchive.bind(this)}>
-					<h1 className="notification-title--heading">
+					<h1 className={this.state.isArchive ? 'hide' : 'notification-title--heading'}>
 						 Notification Archive
 					</h1>
 		

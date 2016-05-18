@@ -6,8 +6,8 @@ export default class NotificationNode extends React.Component {
 		super(props);
 	}
 
-	setArchivedNotif() {
-		this.props.archivedNotif();
+	setArchivedNotification() {
+		this.props.archivedNotification();
 	}
 
 	render() {
@@ -21,7 +21,7 @@ export default class NotificationNode extends React.Component {
 					</div>
 				</div>
 				<div className="notification-node--dismiss">
-					<i className="pe-icon--trash-o" onClick={this.setArchivedNotif.bind(this)}></i>
+					<i className={this.props.trashIconDisable ? '' : 'pe-icon--trash-o'} onClick={this.setArchivedNotification.bind(this)}></i>
 				</div>
 				<div className="notification-node--meta">
 					<div className="notification-node--meta-course">

@@ -5,7 +5,7 @@ function parseResponse(response) {
 	const userNotifications = response._embedded.usernotifications;
 
 	let newNotifications = false;
-	let archivedNotificationsList = [];
+	const archivedNotificationsList = [];
 	let unreadCount = 0;
 	// we are doing this simply to make it so that we flatten the object.  This is because the way notification works is
 	// it sends a payload message body which is a template which we made it a template of a json object.  
