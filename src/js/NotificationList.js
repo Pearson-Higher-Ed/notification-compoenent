@@ -21,7 +21,7 @@ export default class NotificationList extends React.Component {
 	render() {
 
 		const notificationNodeList = this.props.list.map((notification) => {
-			const time = DateParser.getFormatDateString(new Date(notification.updatedAt))
+			const time = DateParser.getFormatDateString(notification.updatedAt)
 			return (
 				<NotificationNode key={notification.userNotificationId} detailsClick={this.showDetails.bind(this, notification)} title={notification.title}
 				summary={notification.body.substring(0, 30) + '...'} time={time}/>
