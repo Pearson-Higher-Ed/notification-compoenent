@@ -18,7 +18,9 @@ export default class NotificationHeading extends React.Component {
                     </h1>
                 </div>
             );
-        } else {
+        } 
+
+        if (!this.props.isList) {
             return (
                 <div>
                     <h1 className="notification-title--heading">
