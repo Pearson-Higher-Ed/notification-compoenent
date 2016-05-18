@@ -12,7 +12,6 @@ export default class NotificationList extends React.Component {
 	}
 
 	showDetails(notification) {
-		console.log(notification);
 		this.props.showDetails(notification);
 	}
 
