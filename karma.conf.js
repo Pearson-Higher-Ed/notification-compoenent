@@ -51,7 +51,7 @@ module.exports = function(config) {
                     { 
                         test: /\.js?$/, 
                         exclude: /(node_modules)/,
-                        loader: 'babel-loader' 
+                        loader: 'babel-loader?plugins=rewire' 
                     },
                     {
                         // sass-loader for the origami pieces
