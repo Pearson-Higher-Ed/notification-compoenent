@@ -51,11 +51,13 @@
         }
     }
 
-    i {
-        float:right;
-        border-bottom: none;
-        font-size: 16px;
-        margin: 25px 10px 20px 20px;
+    .notification-archive--back {
+        i {
+            float:right;
+            border-bottom: none;
+            font-size: 16px;
+            margin: 25px 10px 20px 20px;
+        }
     }
 
 	.close-dropdown {
