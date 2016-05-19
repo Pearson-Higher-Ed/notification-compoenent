@@ -93,6 +93,7 @@ class NotificationComponent {
 					return notification;
 				}
 			});
+			
 			viewedList.forEach((notification) => {
 				this.notApi.markAsViewed(notification.id).then(function(result) {
 					// we don't care to do anything here...
