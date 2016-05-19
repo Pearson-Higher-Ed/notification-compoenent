@@ -1,4 +1,3 @@
-jest.unmock('../src/js/DateParser');
 
 import DateParser from '../src/js/DateParser';
 

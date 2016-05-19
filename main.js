@@ -18,7 +18,7 @@ class NotificationComponent {
 
 	constructor(config, elementId) {
 		this.notApi = new NotificationApi(config);
-		const userNotifications = this.notApi.getNotifications(config);
+		const userNotifications = this.notApi.getNotifications();
 
 		// Connect up the drawer component here.  
 		const dom = document.createElement('div');
@@ -30,7 +30,7 @@ class NotificationComponent {
 		this.notificationList = [];
 		this.archivedNotificationList = [];
 		userNotifications.then((result) => {
-
+			console.log(result);
 			// create the react classes for reference later
 			this._createBellReactClass();
 			this._createListReactClass(config);
@@ -51,7 +51,7 @@ class NotificationComponent {
 			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
 			this.bellComponent = ReactDOM.render(<this.bellClass/>, document.getElementById(elementId));
 
-		}, function(error) {
+		}).catch(function(error) {
 			console.log(error);
 		});
 
@@ -95,6 +95,7 @@ class NotificationComponent {
 					return notification;
 				}
 			});
+			
 			viewedList.forEach((notification) => {
 				this.notApi.markAsViewed(notification.id).then(function(result) {
 					// we don't care to do anything here...
