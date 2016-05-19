@@ -19,6 +19,13 @@ export default class NotificationDetails extends React.Component {
 	}
 
 	render() {
+		let tourButton = '';
+		if (this.props.notification.message.cmIds) {
+			let tourButtonText = this.props.notification.message.tourButtonText
+			tourButtonText = tourButtonText ? tourButtonText : 'Take the tour';
+			tourButton = <button onClick={this.launchCoachmark.bind(this)} className="notification-details--button">{tourButtonText}</button>;
+		}
+		
 		return (
 			<div className="notification-details">
 				<div className="notification-details--title">
@@ -27,7 +34,7 @@ export default class NotificationDetails extends React.Component {
 				<div className="notification-details--body">
 					{this.props.notification.message.body}
 				</div>
-				<button onClick={this.launchCoachmark.bind(this)} className="notification-details--button">Take the tour</button>
+				{tourButton}
 				<div className="notification-details--align">
 					<a href="javascript:void(0);" className="notification-details--archive"><i className="pe-icon--trash-o"></i> archive this notification </a>
 				</div>
