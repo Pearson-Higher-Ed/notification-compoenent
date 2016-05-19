@@ -30,7 +30,6 @@ class NotificationComponent {
 		this.notificationList = [];
 		this.archivedNotificationList = [];
 		userNotifications.then((result) => {
-			console.log(result);
 			// create the react classes for reference later
 			this._createBellReactClass();
 			this._createListReactClass(config);
