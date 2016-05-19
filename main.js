@@ -39,14 +39,16 @@ class NotificationComponent {
 			this.newNotifications = result.newNotifications;
 			this.unreadCount = result.unreadCount;
 			// convert to Date objects
-			this.notificationList.forEach(item => {
-				item.createdAt = new Date(item.createdAt);
-				item.updatedAt = new Date(item.updatedAt);
-			});
-			// sort by created field, newest first
-			this.notificationList.sort((x, y) => {
-				return y.createdAt - x.createdAt;
-			});
+			if (this.notificationList!==undefined) {
+				this.notificationList.forEach(item => {
+					item.createdAt = new Date(item.createdAt);
+					item.updatedAt = new Date(item.updatedAt);
+				});
+				// sort by created field, newest first
+				this.notificationList.sort((x, y) => {
+					return y.createdAt - x.createdAt;
+				});
+			}
 			// Keep reference to the components to set state later and render the react components now that we have the data
 			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
 			this.bellComponent = ReactDOM.render(<this.bellClass/>, document.getElementById(elementId));

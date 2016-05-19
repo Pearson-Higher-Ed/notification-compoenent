@@ -3,6 +3,7 @@
 import React from 'react';
 import NotificationNode from './NotificationNode';
 import DateParser from './DateParser';
+import NotificationBlankState from './NotificationBlankState';
 
 export default class NotificationList extends React.Component {
 
@@ -23,15 +24,22 @@ export default class NotificationList extends React.Component {
 	 * Render
 	 **/
 	render() {
-		const notificationNodeList = this.props.list.map((notification) => {
+		
+		let notificationNodeList = {};
+		if (this.props.list.length > 0) {
+			notificationNodeList = this.props.list.map((notification) => {
 			const time = DateParser.getFormatDateString(new Date(notification.createdAt))
 			return (
-
-				<NotificationNode key={notification.id} detailsClick={this.showDetails.bind(this, notification)} 
+					<NotificationNode key={notification.id} detailsClick={this.showDetails.bind(this, notification)} 
 					title={notification.message.title.substring(0, 50) + '...'} summary={notification.message.body.substring(0, 30) + '...'}
 					archivedNotification={this.onArchived.bind(this, notification)} trashIconDisable={this.props.trashIconDisable}  time={time} isRead={notification.isRead}/>
-			);
-		});
+				);
+			});
+		} 
+		 if (!this.props.list.length > 0) {
+			return (notificationNodeList = <NotificationBlankState blankArchivedNotification={!this.props.archivedList.length>0} clickedNotificationArchive = {this.props.clickedNotificationArchive}/>)
+		}
+		
 		return (
 			<div className="notification-list">
 				{notificationNodeList}
