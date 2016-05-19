@@ -8,19 +8,8 @@ function parseResponse(response) {
 	let newNotifications = false;
 	const archivedNotificationsList = [];
 	let unreadCount = 0;
-	let notificationsData = {};
+	
 	let userNotificationsList = [];
-	if (response==='{}') {
-		return notificationsData = (response) => {
-			return {
-				list: userNotificationsList,
-				newNotifications: newNotifications,
-				archivedList: archivedNotificationsList,
-				unreadCount: unreadCount
-			};
-		}
-	} else {
-
 		const userNotifications = response._embedded.usernotifications;
 		// we are doing this simply to make it so that we flatten the object.  This is because the way notification works is
 		// it sends a payload message body which is a template which we made it a template of a json object.  
@@ -40,14 +29,12 @@ function parseResponse(response) {
 			}
 			return notification;
 		});
-		notificationsData = {
+		return {
 			list: userNotificationsList,
 			newNotifications: newNotifications,
 			archivedList: archivedNotificationsList,
 			unreadCount: unreadCount
 		};
-	}
-	return notificationsData;
 }
 
 export default class NotificationApi {
@@ -58,9 +45,10 @@ export default class NotificationApi {
 		this.contentType = config.nfContentTypeHeader;
 		this.recipientId = config.nfRecipientId;
 	}
-
+	
 	getNotifications() {
 		const response = new Promise((resolve, reject) => {
+			const emptyPayload = '{\r\n\t\"_links\": {\r\n\t\t\"self\": {\r\n\t\t\t\"href\": \"http://notifications-api.prd-prsn.com/usernotifications/recipientid/ffffffff53a846e1e4b08d9451ce5190/dateSince/2014-10-20T02:04:26.177Z/isread/false\"\r\n\t\t}\r\n\t},\r\n\t\"_embedded\": {\r\n\t\t\"usernotifications\": []\r\n\t}\r\n}';
 			const request = new Request(this.url + '/usernotifications/recipientid/' + this.recipientId, {
 				method: 'GET',
 				mode: 'cors',
@@ -70,7 +58,7 @@ export default class NotificationApi {
 				}
 			});
 			fetch(request).then(function(response) {
-				if (response.statusText === 'No Content') { return '{}'}
+				if (response.statusText === 'No Content') { return JSON.parse(emptyPayload)}
 				return response.json();
 			}).then(function(json) {
 				resolve(parseResponse(json));

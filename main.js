@@ -39,7 +39,7 @@ class NotificationComponent {
 			this.newNotifications = result.newNotifications;
 			this.unreadCount = result.unreadCount;
 			// convert to Date objects
-			if (this.notificationList!==undefined) {
+			if (this.notificationList.length > 0) {
 				this.notificationList.forEach(item => {
 					item.createdAt = new Date(item.createdAt);
 					item.updatedAt = new Date(item.updatedAt);

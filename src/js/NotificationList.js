@@ -32,12 +32,15 @@ export default class NotificationList extends React.Component {
 			return (
 					<NotificationNode key={notification.id} detailsClick={this.showDetails.bind(this, notification)} 
 					title={notification.message.title.substring(0, 50) + '...'} summary={notification.message.body.substring(0, 30) + '...'}
-					archivedNotification={this.onArchived.bind(this, notification)} trashIconDisable={this.props.trashIconDisable}  time={time} isRead={notification.isRead}/>
+					archivedNotification={this.onArchived.bind(this, notification)} trashIconDisable={this.props.isArchiveTray}  time={time} isRead={notification.isRead}/>
 				);
 			});
 		} 
 		 if (!this.props.list.length > 0) {
-			return (notificationNodeList = <NotificationBlankState blankArchivedNotification={!this.props.archivedList.length>0} clickedNotificationArchive = {this.props.clickedNotificationArchive}/>)
+			return (
+				notificationNodeList = <NotificationBlankState blankArchivedNotification={!this.props.archivedList.length>0} 
+				clickedNotificationArchive={this.props.clickedNotificationArchive} isArchivedTray={this.props.isArchiveTray}/>
+				);
 		}
 		
 		return (
