@@ -2,7 +2,7 @@
 
 import NotificationComponent from '../main'; // for direct API usage
 
-const pt = 'eyJhbGciOiJSUzUxMiIsImtpZCI6ImsxMDY5NDgxOTAifQ.eyJleHAiOjE0NjM2OTQzMjksInN1YiI6ImZmZmZmZmZmNTMzZWRlNGRlNGIwNmVmNjQ5NGM5MGI1Iiwic2Vzc2lkIjoiOWMzZjgxM2UxZmFlNDgyODk2NjI5NzAxN2I4NTA3MTkiLCJ0eXBlIjoiYXQiLCJpYXQiOjE0NjM2ODM1Mjh9.LemJJ450TNi_w328JxWWrr2jbU6ndWJe9xqdRusVACQIxrgDmYfbQCvSaeG3qN7pf93IGXjK99Bu5VPEZgxIpBp5D6a4qarNDn3an2W2intlTr4zKJyb6epmT_V3NzVtXlHS79CKFgPH9Xywrgqk3RnAYuZeVpjki0sM8_iycDM';
+const pt = 'eyJhbGciOiJSUzUxMiIsImtpZCI6ImsxMDY5NDgxOTAifQ.eyJleHAiOjE0NjM3MDUyMDQsInN1YiI6ImZmZmZmZmZmNTNkYTNjYjNlNGIwZWFhZGRkNTc2ODc3Iiwic2Vzc2lkIjoiOTZmYzkzYzUzMzE4NDhmNGEzODM2NjgzZDNmYmRlNjYiLCJ0eXBlIjoiYXQiLCJpYXQiOjE0NjM2OTQ0MDN9.IxQ9rLOdE2we-iVRaw6nnjE6tTeKJEsw6jpT-lN2oBbdsvYAhlWYnqHHMRbFOqgBV0xKlue8MEzm7lStznPewNEjtWjezVpwjjgVSVkm31PJ524fY_7E9Nq6NtIyo77-bG3AJcSG7WmoLct7gVchcc--EypsAm_BPOY451wxFns';
 
 const AppHeaderConfig = {
 	// NotificationAPI
@@ -11,6 +11,7 @@ const AppHeaderConfig = {
 	nfPiToken: pt,
 	nfRecipientId: 'ffffffff53a840c2e4b07ba3e2a74458',
 	//ffffffff53a840c2e4b07ba3e2a74458
+	//ffffffff560c1a1ee4b04ebf43118c60
 
 	// CoachmarkAPI
 	cmApiUrl: 'http://localhost:8080',
