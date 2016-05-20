@@ -10,9 +10,7 @@ export default class NotificationList extends React.Component {
 
 	constructor(props) {
 		super(props);
-		console.log('notif list '+props)
 		this.notApi = new NotificationApi(this.props.apiConfig);
-		// Empty objects to be created on load
 	}
 
 	showDetails(notification) {
