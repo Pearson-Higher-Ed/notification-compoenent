@@ -14,6 +14,7 @@ export default class NotificationContainer extends React.Component {
 				message: {}
 			},
 			archivedList: props.archivedList || [],
+
 			list: props.list || [],
 			notificationList: props.list || []
 		};
@@ -62,6 +63,7 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	render() {
+		
 		return (
 			<div>
 				<div className="notification-title">

@@ -5,26 +5,33 @@ function parseResponse(response) {
 	const userNotifications = response._embedded.usernotifications;
 
 	let newNotifications = false;
-	const archivedNotificationsList = [];
 	let unreadCount = 0;
 	// we are doing this simply to make it so that we flatten the object.  This is because the way notification works is
 	// it sends a payload message body which is a template which we made it a template of a json object.  
 	const userNotificationsList = userNotifications.filter((notification) => {
-		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser');
+		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser' && notification.status !== 'ARCHIVED');
 	}).map((notification) => {
 		const result = JSON.parse(notification.payload.message);
 		notification.message = result;
 		if (notification.status === 'CREATED') {
 			newNotifications = true;
 		}
-		if (notification.status === 'ARCHIVED') {
-			archivedNotificationsList.push(notification);
-		}
 		if (notification.isRead === false) {
 			unreadCount++;
 		}
 		return notification;
 	});
+
+	const archivedNotificationsList = userNotifications.filter((notification) => {
+		const result = JSON.parse(notification.payload.message);
+		notification.message = result;
+		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser' && notification.status === 'ARCHIVED');
+	});
+
+
+	console.log('list '+userNotificationsList);
+	console.log('archived'+ archivedNotificationsList);
+
 	return {
 		list: userNotificationsList,
 		newNotifications: newNotifications,
@@ -88,6 +95,31 @@ export default class NotificationApi {
 		const response = new Promise((resolve, reject) => {
 			const payload = {
 				status: 'VIEWED'
+			};
+
+			const request = new Request(this.url + '/usernotifications/' + userNotificationId, {
+				method: 'PUT',
+				mode: 'cors',
+				headers: {
+					'X-Authorization': this.xAuth,
+					'Content-Type': this.contentType
+				},
+				body: JSON.stringify(payload)
+			});
+			fetch(request).then(function(response) {
+				resolve(response);
+			}).catch(function(error) {
+				console.log('onError: ', error);
+				reject(error);
+			});
+		});
+		return response;
+	}
+
+	markAsArchived(userNotificationId) {
+		const response = new Promise((resolve, reject) => {
+			const payload = {
+				status: 'ARCHIVED'
 			};
 
 			const request = new Request(this.url + '/usernotifications/' + userNotificationId, {
