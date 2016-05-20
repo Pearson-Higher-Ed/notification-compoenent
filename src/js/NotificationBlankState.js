@@ -24,18 +24,16 @@ export default class NotificationBlankState extends React.Component {
             </div>
             );
          }
-
-        if (this.props.blankArchivedNotification && this.props.clickedNotificationArchive) {
-              return (
-                <div className="notification-blank-page">
-                    <p> 
-                    <h2>Nothing Here</h2>
-                    <br/><br/>
-                    <h3>This is where you will see your<br/>archived notifications.</h3>
-                    </p>
-                </div>
-            );
-        }
+       
+        return (
+            <div className="notification-blank-page">
+                <p> 
+                <h2>Nothing Here</h2>
+                <br/><br/>
+                <h3>This is where you will see your<br/>archived notifications.</h3>
+                </p>
+            </div>
+        );
         
     }
 }

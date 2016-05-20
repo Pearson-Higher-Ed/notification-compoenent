@@ -9,7 +9,6 @@ export default class NotificationContainer extends React.Component {
 		super(props);
 		this.state = {
 			isArchive: false,
-			clickedNotificationArchive: false,
 			displayDetails: false,
 			notificationDetails: {
 				message: {}
@@ -51,8 +50,7 @@ export default class NotificationContainer extends React.Component {
 	toggleArchive() {
 		this.setState({
 			list: this.state.archivedList,
-			isArchive: true,
-			clickedNotificationArchive: true
+			isArchive: true
 		});
 	}
 
@@ -75,8 +73,7 @@ export default class NotificationContainer extends React.Component {
 				</div>
 				<div className={this.state.displayDetails ? 'hide' : ''}>
 					<NotificationList list={this.state.list}  closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} showDetails={this.showDetails.bind(this)}
-					 appendArchiveList={this.appendArchiveList.bind(this)} isArchiveTray={this.state.isArchive} archivedList = {this.state.archivedList} 
-					 clickedNotificationArchive = {this.state.clickedNotificationArchive}/>
+					 appendArchiveList={this.appendArchiveList.bind(this)} isArchiveTray={this.state.isArchive} archivedList={this.state.archivedList}/>
 				</div>
 				<div className={this.state.displayDetails ? '' : 'hide'}>
 					<div className="notification-list">
