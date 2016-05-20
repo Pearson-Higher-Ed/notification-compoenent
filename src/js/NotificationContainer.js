@@ -68,7 +68,7 @@ export default class NotificationContainer extends React.Component {
 					<NotificationHeading back={this.showList.bind(this)} isList={!this.state.isArchive && !this.state.displayDetails} 
 					isDetails={this.state.displayDetails} isArchive={this.state.isArchive}/>
 					<div className="notification-archive--back ">
-						<i className={this.state.isArchive ? 'pe-icon--chevron-down pointer' : 'pe-icon--times close-dropdown pointer'} onClick={this.state.isArchive  ? this.updatedNotificationList.bind(this) : this.props.closeDrawer}></i>
+						<i className={this.state.isArchive && !this.state.displayDetails? 'pe-icon--chevron-down pointer' : 'pe-icon--times close-dropdown pointer'} onClick={this.state.isArchive && !this.state.displayDetails  ? this.updatedNotificationList.bind(this) : this.props.closeDrawer}></i>
 					</div>	
 				</div>
 				<div className={this.state.displayDetails ? 'hide' : ''}>
