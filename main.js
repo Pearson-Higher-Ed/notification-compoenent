@@ -34,7 +34,6 @@ class NotificationComponent {
 			this._createBellReactClass();
 			this._createListReactClass(config);
 			this.notificationList = result.list;
-			//console.log('main '+ result.archivedNotificationsList);
 			this.archivedNotificationList = result.archivedList;
 			this.newNotifications = result.newNotifications;
 			this.unreadCount = result.unreadCount;

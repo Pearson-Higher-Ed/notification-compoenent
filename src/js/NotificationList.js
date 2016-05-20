@@ -21,7 +21,6 @@ export default class NotificationList extends React.Component {
 
 	onArchived(notification) {
 		this.props.appendArchiveList(notification);
-		console.log('id check'+notification.id)
 		this.notApi.markAsArchived(notification.id).then(function(result) {
 			// we don't care to do anything here...
 		}, function(err) {
@@ -37,12 +36,11 @@ export default class NotificationList extends React.Component {
 		let notificationNodeList = {};
 		if (this.props.list.length > 0) {
 			notificationNodeList = this.props.list.map((notification) => {
-				console.log('message title'+notification.message.title)
 			const time = DateParser.getFormatDateString(new Date(notification.createdAt))
 			return (
 					<NotificationNode key={notification.id} detailsClick={this.showDetails.bind(this, notification)} 
 					title={notification.message.title.substring(0, 50) + '...'} summary={notification.message.body.substring(0, 30) + '...'}
-					archivedNotification={this.onArchived.bind(this, notification)} trashIconDisable={this.props.isArchiveTray}  time={time} isRead={notification.isRead} />
+					archivedNotification={this.onArchived.bind(this, notification)} trashIconDisable={this.props.isArchiveTray}  time={time} isRead={notification.isRead}/>
 				);
 			});
 		} 

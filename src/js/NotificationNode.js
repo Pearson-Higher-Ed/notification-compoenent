@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 export default class NotificationNode extends React.Component {
 
 	constructor(props) {
@@ -8,7 +7,7 @@ export default class NotificationNode extends React.Component {
 	}
 
 	setArchivedNotification() {
-		this.props.archivedNotification();	
+		this.props.archivedNotification();
 	}
 
 	// when we hook up the course meta data.  We need to limit the course to not let it wrap.  

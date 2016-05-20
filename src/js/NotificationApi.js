@@ -28,10 +28,6 @@ function parseResponse(response) {
 		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser' && notification.status === 'ARCHIVED');
 	});
 
-
-	console.log('list '+userNotificationsList);
-	console.log('archived'+ archivedNotificationsList);
-
 	return {
 		list: userNotificationsList,
 		newNotifications: newNotifications,
