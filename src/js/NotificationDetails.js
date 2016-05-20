@@ -18,6 +18,10 @@ export default class NotificationDetails extends React.Component {
 		// and then create that coach mark
 	}
 
+	archiveItem() {
+		this.props.appendArchiveList(this.props.notification);
+	}
+
 	render() {
 		let tourButton = '';
 		if (this.props.notification.message.cmIds) {
@@ -36,7 +40,7 @@ export default class NotificationDetails extends React.Component {
 				</div>
 				{tourButton}
 				<div className="notification-details--align">
-					<a href="javascript:void(0);" className="notification-details--archive"><i className="pe-icon--trash-o"></i> archive this notification </a>
+					<a href="javascript:void(0);" onClick={this.archiveItem.bind(this)} className="notification-details--archive"><i className="pe-icon--trash-o"></i> archive this notification </a>
 				</div>
 			</div>
 		);
