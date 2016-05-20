@@ -20,6 +20,11 @@ export default class NotificationDetails extends React.Component {
 
 	archiveItem() {
 		this.props.appendArchiveList(this.props.notification);
+		this.notificationApi.markAsArchived(this.props.notification.id).then(function(result) {
+			// we don't care to do anything here...
+		}, function(err) {
+			// we really don't care about this...
+		});
 	}
 
 	render() {
