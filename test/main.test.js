@@ -80,7 +80,7 @@ describe('NotificationComponent', () => {
 
                 let markAsViewedCalled = false;
                 notificationComponent.notApi = {
-                    markAsViewed: function() {
+                    markAsViewedOrArchived: function() {
                         markAsViewedCalled = true;
                         return Promise.resolve("");
                     }
