@@ -4,11 +4,15 @@ export default class NotificationBell extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.count = this.props.unreadCount;
+		document.addEventListener('NotificationBell.ReadNotification', () => {
+			this.count--;
+			this.forceUpdate();
+		});
 	}
 
 	render() {
 		let bellClassNames = 'notification-bell--count';
-		this.count = this.props.unreadCount;
 		console.log(this.props.newNotifications);
 		if (this.props.newNotifications) {
 			bellClassNames += ' notification-bell--new'
@@ -21,7 +25,7 @@ export default class NotificationBell extends React.Component {
 		if (this.props.unreadCount > 9) {
 			this.count = '9+'; 
 		}
-		
+		console.log(this.count);
 		return (
 			<div className="notification-bell">
 				<a href="javascript:void(0)" className="notification-bell--activate" onClick={this.props.toggleList}>

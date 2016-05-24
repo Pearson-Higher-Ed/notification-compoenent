@@ -30,6 +30,7 @@ export default class NotificationContainer extends React.Component {
 			notificationDetails: notification,
 			notificationList: this.updateNotification(notification)
 		});
+		document.dispatchEvent(new CustomEvent('NotificationBell.ReadNotification'));
 	}
 
 	showList() {
