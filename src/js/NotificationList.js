@@ -19,7 +19,7 @@ export default class NotificationList extends React.Component {
 
 	onArchived(notification) {
 		this.props.appendArchiveList(notification);
-		this.notApi.markAsViewedOrArchived(notification.id, 'ARCHIVED').then(function(result) {
+		this.notApi.markAsArchived(notification.id).then(function(result) {
 			// we don't care to do anything here...
 		}, function(err) {
 			// we really don't care about this...

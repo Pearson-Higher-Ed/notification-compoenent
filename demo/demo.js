@@ -9,7 +9,7 @@ const AppHeaderConfig = {
 	nfApiUrl: 'https://notifications-api.stg-prsn.com',
 	nfContentTypeHeader: 'application/json',
 	nfPiToken: pt,
-	nfRecipientId: 'ffffffff5482258ce4b05a12806d3b14',
+	nfRecipientId: 'ffffffff5482258ce4b05a12806d3b1',
 
 	// CoachmarkAPI
 	cmApiUrl: 'http://localhost:8080',
