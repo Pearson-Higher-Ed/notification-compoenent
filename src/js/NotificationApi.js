@@ -80,9 +80,6 @@ export default class NotificationApi {
 
 	updateUserNotification(userNotificationId, payload) {
 		const response = new Promise((resolve, reject) => {
-			const payload = {
-				status: 'VIEWED'
-			};
 
 			const request = new Request(this.url + '/usernotifications/' + userNotificationId, {
 				method: 'PUT',
