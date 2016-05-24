@@ -2,14 +2,22 @@
 
 import NotificationComponent from '../main'; // for direct API usage
 
+<<<<<<< HEAD
+const pt = 'eyJhbGciOiJSUzUxMiIsImtpZCI6ImsxMDY5NDgxOTAifQ.eyJleHAiOjE0NjM3ODM3NzksInN1YiI6ImZmZmZmZmZmNTMzZWRlNGRlNGIwNmVmNjQ5NGM5MGI1Iiwic2Vzc2lkIjoiYTQwYTRmZDJjZTlmNDE5ZDhmNzk3MjUxYzI5YWNiNzciLCJ0eXBlIjoiYXQiLCJpYXQiOjE0NjM3NzI5Nzh9.bnmVahRwOl_GVVIGmGyyK5Af1ShmdrF2f2va0_r0yp76RyvdFSRXKVN3ztRNTuSUdNccljfrcKf-j52v-wcGLPDTlbSFVp7pNYFFtyI-m6bAsO760oN4pKx9TGBoD9obWUoeV2zEMEVka77fxhVSYwzyoEVOtsRHMfDMy0v_og8';
+=======
 const pt = '<token>';
+>>>>>>> Aegis-158
 
 const AppHeaderConfig = {
 	// NotificationAPI
 	nfApiUrl: '<notificationUrl>',
 	nfContentTypeHeader: 'application/json',
 	nfPiToken: pt,
+<<<<<<< HEAD
+	nfRecipientId: 'ffffffff5482258ce4b05a12806d3b14',
+=======
 	nfRecipientId: '<userId>',
+>>>>>>> Aegis-158
 
 	// CoachmarkAPI
 	cmApiUrl: 'http://localhost:8080',
