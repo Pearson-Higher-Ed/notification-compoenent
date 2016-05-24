@@ -9,19 +9,24 @@ export default class NotificationBlankState extends React.Component {
         super(props);
     }
 
+    archiveList() {
+        this.props.goToArchiveList();
+    }
+
+
     render() {  
-        
         if (!this.props.isArchivedTray) {
-        return (
-            <div className="notification-blank-page">
-                <p> 
-                <h2>Nothing Yet</h2>
-                <br/>
-                <h3>We’ll let you know when<br/>something comes up. Till then,<br/>find previous notifications in your
-                    <br/><u> Archive.</u>
-                </h3>
-                </p>
-            </div>
+            return (
+                <div className="notification-blank-page">
+                    <p> 
+                    <h2>Nothing Yet</h2>
+                    <br/>
+                    <h3>We’ll let you know when<br/>something comes up. Till then,<br/>find previous notifications in your
+                    <br/>
+                    <a href="javascript:void(0);" onClick={this.archiveList.bind(this)}> Archive </a>
+                    </h3>
+                    </p>
+                </div>
             );
          }
        
@@ -33,7 +38,6 @@ export default class NotificationBlankState extends React.Component {
                 <h3>This is where you will see your<br/>archived notifications.</h3>
                 </p>
             </div>
-        );
-        
+        );  
     }
 }

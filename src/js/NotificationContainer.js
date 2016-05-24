@@ -49,7 +49,7 @@ export default class NotificationContainer extends React.Component {
 		});
 	}
 
-	toggleArchive() {
+	goToArchiveList() {
 		this.setState({
 			list: this.state.archivedList,
 			isArchive: true
@@ -75,14 +75,14 @@ export default class NotificationContainer extends React.Component {
 				</div>
 				<div className={this.state.displayDetails ? 'hide' : ''}>
 					<NotificationList list={this.state.list}  closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} showDetails={this.showDetails.bind(this)}
-					 appendArchiveList={this.appendArchiveList.bind(this)} isArchiveTray={this.state.isArchive} archivedList={this.state.archivedList}/>
+					 appendArchiveList={this.appendArchiveList.bind(this)} isArchiveTray={this.state.isArchive} goToArchiveList={this.goToArchiveList.bind(this)}/>
 				</div>
 				<div className={this.state.displayDetails ? '' : 'hide'}>
 					<div className="notification-list">
 						<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} appendArchiveList={this.appendArchiveList.bind(this)}/>
 					</div>
 				</div>
-				<div className="notification-title" onClick={this.toggleArchive.bind(this)}>
+				<div className="notification-title" onClick={this.goToArchiveList.bind(this)}>
 					<h1 className={this.state.isArchive || this.state.displayDetails ? 'hide' : 'notification-title--heading'}>
 						 Notification Archive
 					</h1>

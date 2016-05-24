@@ -26,14 +26,17 @@ export default class NotificationList extends React.Component {
 		});
 	}
 
+	goToArchiveList() {
+		this.props.goToArchiveList();
+	}
 	/**
 	 * Render
 	 **/
 	render() {
 		
-		let notificationNodeList = {};
+		let notificationNodeObjects = {};
 		if (this.props.list.length > 0) {
-			notificationNodeList = this.props.list.map((notification) => {
+			notificationNodeObjects = this.props.list.map((notification) => {
 			const time = DateParser.getFormatDateString(new Date(notification.createdAt))
 			return (
 					<NotificationNode key={notification.id} detailsClick={this.showDetails.bind(this, notification)} 
@@ -43,12 +46,12 @@ export default class NotificationList extends React.Component {
 			});
 		} 
 		if (!this.props.list.length > 0) {
-			notificationNodeList = <NotificationBlankState isArchivedTray={this.props.isArchiveTray}/>
+			notificationNodeObjects = <NotificationBlankState isArchivedTray={this.props.isArchiveTray} goToArchiveList={this.goToArchiveList.bind(this)}/>
 		}
 		
 		return (
 			<div className="notification-list">
-				{notificationNodeList}
+				{notificationNodeObjects}
 			</div>
 		);
 	}
