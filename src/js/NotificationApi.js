@@ -65,26 +65,20 @@ export default class NotificationApi {
 	}
 
 	markAsRead(userNotificationId) {
-		const response = new Promise((resolve, reject) => {
-			const request = new Request(this.url + '/readusernotifications/' + userNotificationId + '/true', {
-				method: 'PUT',
-				mode: 'cors',
-				headers: {
-					'X-Authorization': this.xAuth,
-					'Content-Type': this.contentType
-				}
-			});
-			fetch(request).then(function(response) {
-				resolve(response);
-			}).catch(function(error) {
-				console.log('onError: ', error);
-				reject(error);
-			});
-		});
-		return response;
+		const payload = {
+			isRead: true
+		};
+		return this.updateUserNotification(userNotificationId, payload);	
 	}
 
 	markAsViewed(userNotificationId) {
+		const payload = {
+			status: 'VIEWED'
+		};
+		return this.updateUserNotification(userNotificationId, payload);
+	}
+
+	updateUserNotification(userNotificationId, payload) {
 		const response = new Promise((resolve, reject) => {
 			const payload = {
 				status: 'VIEWED'
@@ -108,5 +102,4 @@ export default class NotificationApi {
 		});
 		return response;
 	}
-
 };
