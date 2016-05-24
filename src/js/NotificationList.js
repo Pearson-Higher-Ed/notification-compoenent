@@ -22,7 +22,7 @@ export default class NotificationList extends React.Component {
 		this.notApi.markAsArchived(notification.id).then(function(result) {
 			// we don't care to do anything here...
 		}, function(err) {
-			// we really don't care about this...
+			console.log('error setting status to archive and the error is '+err);
 		});
 	}
 
