@@ -2,11 +2,14 @@ import React from 'react';
 import NotificationList from './NotificationList';
 import NotificationDetails from './NotificationDetails';
 import NotificationHeading from './NotificationHeading';
+import NotificationApi from './NotificationApi';
 
 export default class NotificationContainer extends React.Component {
 
 	constructor(props) {
 		super(props);
+
+		this.notificationApi = new NotificationApi(this.props.config);
 		this.state = {
 			isArchive: false,
 			displayDetails: false,
@@ -20,9 +23,12 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	showDetails(notification) {
+		this.notificationApi.markAsRead(notification.id);
+		notification.isRead = true;
 		this.setState({
 			displayDetails: true,
-			notificationDetails: notification
+			notificationDetails: notification,
+			notificationList: this.updateNotification(notification)
 		});
 	}
 
@@ -61,6 +67,17 @@ export default class NotificationContainer extends React.Component {
 			list: this.state.notificationList,
 			isArchive: false
 		});
+	}
+
+	updateNotification(notification) {
+		const newList = this.state.list;
+		for( let i = 0; i < newList.length; i++) {
+			if(newList[i].id === notification.id) {
+				newList[i] = notification;
+				break;
+			}
+		}
+		return newList;
 	}
 
 	render() {
