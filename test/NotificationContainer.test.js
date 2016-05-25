@@ -55,7 +55,7 @@ describe('NotificationContainer', () => {
     });
 
     describe('showDetails', function() {
-        it('should set displayDetails to true and notification to the passed parameter', function(done) {
+        it('should set displayDetails to true and publish event when not in archive mode', function(done) {
             let passedParam = {check: true, message: {title: 'test', body: 'body'}};
             document.addEventListener('NotificationBell.ReadNotification', () => {
                 expect(true).toBe(true);//we just want to be sure that the event got called 
