@@ -242,18 +242,21 @@ describe('Listener Setup', () => {
 
 describe('get display coachmark', () => {
 	let masterpieceId = 444;
-	let coachmarkListener, isIncrementHit;
+	let coachmarkListener, isCountTicked;
 
-	beforeEach(() => {
-		isIncrementHit = false;
-		//CoachmarkListener.Coachmark = () => {console.log('CM-pre');};
+	beforeEach((done) => {
+		isCountTicked = false;
+
+		CoachmarkListener.__Rewire__('Coachmark', (a,b,c) => {});
 		coachmarkListener = new CoachmarkListener({});
-		coachmarkListener.Coachmark = () => {console.log('cm-post');};
+
 		coachmarkListener.redirectIfNewUri = () => {return false;};
 		coachmarkListener.notificationApi = {markAsRead: () => {}};
 		coachmarkListener.closeCoachmark = () => {};
-		coachmarkListener.coachmarkApi = { incrementViewCount: () => {isIncrementHit = true;}};
-
+		coachmarkListener.coachmarkApi = {
+			incrementViewCount: (cmId) => { isCountTicked = true; },
+			getCoachmark: (cmId) => { return Promise.resolve({ options: {}, uri: 'uri', element: 'foo' });}
+		};
 		coachmarkListener.cmState = {};
 		coachmarkListener.cmState[masterpieceId] = {
 			userNotificationId: 222,
@@ -266,18 +269,22 @@ describe('get display coachmark', () => {
 			likeCmSeries: 'like',
 			areListenersSet: false
 		};
+		coachmarkListener.getDisplayCoachmark(masterpieceId);
+		// Fixes problem with promise not finishing in time
+		setTimeout(() => {done();}, 0);
 
-		//coachmarkListener.getDisplayCoachmark(masterpieceId);
 	});
 
+	afterEach(() => { CoachmarkListener.__ResetDependency__('Coachmark'); });
+
 	it('should increment view count if the coachmark has not been visited yet', () => {
-		// TODO
+		expect(isCountTicked).toBe(true);
 	});
 });
 
 
 /**
- * Helper
+ * Helper for triggering events
  **/
 function triggerEvent(eventType, eventData) {
 	let event = document.createEvent('HTMLEvents');
