@@ -9,10 +9,6 @@ export default class CoachmarkListener {
         this.coachmarkApi = new CoachmarkApi(config);
         this.feedbackApi = new FeedbackApi(config);
         this.notificationApi = new NotificationApi(config);
-
-        //super(props);
-        //this.notificationApi = new NotificationApi(this.props.apiConfig);
-        //this.coachmarkApi = new CoachmarkApi(this.props.apiConfig);
     }
 
     /**
@@ -113,15 +109,13 @@ export default class CoachmarkListener {
         if (!fromLocal.masterpieceId) {
             return false; // We aren't here because of a redirect
         }
-
         fromLocal.masterpieceId = parseInt(fromLocal.masterpieceId);
         fromLocal.cmIds = fromLocal.cmIds.map((param) => parseInt(param));
         fromLocal.index = parseInt(fromLocal.index);
-
         this.cmState[fromLocal.masterpieceId] = fromLocal;
-
         this.cmListenerSetup(fromLocal.masterpieceId);
         this.getDisplayCoachmark(fromLocal.masterpieceId);
+        return true;
     }
 
     /**
