@@ -23,14 +23,19 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	showDetails(notification) {
-		this.notificationApi.markAsRead(notification.id);
-		notification.isRead = true;
-		this.setState({
+		const state = {
 			displayDetails: true,
-			notificationDetails: notification,
-			notificationList: this.updateNotification(notification)
-		});
-		document.dispatchEvent(new CustomEvent('NotificationBell.ReadNotification'));
+			notificationDetails: notification
+		};
+		if(!this.state.isArchive && !notification.isRead) {
+			this.notificationApi.markAsRead(notification.id);
+			notification.isRead = true;
+			state.notificationList = this.updatedNotificationList(notification);
+			document.dispatchEvent(new CustomEvent('NotificationBell.ReadNotification'));
+
+		}
+		
+		this.setState(state);
 	}
 
 	showList() {
