@@ -27,7 +27,7 @@ function init() {
 	document.body.dispatchEvent(new CustomEvent('o.InitNotificationComponent', {
 			detail: {
 				config: AppHeaderConfig,
-				elementId: document.getElementById('demo-target1')
+				element: document.getElementById('demo-target1')
 			}
 	 }));
 
