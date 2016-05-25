@@ -4,7 +4,7 @@ export default class CoachmarkApi {
 
 	constructor(config) {
 		this.url = config.cmApiUrl;
-		this.auth = config.cmPiToken;
+		this.xAuth = config.cmPiToken;
 		this.contentType = config.cmContentTypeHeader;
 	}
 

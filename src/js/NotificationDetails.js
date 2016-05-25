@@ -1,21 +1,15 @@
 import React from 'react';
-import CoachmarkApi from './CoachmarkApi';
-import FeedbackApi from './FeedbackApi';
-import NotificationApi from './NotificationApi';
+import CoachmarkListener from './CoachmarkListener';
 
 export default class NotificationDetails extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.notificationApi = new NotificationApi(this.props.apiConfig);
-		this.coachmarkApi = new CoachmarkApi(this.props.apiConfig);
 	}
 
 	launchCoachmark() {
-		console.log('launch the coachmark here');
-		// from here close the drawer
-		// and then also get the first coachmark that needs to be display
-		// and then create that coach mark
+		(new CoachmarkListener(this.props.apiConfig)).launchCoachmark(this.props.notification);
+		this.props.closeDrawer();
 	}
 
 	archiveItem() {
@@ -39,7 +33,7 @@ export default class NotificationDetails extends React.Component {
 		if(this.props.notification.status === 'ARCHIVED') {
 			archiveCss += ' hide';
 		}
-		
+
 		return (
 			<div className="notification-details">
 				<div className="notification-details--title">
