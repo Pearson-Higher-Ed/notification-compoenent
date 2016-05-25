@@ -4,12 +4,13 @@ import React from 'react';
 import NotificationNode from './NotificationNode';
 import DateParser from './DateParser';
 import NotificationBlankState from './NotificationBlankState';
+import NotificationApi from './NotificationApi';
 
 export default class NotificationList extends React.Component {
 
 	constructor(props) {
 		super(props);
-		// Empty objects to be created on load
+		this.notApi = new NotificationApi(this.props.apiConfig);
 	}
 
 	showDetails(notification) {
@@ -18,6 +19,11 @@ export default class NotificationList extends React.Component {
 
 	onArchived(notification) {
 		this.props.appendArchiveList(notification);
+		this.notApi.markAsArchived(notification.id).then(function(result) {
+			// we don't care to do anything here...
+		}, function(err) {
+			console.log('error setting status to archive and the error is '+err);
+		});
 	}
 
 	goToArchiveList() {

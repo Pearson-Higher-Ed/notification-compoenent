@@ -34,7 +34,7 @@ class NotificationComponent {
 			this._createBellReactClass();
 			this._createListReactClass(config);
 			this.notificationList = result.list;
-			this.archivedNotificationList = result.archivedNotificationsList;
+			this.archivedNotificationList = result.archivedList;
 			this.newNotifications = result.newNotifications;
 			this.unreadCount = result.unreadCount;
 			// convert to Date objects
