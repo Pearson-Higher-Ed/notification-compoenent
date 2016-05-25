@@ -16,7 +16,7 @@ import Drawer from '@pearson-components/drawer/main';
  */
 class NotificationComponent {
 
-	constructor(config, elementId) {
+	constructor(config, element) {
 		this.notApi = new NotificationApi(config);
 		const userNotifications = this.notApi.getNotifications();
 
@@ -50,7 +50,7 @@ class NotificationComponent {
 			}
 			// Keep reference to the components to set state later and render the react components now that we have the data
 			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
-			this.bellComponent = ReactDOM.render(<this.bellClass/>, document.getElementById(elementId));
+			this.bellComponent = ReactDOM.render(<this.bellClass/>, element);
 
 		}).catch(function(error) {
 			console.log(error);
@@ -117,4 +117,4 @@ class NotificationComponent {
 
 export default NotificationComponent;
 
-document.body.addEventListener('o.InitNotificationComponent', e => new NotificationComponent(e.detail.config, e.detail.elementId));
+document.body.addEventListener('o.InitNotificationComponent', e => new NotificationComponent(e.detail.config, e.detail.element));
