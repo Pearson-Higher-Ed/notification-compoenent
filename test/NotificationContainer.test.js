@@ -72,7 +72,7 @@ describe('NotificationContainer', () => {
 
     describe('toggleArchive', function() {
         it('should set isArchive to true', function() {
-            container.toggleArchive();
+            container.goToArchiveList();
             expect(container.state.isArchive).toBe(true);
             expect(container.state.list).toBe(archivedList);
         });
