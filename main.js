@@ -16,7 +16,7 @@ import Drawer from '@pearson-components/drawer/main';
  */
 class NotificationComponent {
 
-	constructor(config, elementId) {
+	constructor(config, element) {
 		this.notApi = new NotificationApi(config);
 		const userNotifications = this.notApi.getNotifications();
 
@@ -30,26 +30,27 @@ class NotificationComponent {
 		this.notificationList = [];
 		this.archivedNotificationList = [];
 		userNotifications.then((result) => {
-			console.log(result);
 			// create the react classes for reference later
 			this._createBellReactClass();
 			this._createListReactClass(config);
 			this.notificationList = result.list;
-			this.archivedNotificationList = result.archivedNotificationsList;
+			this.archivedNotificationList = result.archivedList;
 			this.newNotifications = result.newNotifications;
 			this.unreadCount = result.unreadCount;
 			// convert to Date objects
-			this.notificationList.forEach(item => {
-				item.createdAt = new Date(item.createdAt);
-				item.updatedAt = new Date(item.updatedAt);
-			});
-			// sort by created field, newest first
-			this.notificationList.sort((x, y) => {
-				return y.createdAt - x.createdAt;
-			});
+			if (this.notificationList.length > 0) {
+				this.notificationList.forEach(item => {
+					item.createdAt = new Date(item.createdAt);
+					item.updatedAt = new Date(item.updatedAt);
+				});
+				// sort by created field, newest first
+				this.notificationList.sort((x, y) => {
+					return y.createdAt - x.createdAt;
+				});
+			}
 			// Keep reference to the components to set state later and render the react components now that we have the data
 			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
-			this.bellComponent = ReactDOM.render(<this.bellClass/>, document.getElementById(elementId));
+			this.bellComponent = ReactDOM.render(<this.bellClass/>, element);
 
 		}).catch(function(error) {
 			console.log(error);
@@ -116,4 +117,4 @@ class NotificationComponent {
 
 export default NotificationComponent;
 
-document.body.addEventListener('o.InitNotificationComponent', e => new NotificationComponent(e.detail.config, e.detail.elementId));
+document.body.addEventListener('o.InitNotificationComponent', e => new NotificationComponent(e.detail.config, e.detail.element));

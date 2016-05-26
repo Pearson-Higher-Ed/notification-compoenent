@@ -5,26 +5,29 @@ function parseResponse(response) {
 	const userNotifications = response._embedded.usernotifications;
 
 	let newNotifications = false;
-	const archivedNotificationsList = [];
 	let unreadCount = 0;
 	// we are doing this simply to make it so that we flatten the object.  This is because the way notification works is
 	// it sends a payload message body which is a template which we made it a template of a json object.  
 	const userNotificationsList = userNotifications.filter((notification) => {
-		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser');
+		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser' && notification.status !== 'ARCHIVED');
 	}).map((notification) => {
 		const result = JSON.parse(notification.payload.message);
 		notification.message = result;
 		if (notification.status === 'CREATED') {
 			newNotifications = true;
 		}
-		if (notification.status === 'ARCHIVED') {
-			archivedNotificationsList.push(notification);
-		}
 		if (notification.isRead === false) {
 			unreadCount++;
 		}
 		return notification;
 	});
+
+	const archivedNotificationsList = userNotifications.filter((notification) => {
+		const result = JSON.parse(notification.payload.message);
+		notification.message = result;
+		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser' && notification.status === 'ARCHIVED');
+	});
+
 	return {
 		list: userNotificationsList,
 		newNotifications: newNotifications,
@@ -65,31 +68,28 @@ export default class NotificationApi {
 	}
 
 	markAsRead(userNotificationId) {
-		const response = new Promise((resolve, reject) => {
-			const request = new Request(this.url + '/readusernotifications/' + userNotificationId + '/true', {
-				method: 'PUT',
-				mode: 'cors',
-				headers: {
-					'X-Authorization': this.xAuth,
-					'Content-Type': this.contentType
-				}
-			});
-			fetch(request).then(function(response) {
-				resolve(response);
-			}).catch(function(error) {
-				console.log('onError: ', error);
-				reject(error);
-			});
-		});
-		return response;
+		const payload = {
+			isRead: true
+		};
+		return this.updateUserNotification(userNotificationId, payload);	
 	}
 
 	markAsViewed(userNotificationId) {
-		const response = new Promise((resolve, reject) => {
-			const payload = {
-				status: 'VIEWED'
-			};
+		const payload = {
+			status: 'VIEWED'
+		};
+		return this.updateUserNotification(userNotificationId, payload);
+	}
 
+	markAsArchived(userNotificationId) {
+		const payload = {
+			status: 'ARCHIVED'
+		};
+		return this.updateUserNotification(userNotificationId, payload);
+	}
+
+	updateUserNotification(userNotificationId, payload) {
+		const response = new Promise((resolve, reject) => {
 			const request = new Request(this.url + '/usernotifications/' + userNotificationId, {
 				method: 'PUT',
 				mode: 'cors',
@@ -108,5 +108,4 @@ export default class NotificationApi {
 		});
 		return response;
 	}
-
 };

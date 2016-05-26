@@ -14,8 +14,8 @@ export default class NotificationNode extends React.Component {
 
 	render() {
 		let background = 'notification-node';
-		if(!this.props.isRead) {
-			background += ' notification-node--unread';
+		if(this.props.isRead) {
+			background += ' notification-node--isread';
 		}
 		return (
 			<div className={background}>
