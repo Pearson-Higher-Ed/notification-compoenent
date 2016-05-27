@@ -40,8 +40,11 @@
         border-bottom: none;
         font-size: 16px;
         margin: 20px 0px 20px 20px;
+        font-weight: bold;
     }
-
+    a {
+        text-decoration: none;
+    }
     .notification-title--back {
         color: #0d65a6;
         text-decoration: none;
