@@ -29,7 +29,7 @@ export default class NotificationBell extends React.Component {
 		return (
 			<div className="notification-bell">
 				<a href="javascript:void(0)" className="notification-bell--activate" onClick={this.props.toggleList}>
-					<i className="pe-icon--bell-o"></i>
+					<i className="pe-icon--bell"></i>
 					<div className={bellClassNames}>
 						{this.count}
 					</div>
