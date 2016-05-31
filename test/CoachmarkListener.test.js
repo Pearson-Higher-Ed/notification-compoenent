@@ -217,26 +217,32 @@ describe('Listener Setup', () => {
 	let masterpieceId = 444;
 	let coachmarkListener = new CoachmarkListener({});
 	coachmarkListener.cmState = {};
-	let callFlags;
+	let isBackNextCalled, isLikeCalled, isSubmitCalled, isCancelCalled;
 
 	beforeEach(() => {
-		callFlags = 0;
-		coachmarkListener.setupBackNextListener = () => {callFlags+=1;};
-		coachmarkListener.setupLikeListener = () => {callFlags+=10;};
-		coachmarkListener.setupSubmitListener = () => {callFlags+=100;};
-		coachmarkListener.setupCancelListener = () => {callFlags+=1000;};
+		isBackNextCalled = isLikeCalled = isSubmitCalled = isCancelCalled = false;
+		coachmarkListener.setupBackNextListener = () => {isBackNextCalled = true;};
+		coachmarkListener.setupLikeListener = () => {isLikeCalled = true;};
+		coachmarkListener.setupSubmitListener = () => {isSubmitCalled = true;};
+		coachmarkListener.setupCancelListener = () => {isCancelCalled = true;};
 	});
 
 	it('should call each listener setup if not already set up', () => {
 		coachmarkListener.cmState[masterpieceId] = { areListenersSet: false };
 		coachmarkListener.cmListenerSetup(masterpieceId);
-		expect(callFlags).toBe(1111);
+		expect(isBackNextCalled).toBe(true);
+		expect(isLikeCalled).toBe(true);
+		expect(isSubmitCalled).toBe(true);
+		expect(isCancelCalled).toBe(true);
 	});
 
 	it('should not call each listener setup if already set up', () => {
 		coachmarkListener.cmState[masterpieceId] = { areListenersSet: true };
 		coachmarkListener.cmListenerSetup(masterpieceId);
-		expect(callFlags).toBe(0);
+		expect(isBackNextCalled).toBe(false);
+		expect(isLikeCalled).toBe(false);
+		expect(isSubmitCalled).toBe(false);
+		expect(isCancelCalled).toBe(false);
 	});
 });
 
