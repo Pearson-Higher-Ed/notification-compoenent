@@ -19,7 +19,7 @@ export default class NotificationList extends React.Component {
 
 	onArchived(notification) {
 		this.props.appendArchiveList(notification);
-		this.notApi.markAsArchived(notification.id).then(function(result) {
+		this.notApi.markAsArchived(notification.eventId).then(function(result) {
 			// we don't care to do anything here...
 		}, function(err) {
 			console.log('error setting status to archive and the error is '+err);

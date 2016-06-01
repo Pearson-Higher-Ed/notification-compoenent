@@ -52,6 +52,7 @@ export default class NotificationContainer extends React.Component {
 		});
 		const newArchiveList = this.state.archivedList;
 		archivedNotification.status = 'ARCHIVED';
+		archivedNotification.isRead = true;
 		newArchiveList.push(archivedNotification);
 		this.setState({
 			archivedList: newArchiveList,
@@ -59,6 +60,7 @@ export default class NotificationContainer extends React.Component {
 			notificationList:newList,
 			displayDetails: false
 		});
+		document.dispatchEvent(new CustomEvent('NotificationBell.ReadNotification'));
 	}
 
 	goToArchiveList() {

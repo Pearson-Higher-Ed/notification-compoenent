@@ -67,37 +67,29 @@ export default class NotificationApi {
 		return response;
 	}
 
-	markAsRead(userNotificationId) {
-		const payload = {
-			isRead: true
-		};
-		return this.updateUserNotification(userNotificationId, payload);	
+	markAsRead(eventId) {
+		const filter = 'isRead::true';
+		return this.updateUserNotification(eventId, filter);
 	}
 
-	markAsViewed(userNotificationId) {
-		const payload = {
-			status: 'VIEWED'
-		};
-		return this.updateUserNotification(userNotificationId, payload);
+	markAsViewed(eventId) {
+		const filter = 'status::VIEWED';
+		return this.updateUserNotification(eventId, filter);
 	}
 
-	markAsArchived(userNotificationId) {
-		const payload = {
-			status: 'ARCHIVED'
-		};
-		return this.updateUserNotification(userNotificationId, payload);
+	markAsArchived(eventId) {
+		const filter = 'status::ARCHIVED|isRead::true';
+		return this.updateUserNotification(eventId, filter);
 	}
 
-	updateUserNotification(userNotificationId, payload) {
+	updateUserNotification(eventId, filter) {
 		const response = new Promise((resolve, reject) => {
-			const request = new Request(this.url + '/usernotifications/' + userNotificationId, {
+			const request = new Request(this.url + '/events/' + eventId + '/usernotifications?filter=' + filter, {
 				method: 'PUT',
-				mode: 'cors',
 				headers: {
 					'X-Authorization': this.xAuth,
 					'Content-Type': this.contentType
-				},
-				body: JSON.stringify(payload)
+				}
 			});
 			fetch(request).then(function(response) {
 				resolve(response);
