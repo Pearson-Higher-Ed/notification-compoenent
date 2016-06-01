@@ -33,8 +33,8 @@ export default class CoachmarkListener {
         masterpieceId = parseInt(notificationDetails.masterpieceId);
         this.cmState = {};
         this.cmState[masterpieceId] = {
-            userNotificationId: notificationDetails.userNotificationId,
-            userId: notificationDetails.userId,
+            userNotificationId: notification.id,
+            userId: notification.recipientId,
             targetUserRole: notificationDetails.targetUserRole ? notificationDetails.targetUserRole : 'N/A',
             masterpieceId: masterpieceId,
             cmIds: cmIds,
@@ -112,6 +112,7 @@ export default class CoachmarkListener {
         fromLocal.masterpieceId = parseInt(fromLocal.masterpieceId);
         fromLocal.cmIds = fromLocal.cmIds.map((param) => parseInt(param));
         fromLocal.index = parseInt(fromLocal.index);
+        this.cmState = {};
         this.cmState[fromLocal.masterpieceId] = fromLocal;
         this.cmListenerSetup(fromLocal.masterpieceId);
         this.getDisplayCoachmark(fromLocal.masterpieceId);
