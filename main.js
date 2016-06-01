@@ -5,6 +5,7 @@ import NotificationApi from './src/js/NotificationApi';
 import './main.scss';
 import NotificationContainer from './src/js/NotificationContainer';
 import Drawer from '@pearson-components/drawer/main';
+import CoachmarkListener from './src/js/CoachmarkListener';
 
 
 /**
@@ -20,13 +21,13 @@ class NotificationComponent {
 		this.notApi = new NotificationApi(config);
 		const userNotifications = this.notApi.getNotifications();
 
-		// Connect up the drawer component here.  
+		// Connect up the drawer component here.
 		const dom = document.createElement('div');
 		dom.setAttribute('data-o-component', 'o-drawer');
 		dom.classList.add('o-drawer-right', 'o-drawer-animated');
 		this.listDrawer = new Drawer(dom);
 		document.body.appendChild(dom);
-		
+
 		this.notificationList = [];
 		this.archivedNotificationList = [];
 		userNotifications.then((result) => {
@@ -52,6 +53,8 @@ class NotificationComponent {
 			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
 			this.bellComponent = ReactDOM.render(<this.bellClass/>, element);
 
+			(new CoachmarkListener(config)).launchCoachmarkIfFromNewUrl();
+
 		}).catch(function(error) {
 			console.log(error);
 		});
@@ -61,7 +64,7 @@ class NotificationComponent {
 	_createBellReactClass() {
 		//  Keep track of the parent react class
 		const _this = this;//i'm not happy i need to do this....but it would be really complicated since i don't want to actually pass context down to the child except for the notificationList property.
-		
+
 		this.bellClass = React.createClass({
 			render: function() {
 				return (
@@ -90,13 +93,13 @@ class NotificationComponent {
 	toggleList() {
 		this.listDrawer.toggle();
 		if (this.newNotifications) {
-			// need to call the route that will change the status of all the notifications.  
+			// need to call the route that will change the status of all the notifications.
 			const viewedList = this.notificationList.filter(function(notification) {
 				if (notification.status === 'CREATED') {
 					return notification;
 				}
 			});
-			
+
 			viewedList.forEach((notification) => {
 				this.notApi.markAsViewed(notification.id).then(function(result) {
 					// we don't care to do anything here...
