@@ -86,6 +86,7 @@ export default class NotificationApi {
 		const response = new Promise((resolve, reject) => {
 			const request = new Request(this.url + '/events/' + eventId + '/usernotifications?filter=' + filter, {
 				method: 'PUT',
+				mode: 'cors',
 				headers: {
 					'X-Authorization': this.xAuth,
 					'Content-Type': this.contentType
