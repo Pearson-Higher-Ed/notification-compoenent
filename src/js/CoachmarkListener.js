@@ -112,6 +112,7 @@ export default class CoachmarkListener {
         fromLocal.masterpieceId = parseInt(fromLocal.masterpieceId);
         fromLocal.cmIds = fromLocal.cmIds.map((param) => parseInt(param));
         fromLocal.index = parseInt(fromLocal.index);
+        this.cmState = {};
         this.cmState[fromLocal.masterpieceId] = fromLocal;
         this.cmListenerSetup(fromLocal.masterpieceId);
         this.getDisplayCoachmark(fromLocal.masterpieceId);
