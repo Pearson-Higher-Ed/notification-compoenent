@@ -2,14 +2,14 @@
 
 import NotificationComponent from '../main'; // for direct API usage
 
-const pt = 'eyJhbGciOiJSUzUxMiIsImtpZCI6ImsxMDY5NDgxOTAifQ.eyJleHAiOjE0NjQzODAwMjksInN1YiI6ImZmZmZmZmZmNTNkYTNjYjNlNGIwZWFhZGRkNTc2ODc3Iiwic2Vzc2lkIjoiYzk3MGRjZDdmN2FjNDhkZWFhOGYyZDYwMDNiMWM1ZDMiLCJ0eXBlIjoiYXQiLCJpYXQiOjE0NjQzNjkyMjh9.Kn-Vwo-MPNv-cuQHnAZTOcSxVRgaUwEuobSXwIu_DIvlJ-Bk_2cXX2VMuT4_iVNSEII0gE05Ry3B-T1NgF1w37gtR6eox5ZzCFI_WP3LYEb62PKeVgcceAnGE296wpt4LicOb71YhBOG-f1esZeV6twuCg6vhye1huVURDGVpW4';
+const pt = 'eyJhbGciOiJSUzUxMiIsImtpZCI6ImsxMDY5NDgxOTAifQ.eyJleHAiOjE0NjQ4MDQ3NjcsInN1YiI6ImZmZmZmZmZmNTNkYTNjYjNlNGIwZWFhZGRkNTc2ODc3Iiwic2Vzc2lkIjoiNWZmYjMyMjFjYzg1NDE1ZjlkMjRkOTIxYzRkZWM0OTEiLCJ0eXBlIjoiYXQiLCJpYXQiOjE0NjQ3OTM5Njd9.WqjT7XJ8d0Nwh4G6qVFFtaYgGU_396liqM0a4-g830booOmM7EWXbdg11cA96mftQSOnsgiTttqRYHkK5eS88PHUThYBzsVINqyOuWkx2T2YFUiviAyczljDtoeKEuQV17IebNn8H1LDdt8DF2zy86htnuf-yJLhK0saQCWtV_M';
 
 const AppHeaderConfig = {
 	// NotificationAPI
 	nfApiUrl: 'https://notifications-api.stg-prsn.com',
 	nfContentTypeHeader: 'application/json',
 	nfPiToken: pt,
-	nfRecipientId: 'ffffffff5482258ce4b05a12806d3b14',
+	nfRecipientId: 'ffffffff560c1a1ee4b04ebf43118c60',
 
 	// CoachmarkAPI
 	cmApiUrl: 'http://localhost:8080',
