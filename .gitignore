@@ -7,3 +7,4 @@ demo/elements.css
 npm-debug.log
 *.iml
 build/*.js
+token.sh
