@@ -45,6 +45,9 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	appendArchiveList(archivedNotification) {
+		if (!this.state.displayDetails) {
+			document.dispatchEvent(new CustomEvent('NotificationBell.ReadNotification'));
+		}
 		const newList = this.state.list.filter(function(notification) {
 			if (notification.id !== archivedNotification.id) {
 				return notification;
@@ -60,7 +63,7 @@ export default class NotificationContainer extends React.Component {
 			notificationList:newList,
 			displayDetails: false
 		});
-		document.dispatchEvent(new CustomEvent('NotificationBell.ReadNotification'));
+
 	}
 
 	goToArchiveList() {
