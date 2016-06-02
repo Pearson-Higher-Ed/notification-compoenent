@@ -34,7 +34,7 @@ export default class NotificationNode extends React.Component {
 					</div>
 				</a>
 				<div className="notification-node--dismiss">
-					<button className={this.props.trashIconDisable ? 'hide' : ''} onClick={this.setArchivedNotification.bind(this)} ><i className="pe-icon--trash-o" ></i></button>
+					<button className={this.props.trashIconDisable ? 'hide' : ''} onClick={this.setArchivedNotification.bind(this)} ><i className="pe-icon--archive" ></i></button>
 				</div>
 			</div>
 		);
