@@ -176,6 +176,17 @@
     background-color: #ffffff;
     padding: 20px;
 
+    .notification-details__meta {
+        .noticiation-details__meta--source {
+            color: #565656;
+            font-size: 12px;
+        }
+        .notification-details__meta--time {
+            color: #565656;
+            font-size: 12px;
+        }
+    }
+
     .notification-details--title {
         margin-bottom: 40px;
     }
