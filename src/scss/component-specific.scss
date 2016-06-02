@@ -39,9 +39,12 @@
         float:left;
         border-bottom: none;
         font-size: 16px;
-        margin: 20px 0px 20px 20px;
+        margin: 20px 45px 20px 20px;
+        font-weight: bold;
     }
-
+    a {
+        text-decoration: none;
+    }
     .notification-title--back {
         color: #0d65a6;
         text-decoration: none;
@@ -51,20 +54,25 @@
         }
     }
 
-    .notification-archive--back {
-        i {
-            float:right;
-            border-bottom: none;
-            font-size: 16px;
-            margin: 25px 10px 20px 20px;
-        }
-    }
+    
 
 	.close-dropdown {
 		float:right;
         margin: 25px 13px 20px 20px;
 	}
 }
+
+.notification-archive--back {
+    position: absolute;
+    color: #231f20;
+    button {
+        background-color: white;
+        border-color: white;
+        border-width: 0px;
+    }
+    top: 20px;
+    right: 20px;
+    }
 
 .notification-list {
     background-color: #f2f2f2;
