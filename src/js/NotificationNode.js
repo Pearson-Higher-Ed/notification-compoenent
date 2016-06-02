@@ -10,7 +10,7 @@ export default class NotificationNode extends React.Component {
 		this.props.archivedNotification();
 	}
 
-	// when we hook up the course meta data.  We need to limit the course to not let it wrap.  
+	// when we hook up the course meta data.  We need to limit the course to not let it wrap.
 
 	render() {
 		let background = 'notification-node';
@@ -24,11 +24,11 @@ export default class NotificationNode extends React.Component {
 						<div className="notification-node--summary">
 							<h1> {this.props.title} </h1>
 							<div className="notification-node--summary-description">{this.props.summary}</div>
-							
+
 						</div>
 						<div className="notification-node--meta">
 							<div className="notification-node--meta-course">
-								{this.props.time} &#183; US History
+								{this.props.time}{this.props.source ? ' \u00b7 ' : ''}{this.props.source}
 							</div>
 						</div>
 					</div>
@@ -40,4 +40,3 @@ export default class NotificationNode extends React.Component {
 		);
 	}
 };
-
