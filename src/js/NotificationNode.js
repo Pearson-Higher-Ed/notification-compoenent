@@ -28,7 +28,7 @@ export default class NotificationNode extends React.Component {
 						</div>
 						<div className="notification-node--meta">
 							<div className="notification-node--meta-course">
-								{this.props.time}{this.props.source ? ' · ' : ''}{this.props.source}
+								{this.props.time}{this.props.source ? ' \u00b7 ' : ''}{this.props.source}
 							</div>
 						</div>
 					</div>
