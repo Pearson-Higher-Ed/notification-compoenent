@@ -14,7 +14,7 @@ describe('DateParser', () => {
         let oneHourAgo = new Date(now.getTime() - 600000 * 6);
         expect(DateParser.getFormatDateString(oneHourAgo)).toBe('1 hr');
     });
-    
+
     it('should display 1 day before', () => {
         let now = new Date();
         now.setDate(now.getDate()-1);
