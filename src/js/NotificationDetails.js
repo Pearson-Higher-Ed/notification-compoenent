@@ -1,5 +1,6 @@
 import React from 'react';
 import CoachmarkListener from './CoachmarkListener';
+import DateParser from './DateParser';
 
 export default class NotificationDetails extends React.Component {
 
@@ -36,6 +37,14 @@ export default class NotificationDetails extends React.Component {
 
 		return (
 			<div className="notification-details">
+				<div className="notification-details__meta">
+					<div className="noticiation-details__meta--source">
+						{this.props.notification.message.source}
+					</div>
+					<div className="notification-details__meta--time">
+						{DateParser.getFormatDateString(new Date(this.props.notification.createdAt))}
+					</div>
+				</div>
 				<div className="notification-details--title">
 					<h1>{this.props.notification.message.title}</h1>
 				</div>

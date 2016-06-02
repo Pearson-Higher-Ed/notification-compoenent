@@ -39,9 +39,12 @@
         float:left;
         border-bottom: none;
         font-size: 16px;
-        margin: 20px 0px 20px 20px;
+        margin: 20px 45px 20px 20px;
+        font-weight: bold;
     }
-
+    a {
+        text-decoration: none;
+    }
     .notification-title--back {
         color: #0d65a6;
         text-decoration: none;
@@ -51,20 +54,25 @@
         }
     }
 
-    .notification-archive--back {
-        i {
-            float:right;
-            border-bottom: none;
-            font-size: 16px;
-            margin: 25px 10px 20px 20px;
-        }
-    }
+    
 
 	.close-dropdown {
 		float:right;
         margin: 25px 13px 20px 20px;
 	}
 }
+
+.notification-archive--back {
+    position: absolute;
+    color: #231f20;
+    button {
+        background-color: white;
+        border-color: white;
+        border-width: 0px;
+    }
+    top: 20px;
+    right: 20px;
+    }
 
 .notification-list {
     background-color: #f2f2f2;
@@ -82,7 +90,7 @@
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
-        color: #b5b7b8; 
+        color: #b5b7b8;
     }
     h3 {
         text-align: center;
@@ -91,7 +99,7 @@
         top: 50%;
         left: 50%;
         margin-right: -50%;
-        transform: translate(-50%, -50%); 
+        transform: translate(-50%, -50%);
         color: #b5b7b8;
         a {
             color: #b5b7b8;
@@ -142,6 +150,11 @@
         top: 30px;
         color: #231f20;
         z-index: 1;
+        width: 27px;
+        height: 27px;
+        padding: 0px;
+        margin: 0px;
+        border: 0px;
     }
 
     .notification-node--meta {
@@ -162,6 +175,17 @@
 .notification-details {
     background-color: #ffffff;
     padding: 20px;
+
+    .notification-details__meta {
+        .noticiation-details__meta--source {
+            color: #565656;
+            font-size: 12px;
+        }
+        .notification-details__meta--time {
+            color: #565656;
+            font-size: 12px;
+        }
+    }
 
     .notification-details--title {
         margin-bottom: 40px;
