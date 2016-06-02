@@ -18,14 +18,13 @@ export default class NotificationBell extends React.Component {
 			bellClassNames += ' notification-bell--new'
 		}
 
-		if (this.props.unreadCount === 0) {
+		if (this.count === 0) {
 			bellClassNames += ' hide';
 		}
 
-		if (this.props.unreadCount > 9) {
+		if (this.count > 9) {
 			this.count = '9+'; 
 		}
-		console.log(this.count);
 		return (
 			<div className="notification-bell">
 				<a href="javascript:void(0)" className="notification-bell--activate" onClick={this.props.toggleList}>

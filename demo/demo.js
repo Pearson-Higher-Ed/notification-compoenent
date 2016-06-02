@@ -1,5 +1,6 @@
 'use strict';
 
+import './demo.scss';
 import NotificationComponent from '../main'; // for direct API usage
 
 const pt = '<token>';
@@ -12,12 +13,12 @@ const AppHeaderConfig = {
 	nfRecipientId: '<userId>',
 
 	// CoachmarkAPI
-	cmApiUrl: 'http://localhost:8080',
+	cmApiUrl: '<coachmarkUrl>',
 	cmContentTypeHeader: 'application/json',
 	cmPiToken: pt,
 
 	// FeedbackAPI
-	fbApiUrl: 'http://localhost:8080',
+	fbApiUrl: '<feedbackUrl>',
 	fbContentTypeHeader: 'application/json',
 	fbPiToken: pt
 };

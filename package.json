@@ -7,14 +7,13 @@
     "dev-setup": "mkdir -p fonts && cp ./node_modules/pearson-elements/dist/fonts/* ./fonts && cp ./node_modules/pearson-elements/dist/css/elements.css ./demo",
     "dev": "npm run dev-setup && webpack-dev-server --port 8081 --devtool eval --hot --progress --colors",
     "test": "./node_modules/karma/bin/karma start karma.conf.js",
-    "test-cov": "jest --coverage",
     "build": "webpack -p",
     "coveralls": "coveralls < coverage/lcov.info",
     "lint": "eslint src/js/**",
     "lint-all": "eslint src/js/** demo/demo.js __tests__/**",
     "gen-changelog": "node ./npm_scripts/gen-changelog.js",
     "version": "npm run gen-changelog && git add CHANGELOG.md",
-    "ci": "npm run test-cov && npm run build",
+    "ci": "npm test && npm run build",
     "release": "node ./npm_scripts/release.js",
     "verify": "node ./npm_scripts/verify.js"
   },
@@ -25,6 +24,7 @@
     "url": "https://github.com/Pearson-Higher-Ed/"
   },
   "dependencies": {
+    "@pearson-components/coach-mark": "^0.1.3",
     "@pearson-components/drawer": "^0.1.4",
     "react-intl": "~2.0.1"
   },
@@ -61,6 +61,7 @@
     "null-loader": "^0.1.1",
     "pearson-elements": "^0.6.1",
     "phantomjs": "^2.1.7",
+    "phantomjs-prebuilt": "^2.1.7",
     "react": "^15.0.0",
     "react-addons-test-utils": "^15.0.0",
     "react-dom": "^15.0.0",
