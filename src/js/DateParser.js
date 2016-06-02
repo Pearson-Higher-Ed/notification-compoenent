@@ -10,7 +10,7 @@ module.exports = {
         if (difference >= 60) {
             difference = difference / 60;
             if (difference >= 24) {
-                return dayOfWeek[updatedAt.getDay()] + ' ' + month[updatedAt.getMonth()] + ' ' + updatedAt.getDate() + ' ' + updatedAt.getFullYear();
+                return dayOfWeek[updatedAt.getDay()] + ', ' + month[updatedAt.getMonth()] + ' ' + updatedAt.getDate() + ', ' + updatedAt.getFullYear();
             }
             return parseInt(difference) + ' hr';
         }
