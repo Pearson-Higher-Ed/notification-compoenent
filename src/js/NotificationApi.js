@@ -7,7 +7,7 @@ function parseResponse(response) {
 	let newNotifications = false;
 	let unreadCount = 0;
 	// we are doing this simply to make it so that we flatten the object.  This is because the way notification works is
-	// it sends a payload message body which is a template which we made it a template of a json object.  
+	// it sends a payload message body which is a template which we made it a template of a json object.
 	const userNotificationsList = userNotifications.filter((notification) => {
 		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser' && notification.status !== 'ARCHIVED');
 	}).map((notification) => {
@@ -29,11 +29,29 @@ function parseResponse(response) {
 	});
 
 	return {
-		list: userNotificationsList,
+		list: fixDefaultValues(userNotificationsList),
 		newNotifications: newNotifications,
-		archivedList: archivedNotificationsList,
+		archivedList: fixDefaultValues(archivedNotificationsList),
 		unreadCount: unreadCount
 	};
+}
+
+/*
+ * If a property wasn't passed in to the API when the notification was created,
+ * the Velocity template will default the property value to '$eventModel.[property name]',
+ * but we instead need this to default to an empty string.
+ */
+function fixDefaultValues(notificationList) {
+	const badStr = '$eventModel.';
+	for (let i = 0; i < notificationList.length; i++) {
+		const msgObj = notificationList[i].message;
+		for (const prop in msgObj) {
+			if (msgObj.hasOwnProperty(prop) && msgObj[prop].toString().substring(0, badStr.length) === badStr) {
+				msgObj[prop] = '';
+			}
+		}
+	}
+	return notificationList;
 }
 
 export default class NotificationApi {
@@ -71,7 +89,7 @@ export default class NotificationApi {
 		const payload = {
 			isRead: true
 		};
-		return this.updateUserNotification(userNotificationId, payload);	
+		return this.updateUserNotification(userNotificationId, payload);
 	}
 
 	markAsViewed(userNotificationId) {
