@@ -53,7 +53,7 @@ export default class NotificationDetails extends React.Component {
 				</div>
 				{tourButton}
 				<div className="notification-details--align">
-					<a href="javascript:void(0);" onClick={this.archiveItem.bind(this)} className={archiveCss}><i className="pe-icon--archive"></i> archive this notification </a>
+					<a href="javascript:void(0);" onClick={this.archiveItem.bind(this)} className={archiveCss}><i className="pe-icon--archive"></i> Archive this Notification </a>
 				</div>
 			</div>
 		);
