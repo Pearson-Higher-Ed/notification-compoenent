@@ -6,5 +6,5 @@ fonts
 demo/elements.css
 npm-debug.log
 *.iml
-build/*.js
+build/dev.notification.js
 token.sh
