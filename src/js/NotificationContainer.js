@@ -64,7 +64,6 @@ export default class NotificationContainer extends React.Component {
 			notificationList:newList,
 			displayDetails: false
 		});
-
 	}
 
 	goToArchiveList() {
