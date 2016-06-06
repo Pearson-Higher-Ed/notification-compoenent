@@ -44,7 +44,7 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	appendArchiveList(archivedNotification) {
-		if (!this.state.displayDetails) {
+		if (!this.state.displayDetails && !archivedNotification.isRead) {
 			document.dispatchEvent(new CustomEvent('NotificationBell.ReadNotification'));
 		}
 		const newList = this.state.list.filter(function(notification) {
