@@ -39,7 +39,7 @@ export default class NotificationList extends React.Component {
 			const time = DateParser.getFormatDateString(new Date(notification.createdAt))
 			return (
 					<NotificationNode key={notification.id} detailsClick={this.showDetails.bind(this, notification)}
-					title={notification.message.title.substring(0, 50) + '...'} summary={notification.message.body.substring(0, 30) + '...'}
+					title={notification.message.title.substring(0, 50) + (notification.message.title.length > 50 ? '...' : '')} summary={notification.message.body.substring(0, 30) + (notification.message.body.length > 30 ? '...' : '')}
 					archivedNotification={this.onArchived.bind(this, notification)} trashIconDisable={this.props.isArchiveTray}  time={time}
 					isRead={notification.isRead} source={notification.message.source}/>
 				);
