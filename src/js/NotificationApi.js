@@ -7,7 +7,7 @@ function parseResponse(response) {
 	let newNotifications = false;
 	let unreadCount = 0;
 	// we are doing this simply to make it so that we flatten the object.  This is because the way notification works is
-	// it sends a payload message body which is a template which we made it a template of a json object.  
+	// it sends a payload message body which is a template which we made it a template of a json object.
 	const userNotificationsList = userNotifications.filter((notification) => {
 		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser' && notification.status !== 'ARCHIVED');
 	}).map((notification) => {
@@ -29,11 +29,29 @@ function parseResponse(response) {
 	});
 
 	return {
-		list: userNotificationsList,
+		list: fixDefaultValues(userNotificationsList),
 		newNotifications: newNotifications,
-		archivedList: archivedNotificationsList,
+		archivedList: fixDefaultValues(archivedNotificationsList),
 		unreadCount: unreadCount
 	};
+}
+
+/*
+ * If a property wasn't passed in to the API when the notification was created,
+ * the Velocity template will default the property value to '$eventModel.[property name]',
+ * but we instead need this to default to an empty string.
+ */
+function fixDefaultValues(notificationList) {
+	const badStr = '$eventModel.';
+	for (let i = 0; i < notificationList.length; i++) {
+		const msgObj = notificationList[i].message;
+		for (const prop in msgObj) {
+			if (msgObj.hasOwnProperty(prop) && msgObj[prop].toString().substring(0, badStr.length) === badStr) {
+				msgObj[prop] = '';
+			}
+		}
+	}
+	return notificationList;
 }
 
 export default class NotificationApi {
@@ -67,30 +85,37 @@ export default class NotificationApi {
 		return response;
 	}
 
-	markAsRead(eventId) {
-		const filter = 'isRead::true';
-		return this.updateUserNotification(eventId, filter);
+	markAsRead(userNotificationId) {
+		const payload = {
+			isRead: true
+		};
+		return this.updateUserNotification(userNotificationId, payload);
 	}
 
-	markAsViewed(eventId) {
-		const filter = 'status::VIEWED';
-		return this.updateUserNotification(eventId, filter);
+	markAsViewed(userNotificationId) {
+		const payload = {
+			status: 'VIEWED'
+		};
+		return this.updateUserNotification(userNotificationId, payload);
 	}
 
-	markAsArchived(eventId) {
-		const filter = 'status::ARCHIVED|isRead::true';
-		return this.updateUserNotification(eventId, filter);
+	markAsArchived(userNotificationId) {
+		const payload = {
+			status: 'ARCHIVED'
+		};
+		return this.updateUserNotification(userNotificationId, payload);
 	}
 
-	updateUserNotification(eventId, filter) {
+	updateUserNotification(userNotificationId, payload) {
 		const response = new Promise((resolve, reject) => {
-			const request = new Request(this.url + '/events/' + eventId + '/usernotifications?filter=' + filter, {
+			const request = new Request(this.url + '/usernotifications/' + userNotificationId, {
 				method: 'PUT',
 				mode: 'cors',
 				headers: {
 					'X-Authorization': this.xAuth,
 					'Content-Type': this.contentType
-				}
+				},
+				body: JSON.stringify(payload)
 			});
 			fetch(request).then(function(response) {
 				resolve(response);

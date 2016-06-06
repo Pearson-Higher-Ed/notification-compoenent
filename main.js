@@ -101,7 +101,7 @@ class NotificationComponent {
 			});
 
 			viewedList.forEach((notification) => {
-				this.notApi.markAsViewed(notification.eventId).then(function(result) {
+				this.notApi.markAsViewed(notification.id).then(function(result) {
 					// we don't care to do anything here...
 				}, function(err) {
 					// we really don't care about this...

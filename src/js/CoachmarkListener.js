@@ -33,7 +33,7 @@ export default class CoachmarkListener {
         masterpieceId = parseInt(notificationDetails.masterpieceId);
         this.cmState = {};
         this.cmState[masterpieceId] = {
-            eventId: notification.eventId,
+            userNotificationId: notification.id,
             userId: notification.recipientId,
             targetUserRole: notificationDetails.targetUserRole ? notificationDetails.targetUserRole : 'N/A',
             masterpieceId: masterpieceId,
@@ -75,7 +75,7 @@ export default class CoachmarkListener {
             }
 
             const cm = new Coachmark(document.getElementById(result.element), result.options, function() {
-                this.notificationApi.markAsRead(this.cmState[masterpieceId].eventId);
+                this.notificationApi.markAsRead(this.cmState[masterpieceId].userNotificationId);
                 this.closeCoachmark(cm.element.nextSibling);
             }.bind(this));
 
@@ -170,7 +170,7 @@ export default class CoachmarkListener {
                 event.data.payload,
                 this.cmState[masterpieceId].likeCmSeries
             );
-            this.notificationApi.markAsRead(this.cmState[masterpieceId].eventId);
+            this.notificationApi.markAsRead(this.cmState[masterpieceId].userNotificationId);
             this.closeCoachmark(event.target.nextSibling);
         }.bind(this));
     }
