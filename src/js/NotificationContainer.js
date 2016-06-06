@@ -30,7 +30,7 @@ export default class NotificationContainer extends React.Component {
 		if(!this.state.isArchive && !notification.isRead) {
 			this.notificationApi.markAsRead(notification.id);
 			notification.isRead = true;
-			state.notificationList = this.updatedNotification(notification);
+			state.notificationList = this.updateNotification(notification);
 			document.dispatchEvent(new CustomEvent('NotificationBell.ReadNotification'));
 		}
 		this.refs.heading && this.refs.heading.focus();
