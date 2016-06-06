@@ -44,13 +44,18 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	appendArchiveList(archivedNotification) {
+		if (!this.state.displayDetails) {
+			document.dispatchEvent(new CustomEvent('NotificationBell.ReadNotification'));
+		}
 		const newList = this.state.list.filter(function(notification) {
 			if (notification.id !== archivedNotification.id) {
 				return notification;
 			}
 		});
 		const newArchiveList = this.state.archivedList;
+		this.notificationApi.markAsArchivedAndRead(archivedNotification.id);
 		archivedNotification.status = 'ARCHIVED';
+		archivedNotification.isRead = true;
 		newArchiveList.push(archivedNotification);
 		this.setState({
 			archivedList: newArchiveList,
