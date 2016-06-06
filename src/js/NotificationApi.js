@@ -65,7 +65,7 @@ export default class NotificationApi {
 
 	getNotifications() {
 		const response = new Promise((resolve, reject) => {
-			const request = new Request(this.url + '/usernotifications?filter=recipientId::' + this.recipientId + '|notificationType::inbrowser', {
+			const request = new Request(this.url + '?filter=recipientId::' + this.recipientId + '|notificationType::inbrowser', {
 				method: 'GET',
 				mode: 'cors',
 				headers: {
@@ -99,16 +99,17 @@ export default class NotificationApi {
 		return this.updateUserNotification(userNotificationId, payload);
 	}
 
-	markAsArchived(userNotificationId) {
+	markAsArchivedAndRead(userNotificationId) {
 		const payload = {
-			status: 'ARCHIVED'
+			status: 'ARCHIVED',
+			isRead: true
 		};
 		return this.updateUserNotification(userNotificationId, payload);
 	}
 
 	updateUserNotification(userNotificationId, payload) {
 		const response = new Promise((resolve, reject) => {
-			const request = new Request(this.url + '/usernotifications/' + userNotificationId, {
+			const request = new Request(this.url + '/' + userNotificationId, {
 				method: 'PUT',
 				mode: 'cors',
 				headers: {
