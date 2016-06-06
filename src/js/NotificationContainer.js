@@ -91,7 +91,6 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	render() {
-		console.log()
 		return (
 			<div>
 				<div className="notification-title">
