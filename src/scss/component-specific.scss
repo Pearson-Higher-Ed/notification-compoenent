@@ -54,7 +54,7 @@
         }
     }
 
-    
+
 
 	.close-dropdown {
 		float:right;
@@ -137,9 +137,13 @@
                 color: #0d65a6;
                 line-height: normal;
                 font-weight: bold;
+								height: 40px;
+								overflow: hidden;
             }
             .notification-node--summary-description {
                 color: #565656;
+								height: 20px;
+								overflow: hidden;
             }
         }
     }
