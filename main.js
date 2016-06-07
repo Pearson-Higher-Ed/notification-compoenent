@@ -39,13 +39,25 @@ class NotificationComponent {
 			this.newNotifications = result.newNotifications;
 			this.unreadCount = result.unreadCount;
 			// convert to Date objects
-			if (this.notificationList.length > 0) {
+			if (this.notificationList.length > 0 ) {
 				this.notificationList.forEach(item => {
 					item.createdAt = new Date(item.createdAt);
 					item.updatedAt = new Date(item.updatedAt);
 				});
 				// sort by created field, newest first
 				this.notificationList.sort((x, y) => {
+					return y.createdAt - x.createdAt;
+				});
+			}
+
+			// convert to Date objects
+			if (this.archivedNotificationList.length > 0 ) {
+				this.archivedNotificationList.forEach(item => {
+					item.createdAt = new Date(item.createdAt);
+					item.updatedAt = new Date(item.updatedAt);
+				});
+				// sort by created field, newest first
+				this.archivedNotificationList.sort((x, y) => {
 					return y.createdAt - x.createdAt;
 				});
 			}
@@ -114,6 +126,7 @@ class NotificationComponent {
 	}
 
 	closeDrawer() {
+		document.dispatchEvent(new CustomEvent('NotificationContainer.ResetNotificationList'));
 		this.listDrawer.close();
 	}
 }

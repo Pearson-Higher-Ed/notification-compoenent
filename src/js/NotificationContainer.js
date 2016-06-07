@@ -8,7 +8,6 @@ export default class NotificationContainer extends React.Component {
 
 	constructor(props) {
 		super(props);
-
 		this.notificationApi = new NotificationApi(this.props.config);
 		this.state = {
 			isArchive: false,
@@ -20,6 +19,13 @@ export default class NotificationContainer extends React.Component {
 			list: props.list || [],
 			notificationList: props.list || []
 		};
+		document.addEventListener('NotificationContainer.ResetNotificationList', () => {
+			this.setState({
+				displayDetails: false,
+				isArchive: false,
+				list: this.state.notificationList
+			});
+		});
 	}
 
 	showDetails(notification) {
@@ -57,6 +63,9 @@ export default class NotificationContainer extends React.Component {
 		archivedNotification.status = 'ARCHIVED';
 		archivedNotification.isRead = true;
 		newArchiveList.push(archivedNotification);
+		newArchiveList.sort((x, y) => {
+			return y.createdAt - x.createdAt;
+		});
 		this.setState({
 			archivedList: newArchiveList,
 			list: newList,
