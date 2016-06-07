@@ -139,6 +139,7 @@
                 font-weight: bold;
 								height: 40px;
 								overflow: hidden;
+								text-overflow: ellipsis;
             }
             .notification-node--summary-description {
                 color: #565656;
@@ -167,6 +168,8 @@
         color: #565656;
         .notification-node--meta-course {
             float:left;
+						height: 32px;
+						overflow: hidden;
         }
 
     }
