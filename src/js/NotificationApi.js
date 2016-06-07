@@ -61,6 +61,7 @@ export default class NotificationApi {
 		this.xAuth = config.nfPiToken;
 		this.contentType = config.nfContentTypeHeader;
 		this.recipientId = config.nfRecipientId;
+
 	}
 
 	getNotifications() {

@@ -1,7 +1,6 @@
 import React from 'react';
 import CoachmarkApi from './CoachmarkApi';
 import FeedbackApi from './FeedbackApi';
-import NotificationApi from './NotificationApi';
 
 export default class NotificationHeading extends React.Component {
 

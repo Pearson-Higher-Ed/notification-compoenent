@@ -6,6 +6,7 @@ import './main.scss';
 import NotificationContainer from './src/js/NotificationContainer';
 import Drawer from '@pearson-components/drawer/main';
 import CoachmarkListener from './src/js/CoachmarkListener';
+import NotificationRealTime from './src/js/NotificationRealTime';
 
 
 /**
@@ -34,21 +35,14 @@ class NotificationComponent {
 			// create the react classes for reference later
 			this._createBellReactClass();
 			this._createListReactClass(config);
+
 			this.notificationList = result.list;
 			this.archivedNotificationList = result.archivedList;
 			this.newNotifications = result.newNotifications;
 			this.unreadCount = result.unreadCount;
-			// convert to Date objects
-			if (this.notificationList.length > 0) {
-				this.notificationList.forEach(item => {
-					item.createdAt = new Date(item.createdAt);
-					item.updatedAt = new Date(item.updatedAt);
-				});
-				// sort by created field, newest first
-				this.notificationList.sort((x, y) => {
-					return y.createdAt - x.createdAt;
-				});
-			}
+
+			this._sortNotificationList();
+
 			// Keep reference to the components to set state later and render the react components now that we have the data
 			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
 			this.bellComponent = ReactDOM.render(<this.bellClass/>, element);
@@ -58,6 +52,38 @@ class NotificationComponent {
 		}).catch(function(error) {
 			console.log(error);
 		});
+
+		this.realTimeNotification = new NotificationRealTime(config, this._messageListener.bind(this));
+
+		document.addEventListener('NotificationBell.ReadNotification', () => {
+			this.unreadCount--;
+			this.bellComponent.forceUpdate();
+		});
+
+	}
+
+	_messageListener(message) {
+		this.notificationList.push({
+			id: message.payload.userNotificationId,
+			isRead: false,
+			isComplete: false,
+			status: 'CREATED',
+			payload: {
+				message: message.payload.data
+			},
+			createdAt: message.payload.createdAt,
+			updatedAt: message.payload.createdAt, //just for sorting purposes this needs to be here
+			notificationType: 'inbrowser',
+			recipientId: message.payload.recipientId
+		});
+
+		this._sortNotificationList();
+
+		this.unreadCount++;
+		this.newNotifications = true;
+
+		this.bellComponent.forceUpdate();
+		this.containerComponent.forceUpdate();
 
 	}
 
@@ -74,6 +100,20 @@ class NotificationComponent {
 				);
 			}
 		});
+	}
+
+	_sortNotificationList() {
+		// convert to Date objects
+		if (this.notificationList.length > 0) {
+			this.notificationList.forEach(item => {
+				item.createdAt = new Date(item.createdAt);
+				item.updatedAt = new Date(item.updatedAt);
+			});
+			// sort by created field, newest first
+			this.notificationList.sort((x, y) => {
+				return y.createdAt - x.createdAt;
+			});
+		}
 	}
 
 	_createListReactClass(config) {
