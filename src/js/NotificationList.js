@@ -28,13 +28,16 @@ export default class NotificationList extends React.Component {
 	 * Render
 	 **/
 	render() {
+		const titleLength = 46;
+		const bodyLength = 26;
 		let notificationNodeObjects = {};
 		if (this.props.list.length > 0) {
 			notificationNodeObjects = this.props.list.map((notification) => {
 			const time = DateParser.getFormatDateString(new Date(notification.createdAt))
 			return (
 					<NotificationNode key={notification.id} detailsClick={this.showDetails.bind(this, notification)}
-					title={notification.message.title.substring(0, 50) + (notification.message.title.length > 50 ? '\u2026' : '')} summary={notification.message.body.substring(0, 30) + (notification.message.body.length > 30 ? '\u2026' : '')}
+					title={notification.message.title.length > titleLength ? notification.message.title.substring(0, titleLength) + '\u2026' : notification.message.title}
+					summary={notification.message.body.length > bodyLength ? notification.message.body.substring(0, bodyLength)  + '\u2026' : notification.message.body}
 					archivedNotification={this.onArchived.bind(this, notification)} trashIconDisable={this.props.isArchiveTray}  time={time}
 					isRead={notification.isRead} source={notification.message.source}/>
 				);
