@@ -11,21 +11,29 @@ function parseResponse(response) {
 	const userNotificationsList = userNotifications.filter((notification) => {
 		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser' && notification.status !== 'ARCHIVED');
 	}).map((notification) => {
-		const result = JSON.parse(notification.payload.message);
-		notification.message = result;
-		if (notification.status === 'CREATED') {
-			newNotifications = true;
+		try {
+			const result = JSON.parse(notification.payload.message);
+			notification.message = result;
+			if (notification.status === 'CREATED') {
+				newNotifications = true;
+			}
+			if (notification.isRead === false) {
+				unreadCount++;
+			}
+			return notification;
+		} catch (e) {
+			console.log(`Error parsing payload message!\n${e}\nPayload message:\n${notification.payload.message}`);
 		}
-		if (notification.isRead === false) {
-			unreadCount++;
-		}
-		return notification;
 	});
 
 	const archivedNotificationsList = userNotifications.filter((notification) => {
-		const result = JSON.parse(notification.payload.message);
-		notification.message = result;
-		return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser' && notification.status === 'ARCHIVED');
+		try {
+			const result = JSON.parse(notification.payload.message);
+			notification.message = result;
+			return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser' && notification.status === 'ARCHIVED');
+		} catch (e) {
+			console.log(`Error parsing payload message!\n${e}\nPayload message:\n${notification.payload.message}`);
+		}
 	});
 
 	return {
@@ -43,6 +51,8 @@ function parseResponse(response) {
  */
 function fixDefaultValues(notificationList) {
 	const badStr = '$eventModel.';
+	notificationList = notificationList.filter(n => n !== undefined);
+
 	for (let i = 0; i < notificationList.length; i++) {
 		const msgObj = notificationList[i].message;
 		for (const prop in msgObj) {
@@ -127,4 +137,4 @@ export default class NotificationApi {
 		});
 		return response;
 	}
-};
+}
