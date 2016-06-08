@@ -16,6 +16,15 @@ export default class NotificationContainer extends React.Component {
 				message: {}
 			}
 		};
+
+		document.addEventListener('NotificationContainer.ResetNotificationList', () => {
+			this.setState({
+				displayDetails: false,
+				isArchive: false,
+				list: this.state.notificationList
+			});
+		});
+
 	}
 
 	showDetails(notification) {
