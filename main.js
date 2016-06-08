@@ -6,7 +6,7 @@ import './main.scss';
 import NotificationContainer from './src/js/NotificationContainer';
 import Drawer from '@pearson-components/drawer/main';
 import CoachmarkListener from './src/js/CoachmarkListener';
-import NotificationRealTime from './src/js/NotificationRealTime';
+import NotificationRealTimeApi from './src/js/NotificationRealTimeApi';
 
 
 /**
@@ -53,7 +53,7 @@ class NotificationComponent {
 			console.log(error);
 		});
 
-		this.realTimeNotification = new NotificationRealTime(config, this._messageListener.bind(this));
+		this.realTimeNotification = new NotificationRealTimeApi(config, this._messageListener.bind(this));
 
 		document.addEventListener('NotificationBell.ReadNotification', () => {
 			this.unreadCount--;
