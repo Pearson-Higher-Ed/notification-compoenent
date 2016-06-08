@@ -8,7 +8,6 @@ export default class NotificationContainer extends React.Component {
 
 	constructor(props) {
 		super(props);
-
 		this.notificationApi = new NotificationApi(this.props.config);
 		this.state = {
 			isArchive: false,
@@ -20,6 +19,13 @@ export default class NotificationContainer extends React.Component {
 			list: props.list || [],
 			notificationList: props.list || []
 		};
+		document.addEventListener('NotificationContainer.ResetNotificationList', () => {
+			this.setState({
+				displayDetails: false,
+				isArchive: false,
+				list: this.state.notificationList
+			});
+		});
 	}
 
 	showDetails(notification) {
@@ -30,9 +36,8 @@ export default class NotificationContainer extends React.Component {
 		if(!this.state.isArchive && !notification.isRead) {
 			this.notificationApi.markAsRead(notification.id);
 			notification.isRead = true;
-			state.notificationList = this.updatedNotificationList(notification);
+			state.notificationList = this.updateNotification(notification);
 			document.dispatchEvent(new CustomEvent('NotificationBell.ReadNotification'));
-
 		}
 		this.refs.heading && this.refs.heading.focus();
 		this.setState(state);
@@ -45,7 +50,7 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	appendArchiveList(archivedNotification) {
-		if (!this.state.displayDetails) {
+		if (!this.state.displayDetails && !archivedNotification.isRead) {
 			document.dispatchEvent(new CustomEvent('NotificationBell.ReadNotification'));
 		}
 		const newList = this.state.list.filter(function(notification) {
@@ -58,6 +63,9 @@ export default class NotificationContainer extends React.Component {
 		archivedNotification.status = 'ARCHIVED';
 		archivedNotification.isRead = true;
 		newArchiveList.push(archivedNotification);
+		newArchiveList.sort((x, y) => {
+			return y.createdAt - x.createdAt;
+		});
 		this.setState({
 			archivedList: newArchiveList,
 			list: newList,
