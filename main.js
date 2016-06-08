@@ -156,6 +156,7 @@ class NotificationComponent {
 	}
 
 	toggleList() {
+		document.dispatchEvent(new CustomEvent('NotificationContainer.ResetNotificationList'));
 		this.listDrawer.toggle();
 		if (this.newNotifications) {
 			// need to call the route that will change the status of all the notifications.
