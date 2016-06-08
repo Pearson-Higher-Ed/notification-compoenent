@@ -55,11 +55,6 @@ class NotificationComponent {
 
 		this.realTimeNotification = new NotificationRealTimeApi(config, this._messageListener.bind(this));
 
-		document.addEventListener('NotificationBell.ReadNotification', () => {
-			this.unreadCount--;
-			this.bellComponent.forceUpdate();
-		});
-
 	}
 
 	_messageListener(message) {
@@ -68,9 +63,7 @@ class NotificationComponent {
 			isRead: false,
 			isComplete: false,
 			status: 'CREATED',
-			payload: {
-				message: message.payload.data
-			},
+			message: JSON.parse(message.payload.data),
 			createdAt: message.payload.createdAt,
 			updatedAt: message.payload.createdAt, //just for sorting purposes this needs to be here
 			notificationType: 'inbrowser',
@@ -102,6 +95,50 @@ class NotificationComponent {
 		});
 	}
 
+	_createListReactClass(config) {
+
+		const _this = this;
+		this.containerClass = React.createClass({
+			render: function() {
+				return (
+					<div>
+						<NotificationContainer list={_this.notificationList} notificationRead={_this.notificationRead.bind(_this)} 
+						archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} archiveNotification={_this.archiveNotification.bind(_this)}/>
+					</div>
+				);
+			}
+		});
+	}
+
+	notificationRead(notification) {
+		this.notApi.markAsRead(notification.id);
+		for(let i = 0; i < this.notificationList.length; i++) {
+			if(this.notificationList[i].id === notification.id) {
+				this.notificationList[i].isRead = true;
+				break;
+			}
+		}
+		this.unreadCount--;
+		this.bellComponent.forceUpdate();
+	}
+
+	archiveNotification(archivedNotification) {
+		this.notificationList = this.notificationList.filter(function(notification) {
+			if (notification.id !== archivedNotification.id) {
+				return notification;
+			}
+		});
+		this.notApi.markAsArchivedAndRead(archivedNotification.id);
+		if(!archivedNotification.isRead) {
+			archivedNotification.isRead = true;
+			this.unreadCount--;
+			this.bellComponent.forceUpdate();
+		}
+		archivedNotification.status = 'ARCHIVED';
+		this.archivedNotificationList.push(archivedNotification);
+		this.containerComponent.forceUpdate();
+	}
+
 	_sortNotificationList() {
 		// convert to Date objects
 		if (this.notificationList.length > 0) {
@@ -114,20 +151,6 @@ class NotificationComponent {
 				return y.createdAt - x.createdAt;
 			});
 		}
-	}
-
-	_createListReactClass(config) {
-
-		const _this = this;
-		this.containerClass = React.createClass({
-			render: function() {
-				return (
-					<div>
-						<NotificationContainer list={_this.notificationList}  archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} config={config}/>
-					</div>
-				);
-			}
-		});
 	}
 
 	toggleList() {
