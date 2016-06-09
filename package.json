@@ -72,6 +72,7 @@
     "url-loader": "~0.5.7",
     "webpack": "~1.12.9",
     "webpack-dev-server": "~1.14.0",
+    "webpack-strip": "^0.1.0",
     "whatwg-fetch": "^0.11.0"
   },
   "keywords": [
