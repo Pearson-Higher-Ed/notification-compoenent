@@ -9,16 +9,12 @@ export default class NotificationContainer extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.notificationApi = new NotificationApi(this.props.config);
 		this.state = {
 			isArchive: false,
 			displayDetails: false,
 			notificationDetails: {
 				message: {}
-			},
-			archivedList: props.archivedList || [],
-			list: props.list || [],
-			notificationList: props.list || []
+			}
 		};
 	}
 
@@ -28,11 +24,7 @@ export default class NotificationContainer extends React.Component {
 			notificationDetails: notification
 		};
 		if(!this.state.isArchive && !notification.isRead) {
-			this.notificationApi.markAsRead(notification.id);
-			notification.isRead = true;
-			state.notificationList = this.updatedNotificationList(notification);
-			document.dispatchEvent(new CustomEvent('NotificationBell.ReadNotification'));
-
+			this.props.notificationRead(notification);
 		}
 		this.refs.heading && this.refs.heading.focus();
 		this.setState(state);
@@ -45,50 +37,22 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	appendArchiveList(archivedNotification) {
-		if (!this.state.displayDetails) {
-			document.dispatchEvent(new CustomEvent('NotificationBell.ReadNotification'));
-		}
-		const newList = this.state.list.filter(function(notification) {
-			if (notification.id !== archivedNotification.id) {
-				return notification;
-			}
-		});
-		const newArchiveList = this.state.archivedList;
-		this.notificationApi.markAsArchivedAndRead(archivedNotification.id);
-		archivedNotification.status = 'ARCHIVED';
-		archivedNotification.isRead = true;
-		newArchiveList.push(archivedNotification);
+		this.props.archiveNotification(archivedNotification);
 		this.setState({
-			archivedList: newArchiveList,
-			list: newList,
-			notificationList:newList,
 			displayDetails: false
 		});
 	}
 
 	goToArchiveList() {
 		this.setState({
-			list: this.state.archivedList,
 			isArchive: true
 		});
 	}
 
-	updatedNotificationList() {
+	showNonArchivedList() {
 		this.setState({
-			list: this.state.notificationList,
 			isArchive: false
 		});
-	}
-
-	updateNotification(notification) {
-		const newList = this.state.list;
-		for( let i = 0; i < newList.length; i++) {
-			if(newList[i].id === notification.id) {
-				newList[i] = notification;
-				break;
-			}
-		}
-		return newList;
 	}
 
 	render() {
@@ -101,8 +65,14 @@ export default class NotificationContainer extends React.Component {
 					</div>
 				</div>
 				<div className={this.state.displayDetails ? 'hide' : ''}>
-					<NotificationList list={this.state.list}  closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} showDetails={this.showDetails.bind(this)}
-					 appendArchiveList={this.appendArchiveList.bind(this)} isArchiveTray={this.state.isArchive} goToArchiveList={this.goToArchiveList.bind(this)}/>
+					<div className={this.state.isArchive ? 'hide': ''}>
+						<NotificationList list={this.props.list} showDetails={this.showDetails.bind(this)}
+						 appendArchiveList={this.appendArchiveList.bind(this)} isArchiveTray={false} goToArchiveList={this.goToArchiveList.bind(this)}/>
+					</div>
+					<div className={this.state.isArchive ? '': 'hide'}>
+						<NotificationList list={this.props.archivedList} showDetails={this.showDetails.bind(this)}
+						 appendArchiveList={this.appendArchiveList.bind(this)} isArchiveTray={true} goToArchiveList={this.goToArchiveList.bind(this)}/>
+					</div>
 				</div>
 				<div className={this.state.displayDetails ? '' : 'hide'}>
 					<div className="notification-list">
@@ -115,7 +85,7 @@ export default class NotificationContainer extends React.Component {
 					</h1>
 				</div>
 				<div className="notification-archive--back">
-					<button onClick={this.state.isArchive && !this.state.displayDetails ? this.updatedNotificationList.bind(this) : this.props.closeDrawer}> <i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-down pointer' : 'pe-icon--times close-dropdown pointer'}></i> </button>
+					<button onClick={this.state.isArchive && !this.state.displayDetails ? this.showNonArchivedList.bind(this) : this.props.closeDrawer}> <i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-down pointer' : 'pe-icon--times close-dropdown pointer'}></i> </button>
 				</div>		
 			</div>
 		);

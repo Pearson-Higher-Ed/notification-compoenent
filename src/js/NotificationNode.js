@@ -1,42 +1,33 @@
 import React from 'react';
 
-export default class NotificationNode extends React.Component {
+const NotificationNode = ({detailsClick, title, summary, source, archivedNotification, time, isRead, trashIconDisable}) => {
 
-	constructor(props) {
-		super(props);
+	
+	let background = 'notification-node';
+	if(isRead) {
+		background += ' notification-node--isread';
 	}
+	return (
+		<div className={background}>
+			<a href="javascript:void(0)" className="notification-node--no-decoration" onClick={detailsClick}>
+				<div className="notification-node--details">
+					<div className="notification-node--summary">
+						<h1> {title} </h1>
+						<div className="notification-node--summary-description">{summary}</div>
 
-	setArchivedNotification() {
-		this.props.archivedNotification();
-	}
-
-	// when we hook up the course meta data.  We need to limit the course to not let it wrap.
-
-	render() {
-		let background = 'notification-node';
-		if(this.props.isRead) {
-			background += ' notification-node--isread';
-		}
-		return (
-			<div className={background}>
-				<a href="javascript:void(0)" className="notification-node--no-decoration" onClick={this.props.detailsClick}>
-					<div className="notification-node--details">
-						<div className="notification-node--summary">
-							<h1> {this.props.title} </h1>
-							<div className="notification-node--summary-description">{this.props.summary}</div>
-
-						</div>
-						<div className="notification-node--meta">
-							<div className="notification-node--meta-course">
-								{this.props.time}{this.props.source ? ' \u00b7 ' : ''}{this.props.source}
-							</div>
+					</div>
+					<div className="notification-node--meta">
+						<div className="notification-node--meta-course">
+							{time}{source ? ' \u00b7 ' : ''}{source}
 						</div>
 					</div>
-				</a>
-				<div className="notification-node--dismiss">
-					<button className={this.props.trashIconDisable ? 'hide' : ''} onClick={this.setArchivedNotification.bind(this)} ><i className="pe-icon--archive" ></i></button>
 				</div>
+			</a>
+			<div className="notification-node--dismiss">
+				<button className={trashIconDisable ? 'hide' : ''} onClick={archivedNotification} ><i className="pe-icon--archive" ></i></button>
 			</div>
-		);
-	}
+		</div>
+	);
 };
+
+export default NotificationNode;

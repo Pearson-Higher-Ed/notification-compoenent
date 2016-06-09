@@ -11,7 +11,8 @@ const AppHeaderConfig = {
 	nfContentTypeHeader: 'application/json',
 	nfPiToken: pt,
 	nfRecipientId: '<userId>',
-
+	rtdUrl: '<rtdUrl>',
+	rtdProductType: '<rtdProductType>',
 	// CoachmarkAPI
 	cmApiUrl: '<coachmarkUrl>',
 	cmContentTypeHeader: 'application/json',
