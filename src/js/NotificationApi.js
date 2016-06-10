@@ -20,6 +20,8 @@ function parseResponse(response) {
 			if (notification.isRead === false) {
 				unreadCount++;
 			}
+			notification.createdAt = new Date(notification.createdAt);
+			notification.updatedAt = new Date(notification.updatedAt);
 			return notification;
 		} catch (e) {
 			console.log(`Error parsing payload message!\n${e}\nPayload message:\n${notification.payload.message}`);
@@ -30,6 +32,8 @@ function parseResponse(response) {
 		try {
 			const result = JSON.parse(notification.payload.message);
 			notification.message = result;
+			notification.createdAt = new Date(notification.createdAt);
+			notification.updatedAt = new Date(notification.updatedAt);
 			return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser' && notification.status === 'ARCHIVED');
 		} catch (e) {
 			console.log(`Error parsing payload message!\n${e}\nPayload message:\n${notification.payload.message}`);
