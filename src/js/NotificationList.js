@@ -10,7 +10,6 @@ export default class NotificationList extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.notApi = new NotificationApi(this.props.apiConfig);
 	}
 
 	showDetails(notification) {
@@ -35,8 +34,8 @@ export default class NotificationList extends React.Component {
 		let notificationNodeObjects = {};
 		if (this.props.list.length > 0) {
 			notificationNodeObjects = this.props.list.map((notification) => {
-			const time = DateParser.getFormatDateString(new Date(notification.createdAt))
-			return (
+				const time = DateParser.getFormatDateString(new Date(notification.createdAt))
+				return (
 					<NotificationNode key={notification.id} detailsClick={this.showDetails.bind(this, notification)}
 					title={(notification.message && notification.message.title.length > titleLength) ? notification.message.title.substring(0, titleLength) + '\u2026' : notification.message.title}
 					summary={(notification.message.body && notification.message.body.length > bodyLength) ? notification.message.body.substring(0, bodyLength)  + '\u2026' : notification.message.body}

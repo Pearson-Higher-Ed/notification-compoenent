@@ -6,6 +6,7 @@ import './main.scss';
 import NotificationContainer from './src/js/NotificationContainer';
 import Drawer from '@pearson-components/drawer/main';
 import CoachmarkListener from './src/js/CoachmarkListener';
+import NotificationRealTimeApi from './src/js/NotificationRealTimeApi';
 
 
 /**
@@ -34,21 +35,14 @@ class NotificationComponent {
 			// create the react classes for reference later
 			this._createBellReactClass();
 			this._createListReactClass(config);
+
 			this.notificationList = result.list;
 			this.archivedNotificationList = result.archivedList;
 			this.newNotifications = result.newNotifications;
 			this.unreadCount = result.unreadCount;
-			// convert to Date objects
-			if (this.notificationList.length > 0) {
-				this.notificationList.forEach(item => {
-					item.createdAt = new Date(item.createdAt);
-					item.updatedAt = new Date(item.updatedAt);
-				});
-				// sort by created field, newest first
-				this.notificationList.sort((x, y) => {
-					return y.createdAt - x.createdAt;
-				});
-			}
+
+			this._sortNotificationList();
+
 			// Keep reference to the components to set state later and render the react components now that we have the data
 			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
 			this.bellComponent = ReactDOM.render(<this.bellClass/>, element);
@@ -58,6 +52,31 @@ class NotificationComponent {
 		}).catch(function(error) {
 			console.log(error);
 		});
+
+		this.realTimeNotification = new NotificationRealTimeApi(config, this._messageListener.bind(this));
+
+	}
+
+	_messageListener(message) {
+		this.notificationList.push({
+			id: message.payload.userNotificationId,
+			isRead: false,
+			isComplete: false,
+			status: 'CREATED',
+			message: JSON.parse(message.payload.data),
+			createdAt: message.payload.createdAt,
+			updatedAt: message.payload.createdAt, //just for sorting purposes this needs to be here
+			notificationType: 'inbrowser',
+			recipientId: message.payload.recipientId
+		});
+
+		this._sortNotificationList();
+
+		this.unreadCount++;
+		this.newNotifications = true;
+
+		this.bellComponent.forceUpdate();
+		this.containerComponent.forceUpdate();
 
 	}
 
@@ -83,11 +102,55 @@ class NotificationComponent {
 			render: function() {
 				return (
 					<div>
-						<NotificationContainer list={_this.notificationList}  archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} config={config}/>
+						<NotificationContainer list={_this.notificationList} notificationRead={_this.notificationRead.bind(_this)} 
+						archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} archiveNotification={_this.archiveNotification.bind(_this)}/>
 					</div>
 				);
 			}
 		});
+	}
+
+	notificationRead(notification) {
+		this.notApi.markAsRead(notification.id);
+		for(let i = 0; i < this.notificationList.length; i++) {
+			if(this.notificationList[i].id === notification.id) {
+				this.notificationList[i].isRead = true;
+				break;
+			}
+		}
+		this.unreadCount--;
+		this.bellComponent.forceUpdate();
+	}
+
+	archiveNotification(archivedNotification) {
+		this.notificationList = this.notificationList.filter(function(notification) {
+			if (notification.id !== archivedNotification.id) {
+				return notification;
+			}
+		});
+		this.notApi.markAsArchivedAndRead(archivedNotification.id);
+		if(!archivedNotification.isRead) {
+			archivedNotification.isRead = true;
+			this.unreadCount--;
+			this.bellComponent.forceUpdate();
+		}
+		archivedNotification.status = 'ARCHIVED';
+		this.archivedNotificationList.push(archivedNotification);
+		this.containerComponent.forceUpdate();
+	}
+
+	_sortNotificationList() {
+		// convert to Date objects
+		if (this.notificationList.length > 0) {
+			this.notificationList.forEach(item => {
+				item.createdAt = new Date(item.createdAt);
+				item.updatedAt = new Date(item.updatedAt);
+			});
+			// sort by created field, newest first
+			this.notificationList.sort((x, y) => {
+				return y.createdAt - x.createdAt;
+			});
+		}
 	}
 
 	toggleList() {

@@ -1,36 +1,27 @@
 import React from 'react';
 
-export default class NotificationBell extends React.Component {
+const NotificationBell = ({unreadCount, toggleList, newNotifications}) => {
 
-	constructor(props) {
-		super(props);
-		this.count = this.props.unreadCount;
-		document.addEventListener('NotificationBell.ReadNotification', () => {
-			this.count--;
-			this.forceUpdate();
-		});
+	let bellClassNames = 'notification-bell--count';
+	
+	if (newNotifications) {
+		bellClassNames += ' notification-bell--new'
 	}
 
-	render() {
-		let bellClassNames = 'notification-bell--count';
-		console.log(this.props.newNotifications);
-		if (this.props.newNotifications) {
-			bellClassNames += ' notification-bell--new'
-		}
-
-		if (this.count === 0) {
-			bellClassNames += ' hide';
-		}
-
-		return (
-			<div className="notification-bell">
-				<a href="javascript:void(0)" className="notification-bell--activate" onClick={this.props.toggleList}>
-					<i className="pe-icon--bell"></i>
-					<div className={bellClassNames}>
-						{this.count > 9 ? '9+' : this.count}
-					</div>
-				</a>
-			</div>
-		);
+	if (unreadCount === 0) {
+		bellClassNames += ' hide';
 	}
+
+	return (
+		<div className="notification-bell">
+			<a href="javascript:void(0)" className="notification-bell--activate" onClick={toggleList}>
+				<i className="pe-icon--bell"></i>
+				<div className={bellClassNames}>
+					{unreadCount > 9 ? '9+' : unreadCount}
+				</div>
+			</a>
+		</div>
+	);
 }
+
+export default NotificationBell;
