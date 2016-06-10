@@ -150,12 +150,12 @@ class NotificationComponent {
 	}
 	
 	toggleList() {
-		const drawerDiv = document.getElementById('notification-component');
-		while (drawerDiv.firstChild) {
-			drawerDiv.removeChild(drawerDiv.firstChild);
-		}
-		this.containerComponent = ReactDOM.render( < this.containerClass / >, drawerDiv);
-
+        const drawerDiv = document.getElementById('notification-component');
+        while (drawerDiv.firstChild) {
+            drawerDiv.removeChild(drawerDiv.firstChild);
+            this.containerComponent = ReactDOM.render(<this.containerClass/>, drawerDiv);
+        }
+       
 		this.listDrawer.toggle();
 		if (this.newNotifications) {
 			// need to call the route that will change the status of all the notifications.
