@@ -42,12 +42,9 @@ class NotificationComponent {
 			this.newNotifications = result.newNotifications;
 			this.unreadCount = result.unreadCount;
 
-			this.notificationList.sort((x, y) => {
-				return y.createdAt - x.createdAt;
-			});
-			this.archivedNotificationList.sort((x, y) => {
-				return y.createdAt - x.createdAt;
-			});
+
+            this._sortNotificationList();
+			this._sortArchivedNotificationList();
 
 			// Keep reference to the components to set state later and render the react components now that we have the data
 			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
@@ -76,9 +73,7 @@ class NotificationComponent {
 			recipientId: message.payload.recipientId
 		});
 
-		this.notificationList.sort((x, y) => {
-			return y.createdAt - x.createdAt;
-		});
+		this._sortNotificationList();
 		this.unreadCount++;
 		this.newNotifications = true;
 
@@ -143,9 +138,7 @@ class NotificationComponent {
 		}
 		archivedNotification.status = 'ARCHIVED';
 		this.archivedNotificationList.push(archivedNotification);
-		this.archivedNotificationList.sort((x, y) => {
-			return y.createdAt - x.createdAt;
-		});
+		this._sortArchivedNotificationList();
 		this.containerComponent.forceUpdate();
 	}
 	
@@ -177,6 +170,22 @@ class NotificationComponent {
 			this.bellComponent.forceUpdate();
 		}
 	}
+
+    _sortNotificationList() {
+        this.notificationList.sort((x, y) => {
+            return this._getDateDiff(x, y);
+        });
+    }
+
+    _sortArchivedNotificationList() {
+        this.archivedNotificationList.sort((x, y) => {
+            return this._getDateDiff(x, y);
+        });
+    }
+
+    _getDateDiff(x, y) {
+        return y.createdAt - x.createdAt;
+    }
 
 	closeDrawer() {
 		this.listDrawer.close();
