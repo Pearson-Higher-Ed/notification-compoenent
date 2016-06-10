@@ -9,6 +9,8 @@ export default class CoachmarkListener {
         this.coachmarkApi = new CoachmarkApi(config);
         this.feedbackApi = new FeedbackApi(config);
         this.notificationApi = new NotificationApi(config);
+
+        this.localStorageKey = 'notifications.coachmark.stateObject';
     }
 
     /**
@@ -16,20 +18,19 @@ export default class CoachmarkListener {
      * launches the first CM in the set contained in the triggering notification
      **/
     launchCoachmark(notification) {
+      try {
         const notificationDetails = notification.message;
         let cmIds = notificationDetails.cmIds;
         cmIds = cmIds ? cmIds.split(',') : null;
-        if (!cmIds) {
-            return;
-        }
 
         let masterpieceId = notificationDetails.masterpieceId;
         if (!masterpieceId) {
-            return;
+            // TODO: Refactor masterpieceId out, without feedback functionality it's not required.
+            masterpieceId = Date.now();
         }
 
         cmIds = cmIds.map((param) => parseInt(param));
-        masterpieceId = parseInt(notificationDetails.masterpieceId);
+        masterpieceId = parseInt(masterpieceId);
         this.cmState = {};
         this.cmState[masterpieceId] = {
             userNotificationId: notification.id,
@@ -43,6 +44,9 @@ export default class CoachmarkListener {
 
         this.cmListenerSetup(masterpieceId);
         this.getDisplayCoachmark(masterpieceId);
+      } catch (e) {
+        this.handleError(e);
+      }
     }
 
     /**
@@ -52,16 +56,14 @@ export default class CoachmarkListener {
      * Otherwise, we return false and do nothing.
      **/
     launchCoachmarkIfFromNewUrl() {
-        let fromLocal = localStorage.getItem('notifications.coachmark.stateObject');
-        localStorage.removeItem('notifications.coachmark.stateObject');
+      try {
+        let fromLocal = localStorage.getItem(this.localStorageKey);
+        localStorage.removeItem(this.localStorageKey);
         if (!fromLocal) {
             return false;
         }
-        try {
-            fromLocal = JSON.parse(fromLocal);
-        } catch (e) {
-            console.log('Exception parsing JSON from local storage: ', e);
-        }
+
+        fromLocal = JSON.parse(fromLocal);
 
         if (!fromLocal.masterpieceId) {
             return false; // We aren't here because of a redirect
@@ -75,7 +77,12 @@ export default class CoachmarkListener {
         this.cmListenerSetup(fromLocal.masterpieceId);
         this.getDisplayCoachmark(fromLocal.masterpieceId);
         return true;
+      } catch (e) {
+        this.handleError(e);
+      }
     }
+
+
 
     /**
      * Sets up listeners for this series of coachmarks
@@ -130,12 +137,12 @@ export default class CoachmarkListener {
         const index = this.cmState[masterpieceId].index;
         const cmId = cmIds[index];
 
-        this.coachmarkApi.getCoachmark(cmId).then((result) => {
+        this.coachmarkApi.getCoachmark(cmId)
+          .then((result) => {
             // Redirect if this coachmark ID is meant to display on a different page
             if (this.redirectIfNewUri(result.uri, masterpieceId)) {
                 return;
             }
-
             // Auto-populating options to simplify the coachmark payload
             const options = result.options;
             options.id = masterpieceId;
@@ -149,11 +156,15 @@ export default class CoachmarkListener {
 
             // Tick hit counter if first visit
             if (!this.cmState[masterpieceId].isVisited[cmId]) {
+              try {
                 this.coachmarkApi.incrementViewCount(cmId);
+              } catch (e) {
+                this.handleError(e, true);
+              }
                 this.cmState[masterpieceId].isVisited[cmId] = true;
             }
         }, (error) => {
-            console.log('Error: ', error);
+            this.handleError(error);
         });
     }
 
@@ -185,9 +196,20 @@ export default class CoachmarkListener {
         }
         // Set local storage
         this.cmState[masterpieceId].areListenersSet = false;
-        localStorage.setItem('notifications.coachmark.stateObject', JSON.stringify(this.cmState[masterpieceId]));
+        localStorage.setItem(this.localStorageKey, JSON.stringify(this.cmState[masterpieceId]));
 
         window.location.href = uri;
         return true;
+    }
+
+    handleError(error, isSilentFailure) {
+      //TODO: We should probably log all errors
+
+      const options = {
+        title: 'There seems to be a problem with this feature.',
+        text: 'Try refreshing your browser or clearing your cache.​',
+        id: Date.now()
+      };
+      new Coachmark(document.getElementsByClassName('notification-bell')[0], options, () => {});
     }
 }
