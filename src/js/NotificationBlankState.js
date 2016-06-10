@@ -15,6 +15,14 @@ export default class NotificationBlankState extends React.Component {
 
 
 	render() {  
+		if(this.props.isError) {
+			return (
+				<div className="notification-blank-page">
+					<h2>Oh, that’s not good</h2>
+					<h3>There seems to be a problem with this feature.  Try refreshing your browser or clearing your cache.</h3>
+				</div>
+			);
+		}
 		if (!this.props.isArchivedTray) {
 			return (
 				<div className="notification-blank-page">

@@ -66,7 +66,7 @@ export default class NotificationContainer extends React.Component {
 				</div>
 				<div className={this.state.displayDetails ? 'hide' : ''}>
 					<div className={this.state.isArchive ? 'hide': ''}>
-						<NotificationList list={this.props.list} showDetails={this.showDetails.bind(this)}
+						<NotificationList list={this.props.list} showDetails={this.showDetails.bind(this)} apiError={this.props.apiError}
 						 appendArchiveList={this.appendArchiveList.bind(this)} isArchiveTray={false} goToArchiveList={this.goToArchiveList.bind(this)}/>
 					</div>
 					<div className={this.state.isArchive ? '': 'hide'}>

@@ -46,7 +46,7 @@ export default class NotificationList extends React.Component {
 			});
 		}
 		if (!this.props.list.length > 0) {
-			notificationNodeObjects = <NotificationBlankState isArchivedTray={this.props.isArchiveTray} goToArchiveList={this.goToArchiveList.bind(this)}/>
+			notificationNodeObjects = <NotificationBlankState isError={this.props.apiError}isArchivedTray={this.props.isArchiveTray} goToArchiveList={this.goToArchiveList.bind(this)}/>
 		}
 
 		return (
