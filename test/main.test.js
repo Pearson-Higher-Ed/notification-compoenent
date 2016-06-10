@@ -23,13 +23,16 @@ describe('NotificationComponent', () => {
 	};
 
 	let notificationComponent;
-	let closeCalled, toggleCalled, bellComponentUpdateCalled, markAsViewedCalled, containerComponentUpdateCalled;
+	let closeCalled, toggleCalled, markAsArchivedAndReadCalled, bellComponentUpdateCalled, markAsViewedCalled, 
+		containerComponentUpdateCalled, markAsReadCalled;
 	beforeEach(function() {
 		closeCalled = false;
 		toggleCalled = false;
 		bellComponentUpdateCalled = false;
 		markAsViewedCalled = false;
 		containerComponentUpdateCalled = false;
+		markAsReadCalled = false;
+		markAsArchivedAndReadCalled = false;
 
 		NotificationComponent.__Rewire__('Drawer', function(config) {
 			this.close = function(){ 
@@ -61,6 +64,12 @@ describe('NotificationComponent', () => {
 			markAsViewed: function() {
 				markAsViewedCalled = true;
 				return Promise.resolve("");
+			},
+			markAsRead: function() {
+				markAsReadCalled = true;
+			},
+			markAsArchivedAndRead: function() {
+				markAsArchivedAndReadCalled = true;
 			}
 		}
 
@@ -129,6 +138,42 @@ describe('NotificationComponent', () => {
 				expect(notificationComponent.newNotifications).toBe(true);
 				expect(bellComponentUpdateCalled).toBe(true);
 				expect(containerComponentUpdateCalled).toBe(true);
+			});
+		});
+
+		describe('notificationRead', function() {
+			
+			it('should updateNotificationList and unreadCount and forceUpdate bell' , function() {
+				let notification = {
+					id: 1
+				};
+				notificationComponent.notificationList = [{
+					id: 1, isRead: false
+				}];
+				notificationComponent.unreadCount = 1;
+				notificationComponent.notificationRead(notification);
+
+				expect(markAsReadCalled).toBe(true);
+				expect(notificationComponent.notificationList[0].isRead).toBe(true);
+				expect(notificationComponent.unreadCount).toBe(0);
+				expect(bellComponentUpdateCalled).toBe(true);
+			});
+		});
+
+		describe('archiveNotification', function() {
+			it('should filter old notification out of list, markAsArchivedAndRead, update containerComponent and bellComponent', function() {
+
+				notificationComponent.archivedNotificationList = [];
+				notificationComponent.notificationList = [{id: 1, isRead: false}];
+				notificationComponent.unreadCount = 1;
+				notificationComponent.archiveNotification({id: 1, isRead: false});
+
+				expect(markAsArchivedAndReadCalled).toBe(true);
+				expect(containerComponentUpdateCalled).toBe(true);
+				expect(bellComponentUpdateCalled).toBe(true);
+				expect(notificationComponent.unreadCount).toBe(0);
+				expect(notificationComponent.notificationList.length).toBe(0);
+				expect(notificationComponent.archivedNotificationList.length).toBe(1);
 			});
 		});
 	});
