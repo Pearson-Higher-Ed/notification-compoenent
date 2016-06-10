@@ -61,8 +61,6 @@
         }
     }
 
-    
-
 	.close-dropdown {
 		float:right;
         margin: 25px 13px 20px 20px;
@@ -144,9 +142,13 @@
                 color: #0d65a6;
                 line-height: normal;
                 font-weight: bold;
+                height: 40px;
+                overflow: hidden;
             }
             .notification-node--summary-description {
                 color: #565656;
+                height: 20px;
+                overflow: hidden;
             }
         }
     }
@@ -170,6 +172,8 @@
         color: #565656;
         .notification-node--meta-course {
             float:left;
+            height: 32px;
+            overflow: hidden;
         }
 
     }
