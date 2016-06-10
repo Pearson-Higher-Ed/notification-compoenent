@@ -153,8 +153,8 @@ class NotificationComponent {
         const drawerDiv = document.getElementById('notification-component');
         while (drawerDiv.firstChild) {
             drawerDiv.removeChild(drawerDiv.firstChild);
-            this.containerComponent = ReactDOM.render(<this.containerClass/>, drawerDiv);
         }
+        this.containerComponent = this.containerClass && drawerDiv ? ReactDOM.render( <this.containerClass/>, drawerDiv): '';
        
 		this.listDrawer.toggle();
 		if (this.newNotifications) {
