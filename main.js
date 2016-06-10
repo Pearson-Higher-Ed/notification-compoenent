@@ -102,7 +102,7 @@ class NotificationComponent {
 			render: function() {
 				return (
 					<div>
-						<NotificationContainer list={_this.notificationList} notificationRead={_this.notificationRead.bind(_this)} 
+						<NotificationContainer list={_this.notificationList} notificationRead={_this.notificationRead.bind(_this)} config={config}
 						archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} archiveNotification={_this.archiveNotification.bind(_this)}/>
 					</div>
 				);
