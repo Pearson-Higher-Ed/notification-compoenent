@@ -42,8 +42,12 @@ class NotificationComponent {
 			this.newNotifications = result.newNotifications;
 			this.unreadCount = result.unreadCount;
 
-			this._sortList('NOTIFICATION-LIST');
-			this._sortList('ARCHVIED-NOTIFICATION-LIST');
+			this.notificationList.sort((x, y) => {
+				return y.createdAt - x.createdAt;
+			});
+			this.archivedNotificationList.sort((x, y) => {
+				return y.createdAt - x.createdAt;
+			});
 
 			// Keep reference to the components to set state later and render the react components now that we have the data
 			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
@@ -66,14 +70,15 @@ class NotificationComponent {
 			isComplete: false,
 			status: 'CREATED',
 			message: JSON.parse(message.payload.data),
-			createdAt: message.payload.createdAt,
-			updatedAt: message.payload.createdAt, //just for sorting purposes this needs to be here
+			createdAt: new Date(message.payload.createdAt),
+			updatedAt: new Date(message.payload.createdAt), //just for sorting purposes this needs to be here
 			notificationType: 'inbrowser',
 			recipientId: message.payload.recipientId
 		});
 
-		this._sortList('NOTIFICATION-LIST');
-
+		this.notificationList.sort((x, y) => {
+			return y.createdAt - x.createdAt;
+		});
 		this.unreadCount++;
 		this.newNotifications = true;
 
@@ -138,23 +143,10 @@ class NotificationComponent {
 		}
 		archivedNotification.status = 'ARCHIVED';
 		this.archivedNotificationList.push(archivedNotification);
-		this._sortList('ARCHVIED-NOTIFICATION-LIST');
+		this.archivedNotificationList.sort((x, y) => {
+			return y.createdAt - x.createdAt;
+		});
 		this.containerComponent.forceUpdate();
-	}
-
-	_sortList(listType) {
-		const list = (listType === 'NOTIFICATION-LIST') ? this.notificationList : this.archivedNotificationList;
-			// convert to Date objects
-		if (list.length > 0) {
-			list.forEach(item => {
-				item.createdAt = new Date(item.createdAt);
-				item.updatedAt = new Date(item.updatedAt);
-			});
-			// sort by created field, newest first
-			list.sort((x, y) => {
-				return y.createdAt - x.createdAt;
-			});
-		}
 	}
 	
 	toggleList() {
