@@ -24,6 +24,7 @@ class NotificationComponent {
 
 		// Connect up the drawer component here.
 		const dom = document.createElement('div');
+		dom.setAttribute('id', 'notification-component');
 		dom.setAttribute('data-o-component', 'o-drawer');
 		dom.classList.add('o-drawer-right', 'o-drawer-animated');
 		this.listDrawer = new Drawer(dom);
@@ -41,8 +42,8 @@ class NotificationComponent {
 			this.newNotifications = result.newNotifications;
 			this.unreadCount = result.unreadCount;
 
-			this._sortList(this.notificationList);
-			this._sortList(this.archivedNotificationList);
+			this._sortList('NOTIFICATION-LIST');
+			this._sortList('ARCHVIED-NOTIFICATION-LIST');
 
 			// Keep reference to the components to set state later and render the react components now that we have the data
 			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
@@ -71,7 +72,7 @@ class NotificationComponent {
 			recipientId: message.payload.recipientId
 		});
 
-		this._sortList(this.notificationList);
+		this._sortList('NOTIFICATION-LIST');
 
 		this.unreadCount++;
 		this.newNotifications = true;
@@ -137,12 +138,13 @@ class NotificationComponent {
 		}
 		archivedNotification.status = 'ARCHIVED';
 		this.archivedNotificationList.push(archivedNotification);
-		this._sortList(this.archivedNotificationList);
+		this._sortList('ARCHVIED-NOTIFICATION-LIST');
 		this.containerComponent.forceUpdate();
 	}
 
-	_sortList(list) {
-		// convert to Date objects
+	_sortList(listType) {
+		const list = (listType === 'NOTIFICATION-LIST') ? this.notificationList : this.archivedNotificationList;
+			// convert to Date objects
 		if (list.length > 0) {
 			list.forEach(item => {
 				item.createdAt = new Date(item.createdAt);
@@ -154,9 +156,14 @@ class NotificationComponent {
 			});
 		}
 	}
-
+	
 	toggleList() {
-		document.dispatchEvent(new CustomEvent('NotificationContainer.ResetNotificationList'));
+		const drawerDiv = document.getElementById('notification-component');
+		while (drawerDiv.firstChild) {
+			drawerDiv.removeChild(drawerDiv.firstChild);
+		}
+		this.containerComponent = ReactDOM.render( < this.containerClass / >, drawerDiv);
+
 		this.listDrawer.toggle();
 		if (this.newNotifications) {
 			// need to call the route that will change the status of all the notifications.
@@ -180,7 +187,6 @@ class NotificationComponent {
 	}
 
 	closeDrawer() {
-		document.dispatchEvent(new CustomEvent('NotificationContainer.ResetNotificationList'));
 		this.listDrawer.close();
 	}
 }

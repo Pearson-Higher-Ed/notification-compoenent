@@ -16,15 +16,6 @@ export default class NotificationContainer extends React.Component {
 				message: {}
 			}
 		};
-
-		document.addEventListener('NotificationContainer.ResetNotificationList', () => {
-			this.setState({
-				displayDetails: false,
-				isArchive: false,
-				list: this.state.notificationList
-			});
-		});
-
 	}
 
 	showDetails(notification) {
@@ -64,6 +55,15 @@ export default class NotificationContainer extends React.Component {
 		});
 	}
 
+	resetListOnCloseDrawer() {
+		this.setState({
+			displayDetails: false,
+			isArchive: false,
+			list: this.state.notificationList
+		});
+		this.props.closeDrawer();
+	}
+
 	render() {
 		return (
 			<div>
@@ -94,7 +94,7 @@ export default class NotificationContainer extends React.Component {
 					</h1>
 				</div>
 				<div className="notification-archive--back">
-					<button onClick={this.state.isArchive && !this.state.displayDetails ? this.showNonArchivedList.bind(this) : this.props.closeDrawer}> <i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-down pointer' : 'pe-icon--times close-dropdown pointer'}></i> </button>
+					<button onClick={this.state.isArchive && !this.state.displayDetails ? this.showNonArchivedList.bind(this) : this.resetListOnCloseDrawer.bind(this)}> <i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-down pointer' : 'pe-icon--times close-dropdown pointer'}></i> </button>
 				</div>		
 			</div>
 		);
