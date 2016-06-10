@@ -24,6 +24,7 @@ class NotificationComponent {
 
 		// Connect up the drawer component here.
 		const dom = document.createElement('div');
+		dom.setAttribute('id', 'notification-component');
 		dom.setAttribute('data-o-component', 'o-drawer');
 		dom.classList.add('o-drawer-right', 'o-drawer-animated');
 		this.listDrawer = new Drawer(dom);
@@ -41,7 +42,9 @@ class NotificationComponent {
 			this.newNotifications = result.newNotifications;
 			this.unreadCount = result.unreadCount;
 
-			this._sortNotificationList();
+
+            this._sortNotificationList();
+			this._sortArchivedNotificationList();
 
 			// Keep reference to the components to set state later and render the react components now that we have the data
 			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
@@ -64,14 +67,13 @@ class NotificationComponent {
 			isComplete: false,
 			status: 'CREATED',
 			message: JSON.parse(message.payload.data),
-			createdAt: message.payload.createdAt,
-			updatedAt: message.payload.createdAt, //just for sorting purposes this needs to be here
+			createdAt: new Date(message.payload.createdAt),
+			updatedAt: new Date(message.payload.createdAt), //just for sorting purposes this needs to be here
 			notificationType: 'inbrowser',
 			recipientId: message.payload.recipientId
 		});
 
 		this._sortNotificationList();
-
 		this.unreadCount++;
 		this.newNotifications = true;
 
@@ -136,24 +138,17 @@ class NotificationComponent {
 		}
 		archivedNotification.status = 'ARCHIVED';
 		this.archivedNotificationList.push(archivedNotification);
+		this._sortArchivedNotificationList();
 		this.containerComponent.forceUpdate();
 	}
-
-	_sortNotificationList() {
-		// convert to Date objects
-		if (this.notificationList.length > 0) {
-			this.notificationList.forEach(item => {
-				item.createdAt = new Date(item.createdAt);
-				item.updatedAt = new Date(item.updatedAt);
-			});
-			// sort by created field, newest first
-			this.notificationList.sort((x, y) => {
-				return y.createdAt - x.createdAt;
-			});
-		}
-	}
-
+	
 	toggleList() {
+        const drawerDiv = document.getElementById('notification-component');
+        while (drawerDiv.firstChild) {
+            drawerDiv.removeChild(drawerDiv.firstChild);
+        }
+        this.containerComponent = this.containerClass && drawerDiv ? ReactDOM.render( <this.containerClass/>, drawerDiv): '';
+       
 		this.listDrawer.toggle();
 		if (this.newNotifications) {
 			// need to call the route that will change the status of all the notifications.
@@ -175,6 +170,22 @@ class NotificationComponent {
 			this.bellComponent.forceUpdate();
 		}
 	}
+
+    _sortNotificationList() {
+        this.notificationList.sort((x, y) => {
+            return this._getDateDiff(x, y);
+        });
+    }
+
+    _sortArchivedNotificationList() {
+        this.archivedNotificationList.sort((x, y) => {
+            return this._getDateDiff(x, y);
+        });
+    }
+
+    _getDateDiff(x, y) {
+        return y.createdAt - x.createdAt;
+    }
 
 	closeDrawer() {
 		this.listDrawer.close();
