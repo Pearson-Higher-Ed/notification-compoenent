@@ -2,6 +2,7 @@
 
 import './demo.scss';
 import NotificationComponent from '../main'; // for direct API usage
+import AppHeader from '@pearson-components/app-header/main'; // for integrating inside the app header
 
 const pt = '<token>';
 
@@ -26,12 +27,16 @@ const AppHeaderConfig = {
 function init() {
 
 	// Demo eventing API
-	document.body.dispatchEvent(new CustomEvent('o.InitNotificationComponent', {
+	new AppHeader(document.body); // instantiate app header only if it is not already instantiated
+	const appHeaderNotificationDiv = document.getElementsByClassName('o-app-header__nav-item-notification');
+	if (appHeaderNotificationDiv.length) {
+		document.body.dispatchEvent(new CustomEvent('o.InitNotificationComponent', {
 			detail: {
 				config: AppHeaderConfig,
-				element: document.getElementById('demo-target1')
+				element: appHeaderNotificationDiv[0]
 			}
-	 }));
+		}))
+	}
 
 }
 

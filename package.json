@@ -24,6 +24,7 @@
     "url": "https://github.com/Pearson-Higher-Ed/"
   },
   "dependencies": {
+    "@pearson-components/app-header": "^1.1.1",
     "@pearson-components/coach-mark": "^0.1.3",
     "@pearson-components/drawer": "^0.2.0",
     "react-intl": "~2.0.1",
