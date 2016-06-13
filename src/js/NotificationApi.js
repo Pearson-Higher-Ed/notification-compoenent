@@ -41,31 +41,11 @@ function parseResponse(response) {
 	});
 
 	return {
-		list: fixDefaultValues(userNotificationsList),
+		list: userNotificationsList,
 		newNotifications: newNotifications,
-		archivedList: fixDefaultValues(archivedNotificationsList),
+		archivedList: archivedNotificationsList,
 		unreadCount: unreadCount
 	};
-}
-
-/*
- * If a property wasn't passed in to the API when the notification was created,
- * the Velocity template will default the property value to '$eventModel.[property name]',
- * but we instead need this to default to an empty string.
- */
-function fixDefaultValues(notificationList) {
-	const badStr = '$eventModel.';
-	notificationList = notificationList.filter(n => n !== undefined);
-
-	for (let i = 0; i < notificationList.length; i++) {
-		const msgObj = notificationList[i].message;
-		for (const prop in msgObj) {
-			if (msgObj.hasOwnProperty(prop) && msgObj[prop].toString().substring(0, badStr.length) === badStr) {
-				msgObj[prop] = '';
-			}
-		}
-	}
-	return notificationList;
 }
 
 export default class NotificationApi {

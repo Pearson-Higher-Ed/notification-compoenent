@@ -37,8 +37,8 @@ class NotificationComponent {
 			this._createBellReactClass();
 			this._createListReactClass(config);
 
-			this.notificationList = result.list;
-			this.archivedNotificationList = result.archivedList;
+			this.notificationList = this.fixNotificationValues(result.list);
+			this.archivedNotificationList = this.fixNotificationValues(result.archivedList);
 			this.newNotifications = result.newNotifications;
 			this.unreadCount = result.unreadCount;
 
@@ -73,6 +73,7 @@ class NotificationComponent {
 			recipientId: message.payload.recipientId
 		});
 
+		this.fixNotificationValues(this.notificationList);
 		this._sortNotificationList();
 		this.unreadCount++;
 		this.newNotifications = true;
@@ -81,6 +82,26 @@ class NotificationComponent {
 		this.containerComponent.forceUpdate();
 
 	}
+
+	/*
+ * If a property wasn't passed in to the API when the notification was created,
+ * the Velocity template will default the property value to '$eventModel.[property name]',
+ * but we instead need this to default to an empty string.
+ */
+fixNotificationValues(notificationList) {
+	const badStr = '$eventModel.';
+	notificationList = notificationList.filter(n => n !== undefined);
+
+	for (let i = 0; i < notificationList.length; i++) {
+		const msgObj = notificationList[i].message;
+		for (const prop in msgObj) {
+			if (msgObj.hasOwnProperty(prop) && msgObj[prop].toString().substring(0, badStr.length) === badStr) {
+				msgObj[prop] = '';
+			}
+		}
+	}
+	return notificationList;
+}
 
 	_createBellReactClass() {
 		//  Keep track of the parent react class
@@ -141,14 +162,14 @@ class NotificationComponent {
 		this._sortArchivedNotificationList();
 		this.containerComponent.forceUpdate();
 	}
-	
+
 	toggleList() {
         const drawerDiv = document.getElementById('notification-component');
         while (drawerDiv.firstChild) {
             drawerDiv.removeChild(drawerDiv.firstChild);
         }
         this.containerComponent = this.containerClass && drawerDiv ? ReactDOM.render( <this.containerClass/>, drawerDiv): '';
-       
+
 		this.listDrawer.toggle();
 		if (this.newNotifications) {
 			// need to call the route that will change the status of all the notifications.
