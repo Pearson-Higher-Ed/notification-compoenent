@@ -16,6 +16,12 @@ export default class NotificationContainer extends React.Component {
 				message: {}
 			}
 		};
+		this.showDetails = this.showDetails.bind(this);
+		this.showList = this.showList.bind(this);
+		this.appendArchiveList = this.appendArchiveList.bind(this);
+		this.goToArchiveList = this.goToArchiveList.bind(this);
+		this.showNonArchivedList = this.showNonArchivedList.bind(this);
+		this.resetListOnCloseDrawer = this.resetListOnCloseDrawer.bind(this);
 	}
 
 	showDetails(notification) {
@@ -55,37 +61,46 @@ export default class NotificationContainer extends React.Component {
 		});
 	}
 
+	resetListOnCloseDrawer() {
+		this.setState({
+			displayDetails: false,
+			isArchive: false,
+			list: this.state.notificationList
+		});
+		this.props.closeDrawer();
+	}
+
 	render() {
 		return (
 			<div>
 				<div className="notification-title">
 					<div tabIndex={-1} ref="heading">
-						<NotificationHeading back={this.showList.bind(this)} isList={!this.state.isArchive && !this.state.displayDetails} 
+						<NotificationHeading back={this.showList} isList={!this.state.isArchive && !this.state.displayDetails} 
 						isDetails={this.state.displayDetails} isArchive={this.state.isArchive}/>
 					</div>
 				</div>
 				<div className={this.state.displayDetails ? 'hide' : ''}>
 					<div className={this.state.isArchive ? 'hide': ''}>
-						<NotificationList list={this.props.list} showDetails={this.showDetails.bind(this)} apiError={this.props.apiError}
-						 appendArchiveList={this.appendArchiveList.bind(this)} isArchiveTray={false} goToArchiveList={this.goToArchiveList.bind(this)}/>
+						<NotificationList list={this.props.list} showDetails={this.showDetails}
+						 appendArchiveList={this.appendArchiveList} isArchiveTray={false} goToArchiveList={this.goToArchiveList}/>
 					</div>
 					<div className={this.state.isArchive ? '': 'hide'}>
-						<NotificationList list={this.props.archivedList} showDetails={this.showDetails.bind(this)}
-						 appendArchiveList={this.appendArchiveList.bind(this)} isArchiveTray={true} goToArchiveList={this.goToArchiveList.bind(this)}/>
+						<NotificationList list={this.props.archivedList} showDetails={this.showDetails}
+						 appendArchiveList={this.appendArchiveList} isArchiveTray={true} goToArchiveList={this.goToArchiveList}/>
 					</div>
 				</div>
 				<div className={this.state.displayDetails ? '' : 'hide'}>
 					<div className="notification-list">
-						<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} appendArchiveList={this.appendArchiveList.bind(this)}/>
+						<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} appendArchiveList={this.appendArchiveList}/>
 					</div>
 				</div>
-				<div className="notification-title" onClick={this.goToArchiveList.bind(this)}>
+				<div className="notification-title" onClick={this.goToArchiveList}>
 					<h1 className={this.state.isArchive || this.state.displayDetails ? 'hide' : 'notification-title--heading'}>
 						<a href="javascript:void(0);"> Notification Archive </a> 
 					</h1>
 				</div>
 				<div className="notification-archive--back">
-					<button onClick={this.state.isArchive && !this.state.displayDetails ? this.showNonArchivedList.bind(this) : this.props.closeDrawer}> <i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-down pointer' : 'pe-icon--times close-dropdown pointer'}></i> </button>
+					<button onClick={this.state.isArchive && !this.state.displayDetails ? this.showNonArchivedList : this.resetListOnCloseDrawer}> <i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-down pointer' : 'pe-icon--times close-dropdown pointer'}></i> </button>
 				</div>		
 			</div>
 		);
