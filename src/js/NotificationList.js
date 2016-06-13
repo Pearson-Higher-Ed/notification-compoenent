@@ -1,5 +1,3 @@
-// import Coachmark from 'o-coach-mark';
-
 import React from 'react';
 import NotificationNode from './NotificationNode';
 import DateParser from './DateParser';
