@@ -26,11 +26,9 @@ class NotificationComponent {
 		dom.setAttribute('id', 'notification-component');
 		dom.setAttribute('data-o-component', 'o-drawer');
 		dom.classList.add('o-drawer-right', 'o-drawer-animated');
-		dom.setAttribute('style', 'top:' + config.appHeaderClientHeight);
+		dom.setAttribute('style', 'top:' + config.appHeaderClientHeight + ';height:95%;');
 		this.listDrawer = new Drawer(dom);
-
 		document.body.appendChild(dom);
-
 		this.notificationList = [];
 		this.archivedNotificationList = [];
 		userNotifications.then((result) => {
