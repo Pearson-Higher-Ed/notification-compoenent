@@ -21,14 +21,12 @@ class NotificationComponent {
 	constructor(config, element) {
 		this.notApi = new NotificationApi(config);
 		const userNotifications = this.notApi.getNotifications();
-		const appHeaderElement = document.getElementsByClassName('o-app-header o-header o-header--fixed')
-		const appHeaderClientHeight = (appHeaderElement && appHeaderElement[0] && appHeaderElement[0].clientHeight) ? appHeaderElement[0].clientHeight+'px' : '54px';
 		// Connect up the drawer component here.
 		const dom = document.createElement('div');
 		dom.setAttribute('id', 'notification-component');
 		dom.setAttribute('data-o-component', 'o-drawer');
 		dom.classList.add('o-drawer-right', 'o-drawer-animated');
-		dom.setAttribute('style', 'top:' + appHeaderClientHeight);
+		dom.setAttribute('style', 'top:' + config.appHeaderClientHeight);
 		this.listDrawer = new Drawer(dom);
 
 		document.body.appendChild(dom);
