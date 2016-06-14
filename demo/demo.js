@@ -27,10 +27,10 @@ function init() {
 
 	// Demo eventing API
 	document.body.dispatchEvent(new CustomEvent('o.InitNotificationComponent', {
-			detail: {
-				config: AppHeaderConfig,
-				element: document.getElementById('demo-target1')
-			}
+		detail: {
+			config: AppHeaderConfig,
+			element: document.getElementById('demo-target1')
+		}
 	 }));
 
 }
