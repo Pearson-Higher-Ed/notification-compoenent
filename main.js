@@ -21,15 +21,15 @@ class NotificationComponent {
 	constructor(config, element) {
 		this.notApi = new NotificationApi(config);
 		const userNotifications = this.notApi.getNotifications();
-		
+
 		// Connect up the drawer component here.
 		const dom = document.createElement('div');
 		dom.setAttribute('id', 'notification-component');
 		dom.setAttribute('data-o-component', 'o-drawer');
 		dom.classList.add('o-drawer-right', 'o-drawer-animated');
+		dom.setAttribute('style', 'top:' + config.appHeaderClientHeight + ';height:95%;');
 		this.listDrawer = new Drawer(dom);
 		document.body.appendChild(dom);
-
 		this._createBellReactClass();
 		this._createListReactClass();
 		this.unreadCount = 0;
@@ -47,8 +47,7 @@ class NotificationComponent {
 			this.newNotifications = result.newNotifications;
 			this.unreadCount = result.unreadCount;
 
-
-            this._sortNotificationList();
+			this._sortNotificationList();
 			this._sortArchivedNotificationList();
 
 			this.bellComponent.forceUpdate();
@@ -109,7 +108,7 @@ class NotificationComponent {
 			render: function() {
 				return (
 					<div>
-						<NotificationContainer list={_this.notificationList} notificationRead={_this.notificationRead.bind(_this)} config={config} apiError={_this.apiError}
+						<NotificationContainer list={_this.notificationList} notificationRead={_this.notificationRead.bind(_this)} config={_this.config} apiError={_this.apiError}
 						archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} archiveNotification={_this.archiveNotification.bind(_this)}/>
 					</div>
 				);
@@ -148,11 +147,11 @@ class NotificationComponent {
 	}
 	
 	toggleList() {
-        const drawerDiv = document.getElementById('notification-component');
-        while (drawerDiv.firstChild) {
-            drawerDiv.removeChild(drawerDiv.firstChild);
-        }
-        this.containerComponent = this.containerClass && drawerDiv ? ReactDOM.render( <this.containerClass/>, drawerDiv): '';
+		const drawerDiv = document.getElementById('notification-component');
+		while (drawerDiv.firstChild) {
+			drawerDiv.removeChild(drawerDiv.firstChild);
+		}
+		this.containerComponent = this.containerClass && drawerDiv ? ReactDOM.render( <this.containerClass/>, drawerDiv): '';
        
 		this.listDrawer.toggle();
 		if (this.newNotifications) {
@@ -177,20 +176,20 @@ class NotificationComponent {
 	}
 
     _sortNotificationList() {
-        this.notificationList.sort((x, y) => {
-            return this._getDateDiff(x, y);
-        });
-    }
+	this.notificationList.sort((x, y) => {
+		return this._getDateDiff(x, y);
+	});
+}
 
     _sortArchivedNotificationList() {
-        this.archivedNotificationList.sort((x, y) => {
-            return this._getDateDiff(x, y);
-        });
-    }
+	this.archivedNotificationList.sort((x, y) => {
+		return this._getDateDiff(x, y);
+	});
+}
 
     _getDateDiff(x, y) {
-        return y.createdAt - x.createdAt;
-    }
+	return y.createdAt - x.createdAt;
+}
 
 	closeDrawer() {
 		this.listDrawer.close();
