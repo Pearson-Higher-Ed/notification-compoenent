@@ -4,17 +4,17 @@ const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'O
 
 module.exports = {
 
-    getFormatDateString: function(updatedAt) {
-        
-        let difference = (new Date() - updatedAt) / 1000 / 60;// in minutes
-        if (difference >= 60) {
-            difference = difference / 60;
-            if (difference >= 24) {
-                return dayOfWeek[updatedAt.getDay()] + ', ' + month[updatedAt.getMonth()] + ' ' + updatedAt.getDate() + ', ' + updatedAt.getFullYear();
-            }
-            return parseInt(difference) + ' hr';
-        }
-        
-        return parseInt(difference) + ' min';
-    }
+	getFormatDateString: function(updatedAt) {
+		
+		let difference = (new Date() - updatedAt) / 1000 / 60;// in minutes
+		if (difference >= 60) {
+			difference = difference / 60;
+			if (difference >= 24) {
+				return dayOfWeek[updatedAt.getDay()] + ', ' + month[updatedAt.getMonth()] + ' ' + updatedAt.getDate() + ', ' + updatedAt.getFullYear();
+			}
+			return parseInt(difference) + ' hr';
+		}
+		
+		return parseInt(difference) + ' min';
+	}
 }
