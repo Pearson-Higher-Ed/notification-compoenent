@@ -27,7 +27,7 @@
     "@pearson-components/coach-mark": "^0.1.4",
     "@pearson-components/drawer": "^0.2.0",
     "react-intl": "~2.0.1",
-    "rtd": "git+ssh://git@bitbucket.pearson.com/se/realtime-delivery.git#modularize"
+    "rtd": "git+ssh://git@bitbucket.pearson.com/se/realtime-delivery.git"
   },
   "devDependencies": {
     "babel-core": "~6.3.17",
