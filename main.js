@@ -19,6 +19,7 @@ import NotificationRealTimeApi from './src/js/NotificationRealTimeApi';
 class NotificationComponent {
 
 	constructor(config, element) {
+		this.config = config;
 		this.notApi = new NotificationApi(config);
 		const userNotifications = this.notApi.getNotifications();
 
@@ -38,7 +39,7 @@ class NotificationComponent {
 		// Keep reference to the components to set state later and render the react components now that we have the data
 		this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
 		this.bellComponent = ReactDOM.render(<this.bellClass/>, element);
-		
+
 		userNotifications.then((result) => {
 			// create the react classes for reference later
 
@@ -145,14 +146,14 @@ class NotificationComponent {
 		this._sortArchivedNotificationList();
 		this.containerComponent.forceUpdate();
 	}
-	
+
 	toggleList() {
 		const drawerDiv = document.getElementById('notification-component');
 		while (drawerDiv.firstChild) {
 			drawerDiv.removeChild(drawerDiv.firstChild);
 		}
 		this.containerComponent = this.containerClass && drawerDiv ? ReactDOM.render( <this.containerClass/>, drawerDiv): '';
-       
+
 		this.listDrawer.toggle();
 		if (this.newNotifications) {
 			// need to call the route that will change the status of all the notifications.
