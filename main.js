@@ -19,6 +19,7 @@ import NotificationRealTimeApi from './src/js/NotificationRealTimeApi';
 class NotificationComponent {
 
 	constructor(config, element) {
+		this.config = config;
 		this.notApi = new NotificationApi(config);
 		const userNotifications = this.notApi.getNotifications();
 
@@ -27,33 +28,37 @@ class NotificationComponent {
 		dom.setAttribute('id', 'notification-component');
 		dom.setAttribute('data-o-component', 'o-drawer');
 		dom.classList.add('o-drawer-right', 'o-drawer-animated');
+		dom.setAttribute('style', 'top:' + config.appHeaderClientHeight + ';height:95%;');
 		this.listDrawer = new Drawer(dom);
 		document.body.appendChild(dom);
-
+		this._createBellReactClass();
+		this._createListReactClass();
+		this.unreadCount = 0;
 		this.notificationList = [];
 		this.archivedNotificationList = [];
+		// Keep reference to the components to set state later and render the react components now that we have the data
+		this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
+		this.bellComponent = ReactDOM.render(<this.bellClass/>, element);
+
 		userNotifications.then((result) => {
 			// create the react classes for reference later
-			this._createBellReactClass();
-			this._createListReactClass(config);
 
 			this.notificationList = result.list;
 			this.archivedNotificationList = result.archivedList;
 			this.newNotifications = result.newNotifications;
 			this.unreadCount = result.unreadCount;
 
-
-            this._sortNotificationList();
+			this._sortNotificationList();
 			this._sortArchivedNotificationList();
 
-			// Keep reference to the components to set state later and render the react components now that we have the data
-			this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
-			this.bellComponent = ReactDOM.render(<this.bellClass/>, element);
+			this.bellComponent.forceUpdate();
+			this.containerComponent.forceUpdate();
 
 			(new CoachmarkListener(config)).launchCoachmarkIfFromNewUrl();
 
-		}).catch(function(error) {
-			console.log(error);
+		}).catch((error) => {
+			this.apiError = true;
+			this.containerComponent.forceUpdate();
 		});
 
 		this.realTimeNotification = new NotificationRealTimeApi(config, this._messageListener.bind(this));
@@ -97,14 +102,14 @@ class NotificationComponent {
 		});
 	}
 
-	_createListReactClass(config) {
+	_createListReactClass() {
 
 		const _this = this;
 		this.containerClass = React.createClass({
 			render: function() {
 				return (
 					<div>
-						<NotificationContainer list={_this.notificationList} notificationRead={_this.notificationRead.bind(_this)} config={config}
+						<NotificationContainer list={_this.notificationList} notificationRead={_this.notificationRead.bind(_this)} config={_this.config} apiError={_this.apiError}
 						archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} archiveNotification={_this.archiveNotification.bind(_this)}/>
 					</div>
 				);
@@ -141,14 +146,14 @@ class NotificationComponent {
 		this._sortArchivedNotificationList();
 		this.containerComponent.forceUpdate();
 	}
-	
+
 	toggleList() {
-        const drawerDiv = document.getElementById('notification-component');
-        while (drawerDiv.firstChild) {
-            drawerDiv.removeChild(drawerDiv.firstChild);
-        }
-        this.containerComponent = this.containerClass && drawerDiv ? ReactDOM.render( <this.containerClass/>, drawerDiv): '';
-       
+		const drawerDiv = document.getElementById('notification-component');
+		while (drawerDiv.firstChild) {
+			drawerDiv.removeChild(drawerDiv.firstChild);
+		}
+		this.containerComponent = this.containerClass && drawerDiv ? ReactDOM.render( <this.containerClass/>, drawerDiv): '';
+
 		this.listDrawer.toggle();
 		if (this.newNotifications) {
 			// need to call the route that will change the status of all the notifications.
@@ -172,20 +177,20 @@ class NotificationComponent {
 	}
 
     _sortNotificationList() {
-        this.notificationList.sort((x, y) => {
-            return this._getDateDiff(x, y);
-        });
-    }
+	this.notificationList.sort((x, y) => {
+		return this._getDateDiff(x, y);
+	});
+}
 
     _sortArchivedNotificationList() {
-        this.archivedNotificationList.sort((x, y) => {
-            return this._getDateDiff(x, y);
-        });
-    }
+	this.archivedNotificationList.sort((x, y) => {
+		return this._getDateDiff(x, y);
+	});
+}
 
     _getDateDiff(x, y) {
-        return y.createdAt - x.createdAt;
-    }
+	return y.createdAt - x.createdAt;
+}
 
 	closeDrawer() {
 		this.listDrawer.close();
