@@ -47,10 +47,10 @@ export default class CoachmarkApi {
 		return new Promise((resolve, reject) => {
 			fetch(request)
 				.then((response) => {
-				return response.ok ? resolve(response) : reject(Error(`PUT ${response.url} ${response.statusText} (${response.status})`));
-			}).catch(function(error) {
-				return reject(Error(error));
-			});
+					return response.ok ? resolve(response) : reject(Error(`PUT ${response.url} ${response.statusText} (${response.status})`));
+				}).catch(function(error) {
+					return reject(Error(error));
+				});
 		});
 	}
 }
