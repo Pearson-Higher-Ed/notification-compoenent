@@ -189,5 +189,5 @@ export default class CoachmarkListener {
 
 		window.location.href = uri;
 		return true;
-  }
+	}
 }
