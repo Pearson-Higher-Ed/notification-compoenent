@@ -1,6 +1,7 @@
 import React from 'react';
 import NotificationComponent from '../main';
 import ReactTestUtils from 'react-addons-test-utils';
+import ReactDOM from 'react-dom';
 
 
 // These tests are kind of "hacky"  I'm mocking out a lot of things that should be able to "rewired" but isn't doing it 
@@ -44,7 +45,7 @@ describe('NotificationComponent', () => {
 			}
 		});
 
-		notificationComponent = new NotificationComponent(config);
+		notificationComponent = new NotificationComponent(config, document.createElement('div'));
 
 		// override for testing purposes
 		notificationComponent.bellComponent = {
@@ -103,7 +104,10 @@ describe('NotificationComponent', () => {
 				notificationComponent.newNotifications = true;
 				notificationComponent.notificationList = [{
 					status: 'CREATED',
-					id: 1
+					id: 1,
+					message: {
+						title: "blah"
+					}
 				}];
 
 
