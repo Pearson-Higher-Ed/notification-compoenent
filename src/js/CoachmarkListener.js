@@ -6,47 +6,88 @@ import NotificationApi from './NotificationApi';
 export default class CoachmarkListener {
 
 	constructor(config) {
+		// String.startsWith pollyfill for Safari
+		if (!String.prototype.startsWith) {
+			String.prototype.startsWith = function(searchString, position) {
+				position = position || 0;
+				return this.substr(position, searchString.length) === searchString;
+			};
+		}
+
+		// global vars
+		this.localStorageKey = 'notifications.coachmark.stateObject';
+
+		// APIs
 		this.coachmarkApi = new CoachmarkApi(config);
 		this.feedbackApi = new FeedbackApi(config);
 		this.notificationApi = new NotificationApi(config);
 
-		this.localStorageKey = 'notifications.coachmark.stateObject';
+		// listeners
+		this.setupLaunchTourListener();
+		this.setupBackListener();
+		this.setupNextListener();
 	}
 
 	/**
 	 * Entry point from user interaction with the UI,
 	 * launches the first CM in the set contained in the triggering notification
 	 **/
-	launchCoachmark(notification) {
-		try {
-			const notificationDetails = notification.message;
-			let cmIds = notificationDetails.cmIds;
-			cmIds = cmIds ? cmIds.split(',') : null;
+	setupLaunchTourListener() {
+		document.addEventListener('o-notifications__launchTour', (event) => {
+			try {
+				let cmIds = event.detail.message.cmIds;
+				cmIds = cmIds ? cmIds.split(',') : null;
+				cmIds = cmIds.map((param) => parseInt(param));
 
-			let masterpieceId = notificationDetails.masterpieceId;
-			if (!masterpieceId) {
-				// TODO: Refactor masterpieceId out, without feedback functionality it's not required.
-				masterpieceId = Date.now();
+				const state = {
+					userNotificationId: event.detail.id,
+					cmIds: cmIds,
+					index: 0,
+					isVisited: {}
+				};
+
+				this._getDisplayCoachmark(state);
+
+			} catch (e) {
+				this._handleError(e);
 			}
+		});
+	}
 
-			cmIds = cmIds.map((param) => parseInt(param));
-			masterpieceId = parseInt(masterpieceId);
-			this.cmState = {};
-			this.cmState[masterpieceId] = {
-				userNotificationId: notification.id,
-				userId: notification.recipientId,
-				masterpieceId: masterpieceId,
-				cmIds: cmIds,
-				index: 0,
-				isVisited: {},
-				areListenersSet: false
-			};
+	/**
+	 * Sets up the back listener
+	 **/
+	setupBackListener() {
+		document.addEventListener('o-cm-previous-clicked', (event) => {
+			try {
+				const state = JSON.parse(event.data.id);
+				if (state.index === 0) {
+					return;
+				}
+				state.index--;
+				this._getDisplayCoachmark(state);
+			} catch (e) {
+				this._handleError(e);
+			}
+		});
+	}
 
-			this.cmListenerSetup(masterpieceId);
-			this.getDisplayCoachmark(masterpieceId);
-		} catch (e) {
-			this.handleError(e);
-		}
+	/**
+	 * Sets up the next listener
+	 **/
+	setupNextListener() {
+		document.addEventListener('o-cm-next-clicked', (event) => {
+			try {
+				const state = JSON.parse(event.data.id);
+				if (state.index + 1 === state.cmIds.length) {
+					return;
+				}
+				state.index++;
+				this._getDisplayCoachmark(state);
+			} catch (e) {
+				this._handleError(e);
+			}
+		});
 	}
 
 	/**
@@ -55,116 +96,66 @@ export default class CoachmarkListener {
 	 * this function will read those values and launch a coachmark right were we left off.
 	 * Otherwise, we return false and do nothing.
 	 **/
-	launchCoachmarkIfFromNewUrl() {
+	continueTourIfRedirected() {
+		let state;
 		try {
-			let fromLocal = localStorage.getItem(this.localStorageKey);
+			state = localStorage.getItem(this.localStorageKey);
 			localStorage.removeItem(this.localStorageKey);
-			if (!fromLocal) {
-				return false;
-			}
+		} catch (e) {
+			this._handleError(e, true);
+		}
 
-			fromLocal = JSON.parse(fromLocal);
+		if (!state) {
+			return false;
+		}
 
-			if (!fromLocal.masterpieceId) {
-				return false; // We aren't here because of a redirect
-			}
-			fromLocal.masterpieceId = parseInt(fromLocal.masterpieceId);
-			fromLocal.cmIds = fromLocal.cmIds.map((param) => parseInt(param));
-			fromLocal.index = parseInt(fromLocal.index);
-			this.cmState = {};
-			this.cmState[fromLocal.masterpieceId] = fromLocal;
-
-			this.cmListenerSetup(fromLocal.masterpieceId);
-			this.getDisplayCoachmark(fromLocal.masterpieceId);
+		try {
+			state = JSON.parse(state);
+			this._getDisplayCoachmark(state);
 			return true;
 		} catch (e) {
-			this.handleError(e);
+			this._handleError(e);
 		}
 	}
-
-
-
-	/**
-	 * Sets up listeners for this series of coachmarks
-	 **/
-	cmListenerSetup(masterpieceId) {
-		if (this.cmState[masterpieceId].areListenersSet) {
-			return;
-		}
-		this.setupBackListener(masterpieceId);
-		this.setupNextListener(masterpieceId);
-		this.cmState[masterpieceId].areListenersSet = true;
-	}
-
-	/**
-	 * Sets up the back listener
-	 **/
-	setupBackListener(masterpieceId) {
-		const cmIds = this.cmState[masterpieceId].cmIds;
-
-		document.addEventListener('o-cm-previous-clicked', (event) => {
-			const index = this.cmState[masterpieceId].index;
-			if (masterpieceId !== event.data.id || index === 0) {
-				return; // event wasn't meant for this instance of this listener
-			}
-			this.cmState[masterpieceId].index--;
-			this.getDisplayCoachmark(masterpieceId);
-		});
-	}
-
-	/**
-	 * Sets up the next listener
-	 **/
-	setupNextListener(masterpieceId) {
-		const cmIds = this.cmState[masterpieceId].cmIds;
-
-		document.addEventListener('o-cm-next-clicked', (event) => {
-			const index = this.cmState[masterpieceId].index;
-			if (masterpieceId !== event.data.id || index + 1 === cmIds.length) {
-				return;
-			}
-			this.cmState[masterpieceId].index++;
-			this.getDisplayCoachmark(masterpieceId);
-		});
-	}
-
 
 	/**
 	 * Gets data from the API and displays a coachmark on the correct page
 	 **/
-	getDisplayCoachmark(masterpieceId) {
-		const cmIds = this.cmState[masterpieceId].cmIds;
-		const index = this.cmState[masterpieceId].index;
-		const cmId = cmIds[index];
+	_getDisplayCoachmark(state) {
+		const cmId = state.cmIds[state.index];
 
 		this.coachmarkApi.getCoachmark(cmId)
-			.then((result) => {
+			.then((coachmark) => {
 				// Redirect if this coachmark ID is meant to display on a different page
-				if (this.redirectIfNewUri(result.uri, masterpieceId)) {
+				if (this._redirectIfNewUri(coachmark.uri, state)) {
 					return;
 				}
-				// Auto-populating options to simplify the coachmark payload
-				const options = result.options;
-				options.id = masterpieceId;
-				options.currentCM = parseInt(index) + 1;
-				options.totalCM = cmIds.length;
-
-				// Display the coach mark
-				new Coachmark(document.getElementById(result.element), options, () => {
-					this.notificationApi.markAsRead(this.cmState[masterpieceId].userNotificationId);
-				});
 
 				// Tick hit counter if first visit
-				if (!this.cmState[masterpieceId].isVisited[cmId]) {
-					try {
+				try {
+					if (!state.isVisited[cmId]) {
 						this.coachmarkApi.incrementViewCount(cmId);
-					} catch (e) {
-						this.handleError(e, true);
+						state.isVisited[cmId] = true;
 					}
-					this.cmState[masterpieceId].isVisited[cmId] = true;
+				} catch (e) {
+					this._handleError(e, true);
 				}
+
+				// Auto-populating options to simplify the coachmark payload
+				const options = coachmark.options;
+				options.id = JSON.stringify(state);
+				if (state.cmIds.length > 1) {
+					options.currentCM = parseInt(state.index) + 1;
+					options.totalCM = state.cmIds.length;
+				}
+
+				// Display the coach mark
+				new Coachmark(document.getElementById(coachmark.element), options, () => {
+					this.notificationApi.markAsRead(state.userNotificationId);
+				});
+
 			}, (error) => {
-				this.handleError(error);
+				this._handleError(error);
 			});
 	}
 
@@ -172,17 +163,11 @@ export default class CoachmarkListener {
 	 * if the current uri and the uri passed in do not match,
 	 * store state in local storage and redirect to the new uri
 	 **/
-	redirectIfNewUri(uri, masterpieceId) {
+	_redirectIfNewUri(uri, state) {
 		if (!uri) {
 			return false;
 		}
-		// String.startsWith pollyfill for Safari
-		if (!String.prototype.startsWith) {
-			String.prototype.startsWith = function(searchString, position) {
-				position = position || 0;
-				return this.substr(position, searchString.length) === searchString;
-			};
-		}
+
 		// if relative, change to absolute using current domain
 		const currentUri = window.location.href;
 		if (!uri.toLowerCase().startsWith('http')) {
@@ -190,20 +175,24 @@ export default class CoachmarkListener {
 			const domain = arr[0] + '//' + arr[2];
 			uri = domain + '/' + uri;
 		}
-		// Redirect only if the target url and current url don't match
+		// If the target URI and current URI are the same, don't redirect
 		if (uri === currentUri) {
 			return false;
 		}
 		// Set local storage
-		this.cmState[masterpieceId].areListenersSet = false;
-		localStorage.setItem(this.localStorageKey, JSON.stringify(this.cmState[masterpieceId]));
+		localStorage.setItem(this.localStorageKey, JSON.stringify(state));
 
 		window.location.href = uri;
 		return true;
 	}
 
-	handleError(error, isSilentFailure) {
-		//TODO: We should probably log all errors
+	_handleError(error, isSilentFailure) {
+		//TODO: We should probably log back all errors
+		console.log('Handled error: ', error);
+
+		if (isSilentFailure) {
+			return;
+		}
 
 		const options = {
 			title: 'There seems to be a problem with this feature.',
