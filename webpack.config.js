@@ -54,7 +54,7 @@ module.exports = {
         loader: 'json'
       },
       // comment this next line out to enable console.log
-      //{ test: /\.js$/, loader: 'webpack-strip?strip[]=console.log' }
+      { test: /\.js$/, loader: 'webpack-strip?strip[]=console.log' }
     ]
   }
 };
