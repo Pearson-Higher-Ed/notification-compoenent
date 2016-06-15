@@ -81,11 +81,11 @@ export default class NotificationContainer extends React.Component {
 				</div>
 				<div className={this.state.displayDetails ? 'hide' : ''}>
 					<div className={this.state.isArchive ? 'hide': ''}>
-						<NotificationList list={this.props.list} showDetails={this.showDetails}
+						<NotificationList list={this.props.list} showDetails={this.showDetails} isError={this.props.apiError}
 						 appendArchiveList={this.appendArchiveList} isArchiveTray={false} goToArchiveList={this.goToArchiveList}/>
 					</div>
 					<div className={this.state.isArchive ? '': 'hide'}>
-						<NotificationList list={this.props.archivedList} showDetails={this.showDetails}
+						<NotificationList list={this.props.archivedList} showDetails={this.showDetails} isError={this.props.apiError}
 						 appendArchiveList={this.appendArchiveList} isArchiveTray={true} goToArchiveList={this.goToArchiveList}/>
 					</div>
 				</div>
