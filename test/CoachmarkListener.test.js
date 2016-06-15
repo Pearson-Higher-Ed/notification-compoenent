@@ -14,102 +14,94 @@ describe('CoachmarkListener.launchCoachmark', () => {
 		};
 
 		coachmarkListener = new CoachmarkListener({});
-		coachmarkListener.cmListenerSetup = () => {};
-		coachmarkListener.getDisplayCoachmark = () => {};
+
+		coachmarkListener._setupLaunchTourListener = () => {};
+		coachmarkListener._setupBackListener = () => {};
+		coachmarkListener._setupNextListener = () => {};
+		coachmarkListener._getDisplayCoachmark = () => {};
+
 		coachmarkListener.launchCoachmark(notification);
 
 	});
 });
 
-describe('CoachmarkListener.launchCoachmarkIfFromNewUrl', () => {
+describe('CoachmarkListener.continueTourIfRedirected', () => {
 
-	let masterpieceId = 444;
 	let coachmarkListener;
 	let isFromNewUrl = false;
-	let cmStateObj;
+	let state;
 	let storePath = 'notifications.coachmark.stateObject';
 	let cmStateStr;
 
 	beforeEach(() => {
-		cmStateObj = {
+		state = {
 			userNotificationId: 222,
 			userId: 333,
-			masterpieceId: masterpieceId,
 			cmIds: ['555'],
 			index: 0,
 			isVisited: {},
-			areListenersSet: false
 		};
-		cmStateStr = JSON.stringify(cmStateObj);
+		cmStateStr = JSON.stringify(state);
 
 		coachmarkListener = new CoachmarkListener({});
-		coachmarkListener.cmListenerSetup = () => {};
-		coachmarkListener.getDisplayCoachmark = () => {};
-		coachmarkListener.cmState = {};
+
+		coachmarkListener._setupLaunchTourListener = () => {};
+		coachmarkListener._setupBackListener = () => {};
+		coachmarkListener._setupNextListener = () => {};
+		coachmarkListener._getDisplayCoachmark = () => {};
 	});
 
 	it('should return false if no cmState exists', () => {
 		localStorage.clear();
-		expect(coachmarkListener.launchCoachmarkIfFromNewUrl()).toBe(false);
+		expect(coachmarkListener.continueTourIfRedirected()).toBe(false);
 	});
 
 	it('should return true if an object from local storage exists', () => {
 		localStorage.setItem(storePath, cmStateStr);
-		expect(coachmarkListener.launchCoachmarkIfFromNewUrl()).toBe(true);
-	});
-
-	it('should get the cmState object from local storage', () => {
-		localStorage.setItem(storePath, cmStateStr);
-		coachmarkListener.launchCoachmarkIfFromNewUrl();
-		expect(coachmarkListener.cmState[masterpieceId]).not.toBe(undefined);
+		expect(coachmarkListener.continueTourIfRedirected()).toBe(true);
 	});
 });
 
 describe('Back and Next Listeners', () => {
-	let coachmarkListener;
-	let masterpieceId = 444;
-	let closeCmCalled, displayCmCalled;
+	let coachmarkListener, listenerState;
+	let displayCmCalled;
+	let cmEvent = {};
 
 	beforeEach(() => {
-		closeCmCalled = false;
 		displayCmCalled = false;
+
+
+		cmEvent.id = JSON.stringify({
+			userNotificationId: 111,
+			cmIds: [222,333,444],
+			index: 1,
+			isVisited: {}
+		});
 
 		coachmarkListener = new CoachmarkListener({});
 
-		coachmarkListener.cmState = {};
-		coachmarkListener.cmState[masterpieceId] = {
-			userNotificationId: 222,
-			userId: 333,
-			masterpieceId: masterpieceId,
-			cmIds: [554, 555, 556],
-			index: 1,
-			isVisited: {},
-			areListenersSet: false
-		};
-
-		coachmarkListener.closeCoachmark = (element) => { closeCmCalled = true; };
-		coachmarkListener.getDisplayCoachmark = (masterpieceId) => { displayCmCalled = true; };
-		coachmarkListener.setupBackListener(masterpieceId);
-		coachmarkListener.setupNextListener(masterpieceId);
+		coachmarkListener._handleError = (error) => {console.log(error);};
+		coachmarkListener._getDisplayCoachmark = (state) => { displayCmCalled = true; listenerState = state; };
+		coachmarkListener._setupBackListener();
+		coachmarkListener._setupNextListener();
 	});
 
 	it('should open the next CM when next is triggered', () => {
-		triggerEvent('o-cm-next-clicked', { id: masterpieceId, payload: '' });
+		triggerEvent('o-cm-next-clicked', cmEvent);
 
 		expect(displayCmCalled).toBe(true);
-		expect(coachmarkListener.cmState[masterpieceId].index).toBe(2);
+		expect(listenerState.index).toBe(2);
 	});
 
 	it('should open the previous CM when back is triggered', () => {
-		triggerEvent('o-cm-previous-clicked', { id: masterpieceId, payload: '' });
+		triggerEvent('o-cm-previous-clicked', cmEvent);
 
 		expect(displayCmCalled).toBe(true);
-		expect(coachmarkListener.cmState[masterpieceId].index).toBe(0);
+		expect(listenerState.index).toBe(0);
 	});
-});
+ });
 
 describe('get display coachmark', () => {
-	let masterpieceId = 444;
 	let coachmarkListener, isCountTicked;
 
 	beforeEach((done) => {
@@ -118,24 +110,21 @@ describe('get display coachmark', () => {
 		CoachmarkListener.__Rewire__('Coachmark', (a,b,c) => {});
 		coachmarkListener = new CoachmarkListener({});
 
-		coachmarkListener.redirectIfNewUri = () => {return false;};
+		coachmarkListener._redirectIfNewUri = () => {return false;};
 		coachmarkListener.notificationApi = {markAsRead: () => {}};
-		coachmarkListener.closeCoachmark = () => {};
 		coachmarkListener.coachmarkApi = {
 			incrementViewCount: (cmId) => { isCountTicked = true; },
 			getCoachmark: (cmId) => { return Promise.resolve({ options: {}, uri: 'uri', element: 'foo' });}
 		};
-		coachmarkListener.cmState = {};
-		coachmarkListener.cmState[masterpieceId] = {
-			userNotificationId: 222,
-			userId: 333,
-			masterpieceId: masterpieceId,
-			cmIds: [554, 555, 556],
+
+		const state = {
+			userNotificationId: 111,
+			cmIds: [222,333,444],
 			index: 1,
-			isVisited: {},
-			areListenersSet: false
+			isVisited: {}
 		};
-		coachmarkListener.getDisplayCoachmark(masterpieceId);
+
+		coachmarkListener._getDisplayCoachmark(state);
 		// Fixes problem with promise not finishing in time
 		setTimeout(() => {done();}, 0);
 

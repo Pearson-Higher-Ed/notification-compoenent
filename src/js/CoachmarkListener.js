@@ -22,72 +22,13 @@ export default class CoachmarkListener {
 		this.feedbackApi = new FeedbackApi(config);
 		this.notificationApi = new NotificationApi(config);
 
-		// listeners
-		this.setupLaunchTourListener();
-		this.setupBackListener();
-		this.setupNextListener();
 	}
 
-	/**
-	 * Entry point from user interaction with the UI,
-	 * launches the first CM in the set contained in the triggering notification
-	 **/
-	setupLaunchTourListener() {
-		document.addEventListener('o-notifications__launchTour', (event) => {
-			try {
-				let cmIds = event.detail.message.cmIds;
-				cmIds = cmIds ? cmIds.split(',') : null;
-				cmIds = cmIds.map((param) => parseInt(param));
-
-				const state = {
-					userNotificationId: event.detail.id,
-					cmIds: cmIds,
-					index: 0,
-					isVisited: {}
-				};
-
-				this._getDisplayCoachmark(state);
-
-			} catch (e) {
-				this._handleError(e);
-			}
-		});
-	}
-
-	/**
-	 * Sets up the back listener
-	 **/
-	setupBackListener() {
-		document.addEventListener('o-cm-previous-clicked', (event) => {
-			try {
-				const state = JSON.parse(event.data.id);
-				if (state.index === 0) {
-					return;
-				}
-				state.index--;
-				this._getDisplayCoachmark(state);
-			} catch (e) {
-				this._handleError(e);
-			}
-		});
-	}
-
-	/**
-	 * Sets up the next listener
-	 **/
-	setupNextListener() {
-		document.addEventListener('o-cm-next-clicked', (event) => {
-			try {
-				const state = JSON.parse(event.data.id);
-				if (state.index + 1 === state.cmIds.length) {
-					return;
-				}
-				state.index++;
-				this._getDisplayCoachmark(state);
-			} catch (e) {
-				this._handleError(e);
-			}
-		});
+	setupListeners() {
+		this._setupLaunchTourListener();
+		this._setupBackListener();
+		this._setupNextListener();
+		return this;
 	}
 
 	/**
@@ -117,6 +58,70 @@ export default class CoachmarkListener {
 			this._handleError(e);
 		}
 	}
+
+	/**
+	 * Entry point from user interaction with the UI,
+	 * launches the first CM in the set contained in the triggering notification
+	 **/
+	_setupLaunchTourListener() {
+		document.addEventListener('o-notifications__launchTour', (event) => {
+			try {
+				let cmIds = event.detail.message.cmIds;
+				cmIds = cmIds ? cmIds.split(',') : null;
+				cmIds = cmIds.map((param) => parseInt(param));
+
+				const state = {
+					userNotificationId: event.detail.id,
+					cmIds: cmIds,
+					index: 0,
+					isVisited: {}
+				};
+
+				this._getDisplayCoachmark(state);
+
+			} catch (e) {
+				this._handleError(e);
+			}
+		});
+	}
+
+	/**
+	 * Sets up the back listener
+	 **/
+	_setupBackListener() {
+		document.addEventListener('o-cm-previous-clicked', (event) => {
+			try {
+				const state = JSON.parse(event.data.id);
+				if (state.index === 0) {
+					return;
+				}
+				state.index--;
+				this._getDisplayCoachmark(state);
+			} catch (e) {
+				this._handleError(e);
+			}
+		});
+	}
+
+	/**
+	 * Sets up the next listener
+	 **/
+	_setupNextListener() {
+		document.addEventListener('o-cm-next-clicked', (event) => {
+			try {
+				const state = JSON.parse(event.data.id);
+				if (state.index + 1 === state.cmIds.length) {
+					return;
+				}
+				state.index++;
+				this._getDisplayCoachmark(state);
+			} catch (e) {
+				this._handleError(e);
+			}
+		});
+	}
+
+
 
 	/**
 	 * Gets data from the API and displays a coachmark on the correct page

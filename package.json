@@ -24,7 +24,7 @@
     "url": "https://github.com/Pearson-Higher-Ed/"
   },
   "dependencies": {
-    "@pearson-components/coach-mark": "^0.1.5",
+    "@pearson-components/coach-mark": "^0.1.6",
     "@pearson-components/drawer": "^0.2.0",
     "react-intl": "~2.0.1",
     "rtd": "git+ssh://git@bitbucket.pearson.com/se/realtime-delivery.git#modularize"

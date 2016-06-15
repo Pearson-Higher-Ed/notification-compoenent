@@ -54,7 +54,7 @@ class NotificationComponent {
 			this.bellComponent.forceUpdate();
 			this.containerComponent.forceUpdate();
 
-			(new CoachmarkListener(config)).continueTourIfRedirected();
+			(new CoachmarkListener(config)).setupListeners().continueTourIfRedirected();
 
 		}).catch((error) => {
 			this.apiError = true;
