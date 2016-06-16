@@ -31,7 +31,7 @@ export default class NotificationDetails extends React.Component {
 		}
 
 		return (
-			<div className="notification-details">
+			<div className="notification-details, hyphenate">
 				<div className="notification-details__meta">
 					<div className="noticiation-details__meta--source">
 						{this.props.notification.message.source}
