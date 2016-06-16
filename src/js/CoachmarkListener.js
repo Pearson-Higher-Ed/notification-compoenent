@@ -203,7 +203,8 @@ export default class CoachmarkListener {
 			title: 'There seems to be a problem with this feature.',
 			text: 'Try refreshing your browser or clearing your cache.​',
 			id: Date.now(),
-			disableShadow: true
+			disableShadow: true,
+			disablePointer: true
 		};
 		new Coachmark(document.getElementsByClassName('notification-bell')[0], options, () => {});
 	}
