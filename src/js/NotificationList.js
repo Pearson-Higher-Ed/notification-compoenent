@@ -48,7 +48,7 @@ export default class NotificationList extends React.Component {
 		}
 
 		return (
-			<div className="notification-list">
+			<div className="notification-list, hyphenate">
 				{notificationNodeObjects}
 			</div>
 		);
