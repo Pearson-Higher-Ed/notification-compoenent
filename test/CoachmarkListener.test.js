@@ -15,7 +15,7 @@ describe('CoachmarkListener.launchCoachmark', () => {
 
 		coachmarkListener = new CoachmarkListener({});
 
-		coachmarkListener._setupLaunchTourListener = () => {};
+		coachmarkListener.launchTour = () => {};
 		coachmarkListener._setupBackListener = () => {};
 		coachmarkListener._setupNextListener = () => {};
 		coachmarkListener._getDisplayCoachmark = () => {};
@@ -45,13 +45,13 @@ describe('CoachmarkListener.continueTourIfRedirected', () => {
 
 		coachmarkListener = new CoachmarkListener({});
 
-		coachmarkListener._setupLaunchTourListener = () => {};
+		coachmarkListener.launchTour = () => {};
 		coachmarkListener._setupBackListener = () => {};
 		coachmarkListener._setupNextListener = () => {};
 		coachmarkListener._getDisplayCoachmark = () => {};
 	});
 
-	it('should return false if no cmState exists', () => {
+	it('should return false if no object from local storage exists', () => {
 		localStorage.clear();
 		expect(coachmarkListener.continueTourIfRedirected()).toBe(false);
 	});

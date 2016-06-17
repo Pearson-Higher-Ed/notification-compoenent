@@ -1,5 +1,4 @@
 import React from 'react';
-//import CoachmarkListener from './CoachmarkListener';
 import DateParser from './DateParser';
 
 export default class NotificationDetails extends React.Component {
@@ -9,7 +8,7 @@ export default class NotificationDetails extends React.Component {
 	}
 
 	launchCoachmark() {
-		document.dispatchEvent(new CustomEvent('o-notifications__launchTour', {'detail': this.props.notification}));
+		this.props.coachmarkListener.launchTour(this.props.notification)
 		this.props.closeDrawer();
 	}
 

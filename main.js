@@ -54,7 +54,8 @@ class NotificationComponent {
 			this.bellComponent.forceUpdate();
 			this.containerComponent.forceUpdate();
 
-			(new CoachmarkListener(config)).setupListeners().continueTourIfRedirected();
+			this.coachmarkListener = new CoachmarkListener(config);
+			this.coachmarkListener.setupListeners().continueTourIfRedirected();
 
 		}).catch((error) => {
 			this.apiError = true;
@@ -131,7 +132,8 @@ fixNotificationValues(notificationList) {
 				return (
 					<div>
 						<NotificationContainer list={_this.notificationList} notificationRead={_this.notificationRead.bind(_this)} config={_this.config} apiError={_this.apiError}
-						archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} archiveNotification={_this.archiveNotification.bind(_this)}/>
+						archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} archiveNotification={_this.archiveNotification.bind(_this)}
+						coachmarkListener={_this.coachmarkListener}/>
 					</div>
 				);
 			}
