@@ -13,50 +13,44 @@ export default class CoachmarkApi {
 	 * Gets a coachmark by id
 	 **/
 	getCoachmark(cmId) {
-		const response = new Promise((resolve, reject) => {
-			const request = new Request(this.url + '/coachmark/' + cmId, {
-				method: 'GET',
-				mode: 'cors',
-				headers: {
-					'X-Authorization': this.xAuth,
-					'Content-Type': this.contentType
-				}
-			});
-			fetch(request).then(function(response) {
-				return response.json();
-			}).then(function(coachmark) {
-				if (!coachmark.options.id) {
-					coachmark.options.id = cmId;
-				}
-				resolve(coachmark);
-			}).catch(function(error) {
-				console.log('onError: ', error);
-				reject(error);
-			});
+		const request = new Request(this.url + '/coachmark/' + cmId, {
+			method: 'GET',
+			mode: 'cors',
+			headers: {
+				'X-Authorization': this.xAuth,
+				'Content-Type': this.contentType
+			}
 		});
-		return response;
+		return new Promise((resolve, reject) => {
+			fetch(request)
+				.then((response) => {
+					return response.ok ? resolve(response.json()) : reject(Error(`GET ${response.url} ${response.statusText} (${response.status})`));
+				})
+				.catch((error) => {
+					return reject(Error(error));
+				});
+		});
 	}
 
 	/**
 	 * Tracks how many times a coachmark has been viewed
 	 **/
 	incrementViewCount(cmId) {
-		const response = new Promise((resolve, reject) => {
-			const request = new Request(this.url + '/coachmark/' + cmId + '/increment', {
-				method: 'PUT',
-				mode: 'cors',
-				headers: new Headers({
-					'X-Authorization': this.xAuth,
-					'Content-Type': this.contentType
-				})
-			});
-			fetch(request).then(function(response) {
-				resolve(response);
-			}).catch(function(error) {
-				console.log('onError: ', error);
-				reject(error);
-			});
+		const request = new Request(this.url + '/coachmark/' + cmId + '/increment', {
+			method: 'PUT',
+			mode: 'cors',
+			headers: new Headers({
+				'X-Authorization': this.xAuth,
+				'Content-Type': this.contentType
+			})
 		});
-		return response;
+		return new Promise((resolve, reject) => {
+			fetch(request)
+				.then((response) => {
+					return response.ok ? resolve(response) : reject(Error(`PUT ${response.url} ${response.statusText} (${response.status})`));
+				}).catch(function(error) {
+					return reject(Error(error));
+				});
+		});
 	}
 }
