@@ -37,7 +37,6 @@ function init() {
 	const appHeaderElement = document.getElementsByClassName('o-app-header o-header o-header--fixed')
 	const appHeaderClientHeight = (appHeaderElement && appHeaderElement[0] && appHeaderElement[0].clientHeight) ? appHeaderElement[0].clientHeight+'px' : '54px';
 	AppHeaderConfig.appHeaderClientHeight = appHeaderClientHeight; // need to do this jusst to make sure we get proper height of the appheader
-
 	if (appHeaderNotificationDiv.length) {
 		document.body.dispatchEvent(new CustomEvent('o.InitNotificationComponent', {
 			detail: {
