@@ -30,14 +30,18 @@ class NotificationComponent {
 		dom.classList.add('o-drawer-right', 'o-drawer-animated');
 		dom.setAttribute('aria-role', 'menu');
 		dom.setAttribute('role', 'menu');
-		dom.setAttribute('style', 'top:' + config.appHeaderClientHeight + ';height:95%;');
+
 		document.body.appendChild(dom);
 
-		//insert the notification as a sibling for the app header so get the tab focus in order
-		const par = document.getElementsByTagName('body')[0];
-		const target = document.querySelector('header.o-app-header') || par.firstChild;
-		par.insertBefore(dom, target? target.nextSibling : target);
-
+		//insert the notification as a sibling for the app header so as to get keyboard tab focus in order ,also turn aria-hidden to false inside the appheader
+		if (config.bellInsideAppHeaderFlag) {
+			dom.setAttribute('style', 'top:' + config.appHeaderClientHeight + ';height:95%;');
+			const listItemNotification = document.getElementsByClassName('o-header__nav-item o-app-header__nav-item-notification');
+			listItemNotification[0].setAttribute('aria-hidden', false);
+			const bodyDom = document.getElementsByTagName('body')[0];
+			const appHeaderDom = document.querySelector('header.o-app-header') || bodyDom.firstChild;
+			bodyDom.insertBefore(dom, appHeaderDom ? appHeaderDom.nextSibling : appHeaderDom);
+		}
 		this.listDrawer = new Drawer(dom);
 		
 		this._createBellReactClass();
