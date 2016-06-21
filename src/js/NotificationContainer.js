@@ -72,9 +72,9 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	render() {
-		const closButton = <button aria-label="close Notification" onClick={this.state.isArchive && !this.state.displayDetails ? this.showNonArchivedList : this.resetListOnCloseDrawer}> <i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-down pointer' : 'pe-icon--times close-dropdown pointer'}></i> </button>;
+		const closButton = <button aria-label="Close Notification" onClick={this.state.isArchive && !this.state.displayDetails ? this.showNonArchivedList : this.resetListOnCloseDrawer}> <i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-down pointer' : 'pe-icon--times close-dropdown pointer'}></i> </button>;
 		return (
-			<div aria-label="notifiations menu" role="menuitem">
+			<div aria-label="Notifiations Menu" role="menuitem">
 				<div className={!this.state.displayDetails ? 'notification-archive--back' : 'hide'} tabIndex={-1} ref="closeButton">
 					{closButton}
 				</div>
