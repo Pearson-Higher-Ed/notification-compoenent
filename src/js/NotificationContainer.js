@@ -70,6 +70,29 @@ export default class NotificationContainer extends React.Component {
 		this.props.closeDrawer();
 	}
 
+	hyphenateWords(sentence) {
+		const maxLength = 8;
+		if (typeof sentence !== 'string') {
+			return sentence;
+		}
+		return sentence.split(' ').map((word) => {
+			if (word.length <= maxLength) {
+				return word;
+			}
+			const chunkCount = Math.floor(word.length / maxLength) + 1;
+			const chunkSize = Math.round(word.length / chunkCount);
+
+			let result = '';
+			for (let spacer = '', i = 0; i < chunkCount; i++) {
+				const chunkStart = i * chunkSize;
+				const chunkEnd = (i + 1) * chunkSize;
+				result += spacer + word.substring(chunkStart, chunkEnd);
+				spacer = '\u00AD';
+			}
+			return result;
+		}).join(' ');
+	}
+
 	render() {
 		return (
 			<div>
@@ -82,17 +105,17 @@ export default class NotificationContainer extends React.Component {
 				<div className={this.state.displayDetails ? 'hide' : ''}>
 					<div className={this.state.isArchive ? 'hide': ''}>
 						<NotificationList list={this.props.list} showDetails={this.showDetails} isError={this.props.apiError}
-						 appendArchiveList={this.appendArchiveList} isArchiveTray={false} goToArchiveList={this.goToArchiveList}/>
+						 appendArchiveList={this.appendArchiveList} isArchiveTray={false} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
 					</div>
 					<div className={this.state.isArchive ? '': 'hide'}>
 						<NotificationList list={this.props.archivedList} showDetails={this.showDetails} isError={this.props.apiError}
-						 appendArchiveList={this.appendArchiveList} isArchiveTray={true} goToArchiveList={this.goToArchiveList}/>
+						 appendArchiveList={this.appendArchiveList} isArchiveTray={true} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
 					</div>
 				</div>
 				<div className={this.state.displayDetails ? '' : 'hide'}>
 					<div className="notification-list">
 						<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} appendArchiveList={this.appendArchiveList}
-							coachmarkListener={this.props.coachmarkListener}/>
+							coachmarkListener={this.props.coachmarkListener} hyphenateWords={this.hyphenateWords}/>
 					</div>
 				</div>
 				<div className="notification-title" onClick={this.goToArchiveList}>

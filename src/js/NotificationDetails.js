@@ -30,7 +30,7 @@ export default class NotificationDetails extends React.Component {
 		}
 
 		return (
-			<div className="notification-details, hyphenate">
+			<div className="notification-details">
 				<div className="notification-details__meta">
 					<div className="noticiation-details__meta--source">
 						{this.props.notification.message.source}
@@ -40,10 +40,10 @@ export default class NotificationDetails extends React.Component {
 					</div>
 				</div>
 				<div className="notification-details--title">
-					<h1>{this.props.notification.message.title}</h1>
+					<h1>{this.props.hyphenateWords(this.props.notification.message.title)}</h1>
 				</div>
 				<div className="notification-details--body">
-					{this.props.notification.message.body}
+					{this.props.hyphenateWords(this.props.notification.message.body)}
 				</div>
 				{tourButton}
 				<div className="notification-details--align">
