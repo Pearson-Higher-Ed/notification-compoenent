@@ -28,9 +28,18 @@ class NotificationComponent {
 		dom.setAttribute('id', 'notification-component');
 		dom.setAttribute('data-o-component', 'o-drawer');
 		dom.classList.add('o-drawer-right', 'o-drawer-animated');
+		dom.setAttribute('aria-role', 'menu');
+		dom.setAttribute('role', 'menu');
 		dom.setAttribute('style', 'top:' + config.appHeaderClientHeight + ';height:95%;');
-		this.listDrawer = new Drawer(dom);
 		document.body.appendChild(dom);
+
+		//insert the notification as a sibling for the app header so get the tab focus in order
+		const par = document.getElementsByTagName('body')[0];
+		const target = document.querySelector('header.o-app-header') || par.firstChild;
+		par.insertBefore(dom, target? target.nextSibling : target);
+
+		this.listDrawer = new Drawer(dom);
+		
 		this._createBellReactClass();
 		this._createListReactClass();
 		this.unreadCount = 0;

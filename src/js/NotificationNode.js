@@ -24,7 +24,7 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 				</div>
 			</a>
 			<div className="notification-node--dismiss">
-				<button className={trashIconDisable ? 'hide' : ''} onClick={archivedNotification} ><i className="pe-icon--archive" ></i></button>
+				<button aria-label="archive" className={trashIconDisable ? 'hide' : ''} onClick={archivedNotification} ><i className="pe-icon--archive" ></i></button>
 			</div>
 		</div>
 	);
