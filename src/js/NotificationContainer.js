@@ -57,7 +57,6 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	showNonArchivedList() {
-			this.refs.closeButton && this.refs.closeButton.focus();
 		this.setState({
 			isArchive: false
 		});
