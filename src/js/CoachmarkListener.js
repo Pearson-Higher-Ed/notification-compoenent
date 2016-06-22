@@ -126,9 +126,15 @@ export default class CoachmarkListener {
 
 		this.coachmarkApi.getCoachmark(cmId)
 			.then((coachmark) => {
-				// Redirect if this coachmark ID is meant to display on a different page
-				if (!isAlreadyRedirected ? this._redirectIfNewUri(coachmark.uri, state) : false) {
-					return;
+				// continueTourIfRedirected is the only thing setting this flag.
+				// If it's set to true, it means we're trying to load a coach mark from a redirect
+				// and we can bypass this check. This is meant to prevent a situation
+				// where hitting back on a bad redirect always triggers the redirect again.
+				if (!isAlreadyRedirected) {
+					// Redirect if this coachmark ID is meant to display on a different page
+					if (this._redirectIfNewUri(coachmark.uri, state)) {
+						return;
+					}
 				}
 
 				// Tick hit counter if first visit
