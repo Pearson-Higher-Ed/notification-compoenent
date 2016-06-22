@@ -50,6 +50,7 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	goToArchiveList() {
+		this.refs.closeButton && this.refs.closeButton.focus();
 		this.setState({
 			isArchive: true
 		});
@@ -94,8 +95,12 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	render() {
+		const closButton = <button aria-label="Close Notification" onClick={this.state.isArchive && !this.state.displayDetails ? this.showNonArchivedList : this.resetListOnCloseDrawer}> <i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-down pointer' : 'pe-icon--times close-dropdown pointer'}></i> </button>;
 		return (
-			<div>
+			<div aria-label="Notifiations Menu" role="menuitem">
+				<div className={!this.state.displayDetails ? 'notification-archive--back' : 'hide'} tabIndex={-1} ref="closeButton">
+					{closButton}
+				</div>
 				<div className="notification-title">
 					<div tabIndex={-1} ref="heading">
 						<NotificationHeading back={this.showList} isList={!this.state.isArchive && !this.state.displayDetails}
@@ -123,8 +128,8 @@ export default class NotificationContainer extends React.Component {
 						<a href="javascript:void(0);"> Notification Archive </a>
 					</h1>
 				</div>
-				<div className="notification-archive--back">
-					<button onClick={this.state.isArchive && !this.state.displayDetails ? this.showNonArchivedList : this.resetListOnCloseDrawer}> <i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-down pointer' : 'pe-icon--times close-dropdown pointer'}></i> </button>
+				<div className={this.state.displayDetails ? 'notification-archive--back' : 'hide'}>
+					{closButton}
 				</div>
 			</div>
 		);
