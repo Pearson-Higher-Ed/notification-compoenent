@@ -51,7 +51,7 @@ export default class CoachmarkListener {
 
 		try {
 			state = JSON.parse(state);
-			this._getDisplayCoachmark(state);
+			this._getDisplayCoachmark(state, true);
 			return true;
 		} catch (e) {
 			this._handleError(e);
@@ -121,14 +121,20 @@ export default class CoachmarkListener {
 	/**
 	 * Gets data from the API and displays a coachmark on the correct page
 	 **/
-	_getDisplayCoachmark(state) {
+	_getDisplayCoachmark(state, isAlreadyRedirected) {
 		const cmId = state.cmIds[state.index];
 
 		this.coachmarkApi.getCoachmark(cmId)
 			.then((coachmark) => {
-				// Redirect if this coachmark ID is meant to display on a different page
-				if (this._redirectIfNewUri(coachmark.uri, state)) {
-					return;
+				// continueTourIfRedirected is the only thing setting this flag.
+				// If it's set to true, it means we're trying to load a coach mark from a redirect
+				// and we can bypass this check. This is meant to prevent a situation
+				// where hitting back on a bad redirect always triggers the redirect again.
+				if (!isAlreadyRedirected) {
+					// Redirect if this coachmark ID is meant to display on a different page
+					if (this._redirectIfNewUri(coachmark.uri, state)) {
+						return;
+					}
 				}
 
 				// Tick hit counter if first visit
@@ -188,6 +194,15 @@ export default class CoachmarkListener {
 
 	_handleError(error, isSilentFailure) {
 		//TODO: We should probably log back all errors
+
+		if (window.sessionStorage) {
+			const errKey = 'CoachMark_ERROR';
+			let err = Date().toString() + ': ' + error.toString() + '\n';
+			const currErr = sessionStorage.getItem(errKey);
+			err += currErr ? currErr : '';
+			sessionStorage.setItem(errKey, err);
+		}
+
 		console.log('Handled error: ', error);
 
 		if (isSilentFailure) {
