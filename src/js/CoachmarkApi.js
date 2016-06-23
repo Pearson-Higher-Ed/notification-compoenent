@@ -13,6 +13,7 @@ export default class CoachmarkApi {
 	 * Gets a coachmark by id
 	 **/
 	getCoachmark(cmId) {
+		console.log('Entering getCoachmark with cmId: ', cmId);
 		const request = new Request(this.url + '/coachmark/' + cmId, {
 			method: 'GET',
 			mode: 'cors',
@@ -24,9 +25,11 @@ export default class CoachmarkApi {
 		return new Promise((resolve, reject) => {
 			fetch(request)
 				.then((response) => {
+					console.log('Got response: ', response.body);
 					return response.ok ? resolve(response.json()) : reject(Error(`GET ${response.url} ${response.statusText} (${response.status})`));
 				})
 				.catch((error) => {
+					console.log('Rejecting with error: ', error);
 					return reject(Error(error));
 				});
 		});
