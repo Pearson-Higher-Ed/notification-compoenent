@@ -195,14 +195,6 @@ export default class CoachmarkListener {
 	_handleError(error, isSilentFailure) {
 		//TODO: We should probably log back all errors
 
-		if (window.sessionStorage) {
-			const errKey = 'CoachMark_ERROR';
-			let err = Date().toString() + ': ' + error.toString() + '\n';
-			const currErr = sessionStorage.getItem(errKey);
-			err += currErr ? currErr : '';
-			sessionStorage.setItem(errKey, err);
-		}
-
 		console.log('Handled error: ', error);
 
 		if (isSilentFailure) {

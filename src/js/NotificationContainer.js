@@ -72,7 +72,7 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	hyphenateWords(sentence) {
-		const maxLength = 8;
+		const maxLength = 12;
 		if (typeof sentence !== 'string') {
 			return sentence;
 		}
