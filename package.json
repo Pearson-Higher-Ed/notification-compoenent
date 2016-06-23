@@ -75,7 +75,7 @@
     "webpack-dev-server": "~1.14.0",
     "webpack-strip": "^0.1.0",
     "whatwg-fetch": "^0.11.0",
-    "@pearson-components/app-header": "^1.1.1"
+    "@pearson-components/app-header": "^1.1.2"
   },
   "keywords": [
     "pearson-components"
