@@ -14,12 +14,17 @@
 
 .notification-bell {
     font-size: 16px;
+
     .notification-bell--activate {
         text-decoration: none;
         display: block;
-        padding: 17px 15px;
-        padding-bottom: 1px;
+        padding: 12px 15px 0px 15px;
         color: #cccccc;
+        line-height: 18px;
+
+        @media (min-width: 1024px) {
+            padding: 20px 15px 2px 15px;
+        }
 
         .notification-bell--count {
             background-color: #ffffff;

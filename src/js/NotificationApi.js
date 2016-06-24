@@ -60,7 +60,7 @@ export default class NotificationApi {
 
 	getNotifications() {
 		const response = new Promise((resolve, reject) => {
-			const request = new Request(this.url + '?filter=recipientId::' + this.recipientId + '|notificationType::inbrowser', {
+			const request = new Request(this.url + '/recipientid/' + this.recipientId + '/notificationtype/inbrowser', {
 				method: 'GET',
 				mode: 'cors',
 				headers: {
