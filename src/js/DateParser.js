@@ -12,9 +12,9 @@ module.exports = {
 			if (difference >= 24) {
 				return dayOfWeek[updatedAt.getDay()] + ', ' + month[updatedAt.getMonth()] + ' ' + updatedAt.getDate() + ', ' + updatedAt.getFullYear();
 			}
-			return parseInt(difference) + ' hr';
+			return parseInt(difference) + ' hours';
 		}
 		
-		return parseInt(difference) + ' min';
+		return parseInt(difference) + ' minutes';
 	}
 }

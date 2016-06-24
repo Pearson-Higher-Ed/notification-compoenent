@@ -35,7 +35,7 @@ class NotificationComponent {
 
 		//insert the notification as a sibling for the app header so as to get keyboard tab focus in order ,also turn aria-hidden to false inside the appheader
 		if (config.bellInsideAppHeaderFlag) {
-			dom.setAttribute('style', 'top:' + config.appHeaderClientHeight + ';height:95%;');
+			dom.setAttribute('style', 'top:' + config.appHeaderClientHeight + ';height:95%;display: none;');
 			const listItemNotification = document.getElementsByClassName('o-header__nav-item o-app-header__nav-item-notification');
 			listItemNotification[0].setAttribute('aria-hidden', false);
 			const bodyDom = document.getElementsByTagName('body')[0];

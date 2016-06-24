@@ -14,9 +14,9 @@ const NotificationBell = ({unreadCount, toggleList, newNotifications}) => {
 
 	return (
 		<div className="notification-bell">
-			<a href="javascript:void(0)" className="notification-bell--activate" onClick={toggleList}>
+			<a aria-label="Notifications" href="javascript:void(0)" className="notification-bell--activate" onClick={toggleList}>
 				<i className="pe-icon--bell"></i>
-				<div aria-label="Notifications" className={bellClassNames}>
+				<div className={bellClassNames}>
 					{unreadCount > 9 ? '9+' : unreadCount}
 				</div>
 			</a>
