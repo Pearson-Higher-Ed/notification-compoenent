@@ -7,9 +7,13 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 	if(isRead) {
 		background += ' notification-node--isread';
 	}
+	const anchorStyle = {
+		display: '-moz-box'
+	};
+
 	return (
 		<div className={background}>
-			<a href="javascript:void(0)" className="notification-node--no-decoration" onClick={detailsClick}>
+			<a href="javascript:void(0)" className="notification-node--no-decoration" style= {anchorStyle} onClick={detailsClick}>
 				<div className="notification-node--details">
 					<div className="notification-node--summary">
 						<h2> {title} </h2>
