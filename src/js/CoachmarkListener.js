@@ -63,6 +63,7 @@ export default class CoachmarkListener {
 	 * launches the first CM in the set contained in the triggering notification
 	 **/
 	launchTour(notification) {
+		console.log('Entering launchTour with notification: ', notification);
 		try {
 			let cmIds = notification.message.cmIds;
 			cmIds = cmIds ? cmIds.split(',') : null;
@@ -122,10 +123,12 @@ export default class CoachmarkListener {
 	 * Gets data from the API and displays a coachmark on the correct page
 	 **/
 	_getDisplayCoachmark(state, isAlreadyRedirected) {
+		console.log('Entering _getDisplayCoachmark with state: ', state);
 		const cmId = state.cmIds[state.index];
 
 		this.coachmarkApi.getCoachmark(cmId)
 			.then((coachmark) => {
+				console.log('coachmarkApi returned: ', coachmark);
 				// continueTourIfRedirected is the only thing setting this flag.
 				// If it's set to true, it means we're trying to load a coach mark from a redirect
 				// and we can bypass this check. This is meant to prevent a situation
@@ -137,16 +140,6 @@ export default class CoachmarkListener {
 					}
 				}
 
-				// Tick hit counter if first visit
-				try {
-					if (!state.isVisited[cmId]) {
-						this.coachmarkApi.incrementViewCount(cmId);
-						state.isVisited[cmId] = true;
-					}
-				} catch (e) {
-					this._handleError(e, true);
-				}
-
 				// Auto-populating options to simplify the coachmark payload
 				const options = coachmark.options;
 				options.id = JSON.stringify(state);
@@ -156,9 +149,20 @@ export default class CoachmarkListener {
 				}
 
 				// Display the coach mark
+				console.log(`Display CM with element: ${coachmark.element}, options: ${options}`);
 				new Coachmark(document.getElementById(coachmark.element), options, () => {
 					this.notificationApi.markAsRead(state.userNotificationId);
 				});
+
+				// Tick hit counter if first visit
+				try {
+					if (!state.isVisited[cmId]) {
+						this.coachmarkApi.incrementViewCount(cmId);
+						state.isVisited[cmId] = true;
+					}
+				} catch (e) {
+					this._handleError(e, true);
+				}
 
 			}, (error) => {
 				this._handleError(error);
@@ -179,7 +183,7 @@ export default class CoachmarkListener {
 		if (!uri.toLowerCase().startsWith('http')) {
 			const arr = (currentUri).split('/');
 			const domain = arr[0] + '//' + arr[2];
-			uri = domain + '/' + uri;
+			uri = domain + (uri.startsWith('/') ? uri : ('/' + uri));
 		}
 		// If the target URI and current URI are the same, don't redirect
 		if (uri === currentUri) {
