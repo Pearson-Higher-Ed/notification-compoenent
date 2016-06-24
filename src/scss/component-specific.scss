@@ -19,7 +19,6 @@
         text-decoration: none;
         display: block;
         padding: 12px 15px 0px 15px;
-        padding-bottom: 1px;
         color: #cccccc;
         line-height: 18px;
 
@@ -106,7 +105,7 @@
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
-        color: #b5b7b8;
+        color: #565656;
         font-size: 24px;
     }
     .notification-blank-page-description {
@@ -117,10 +116,11 @@
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
-        color: #b5b7b8;
+        color: #565656;
         font-size: 20px;
         a {
-            color: #b5b7b8;
+            color: #565656;
+            text-decoration: underline;
         }
     }
 }
@@ -195,6 +195,17 @@
 
 .notification-node--isread {
     background-color: #f2f2f2;
+}
+
+.sr-hidden {
+    position: absolute;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+    padding: 0;
+    border: 0;
+    height: 0px;
+    width: 0px;
+    overflow: hidden;
 }
 
 .notification-details {

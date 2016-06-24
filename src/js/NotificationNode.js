@@ -7,6 +7,7 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 	if(isRead) {
 		background += ' notification-node--isread';
 	}
+	const timeScreenReader = (time.indexOf('min') !== -1) || (time.indexOf('hr') !== -1) ? ((time.indexOf('min') !== -1) ? time.replace('min', 'minutes') : time.replace('hr', 'hours')) : time;
 	return (
 		<div className={background}>
 			<a href="javascript:void(0)" className="notification-node--no-decoration" onClick={detailsClick}>
@@ -18,13 +19,14 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 					</div>
 					<div className="notification-node--meta">
 						<div className="notification-node--meta-course">
-							{time}{source ? ' \u00b7 ' : ''}{source}
+						<span className="sr-hidden"> {timeScreenReader}{source ? ' \u00b7 ' : ''}{source}</span>
+						<span aria-hidden="true">{time}{source ? ' \u00b7 ' : ''}{source}</span>
 						</div>
 					</div>
 				</div>
 			</a>
 			<div className="notification-node--dismiss">
-				<button className={trashIconDisable ? 'hide' : ''} onClick={archivedNotification} ><i className="pe-icon--archive" ></i></button>
+				<button aria-label="Archive" className={trashIconDisable ? 'hide' : ''} onClick={archivedNotification} ><i className="pe-icon--archive" ></i></button>
 			</div>
 		</div>
 	);
