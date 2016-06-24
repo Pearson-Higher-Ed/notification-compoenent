@@ -7,6 +7,7 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 	if(isRead) {
 		background += ' notification-node--isread';
 	}
+
 	const timeScreenReader = (time.indexOf('min') !== -1) || (time.indexOf('hr') !== -1) ? ((time.indexOf('min') !== -1) ? time.replace('min', 'minutes') : time.replace('hr', 'hours')) : time;
 	return (
 		<div className={background}>
