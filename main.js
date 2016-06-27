@@ -21,7 +21,7 @@ class NotificationComponent {
 	constructor(config, element) {
 		this.config = config;
 		this.notApi = new NotificationApi(config);
-		const userNotifications = this.notApi.getNotifications();
+		
 
 		// Connect up the drawer component here.
 		const dom = document.createElement('div');
@@ -53,44 +53,58 @@ class NotificationComponent {
 		this.containerComponent = ReactDOM.render(<this.containerClass/>, dom);
 		this.bellComponent = ReactDOM.render(<this.bellClass/>, element);
 
-		userNotifications.then((result) => {
-			// create the react classes for reference later
 
-			this.notificationList = this.fixNotificationValues(result.list);
-			this.archivedNotificationList = this.fixNotificationValues(result.archivedList);
-			this.newNotifications = result.newNotifications;
-			this.unreadCount = result.unreadCount;
+		const realTimeNotification = new NotificationRealTimeApi(config, this._messageListener.bind(this));
 
-			this._sortNotificationList();
-			this._sortArchivedNotificationList();
+		realTimeNotification.then((result) => {
 
-			this.bellComponent.forceUpdate();
-			this.containerComponent.forceUpdate();
+			const userNotifications = this.notApi.getNotifications();
+			userNotifications.then((result) => {
+				// create the react classes for reference later
 
-			this.coachmarkListener = new CoachmarkListener(config);
-			this.coachmarkListener.setupListeners().continueTourIfRedirected();
+				this.notificationList = this.fixNotificationValues(result.list);
+				this.archivedNotificationList = this.fixNotificationValues(result.archivedList);
+				this.newNotifications = result.newNotifications;
+				this.unreadCount = result.unreadCount;
+
+				this._sortNotificationList();
+				this._sortArchivedNotificationList();
+
+				this.bellComponent.forceUpdate();
+				this.containerComponent.forceUpdate();
+
+				this.coachmarkListener = new CoachmarkListener(config);
+				this.coachmarkListener.setupListeners().continueTourIfRedirected();
+
+			}).catch((error) => {
+				this.apiError = true;
+				this.containerComponent.forceUpdate();
+			});
 
 		}).catch((error) => {
 			this.apiError = true;
-			this.containerComponent.forceUpdate();
 		});
-
-		this.realTimeNotification = new NotificationRealTimeApi(config, this._messageListener.bind(this));
-
 	}
 
 	_messageListener(message) {
-		this.notificationList.push({
-			id: message.payload.userNotificationId,
-			isRead: false,
-			isComplete: false,
-			status: 'CREATED',
-			message: JSON.parse(message.payload.data),
-			createdAt: new Date(message.payload.createdAt),
-			updatedAt: new Date(message.payload.createdAt), //just for sorting purposes this needs to be here
-			notificationType: 'inbrowser',
-			recipientId: message.payload.recipientId
-		});
+
+		const newNotificationIndex = this.notificationList.map(function(e) {
+			return e.id;
+		}).indexOf(message.payload.userNotificationId);
+
+		if (newNotificationIndex === -1) {
+			this.notificationList.push({
+				id: message.payload.userNotificationId,
+				isRead: false,
+				isComplete: false,
+				status: 'CREATED',
+				message: JSON.parse(message.payload.data),
+				createdAt: new Date(message.payload.createdAt),
+				updatedAt: new Date(message.payload.createdAt), //just for sorting purposes this needs to be here
+				notificationType: 'inbrowser',
+				recipientId: message.payload.recipientId
+			});
+		}
 
 		this.fixNotificationValues(this.notificationList);
 		this._sortNotificationList();
