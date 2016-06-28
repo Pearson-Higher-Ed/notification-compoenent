@@ -2,6 +2,9 @@
 
 module.exports = {
 	getDecodedString : function(s) {
+		if(s === undefined) {
+			return "";
+		}
 		const elem = document.createElement('textarea');
 		elem.innerHTML = s;
 		return elem.value;
