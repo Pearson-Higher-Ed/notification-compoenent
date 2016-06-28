@@ -6,13 +6,13 @@ describe('DateParser', () => {
     it('should display 10 min', () => {
         let now = new Date();
         let tenMinutesAgo = new Date(now.getTime() - 600000);
-        expect(DateParser.getFormatDateString(tenMinutesAgo)).toBe('10 min');
+        expect(DateParser.getFormatDateString(tenMinutesAgo)).toBe('10 minutes');
     });
 
     it('should display 1 hr', () => {
         let now = new Date();
         let oneHourAgo = new Date(now.getTime() - 600000 * 6);
-        expect(DateParser.getFormatDateString(oneHourAgo)).toBe('1 hr');
+        expect(DateParser.getFormatDateString(oneHourAgo)).toBe('1 hours');
     });
 
     it('should display 1 day before', () => {
