@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import decode from './utf8Decoding.js';
 
 function parseResponse(response) {
 	'use strict';
@@ -13,7 +14,8 @@ function parseResponse(response) {
 	}).map((notification) => {
 		try {
 			const result = JSON.parse(notification.payload.message);
-			notification.message = result;
+			notification.message = decode.decodeNotificationMessage(result);
+
 			if (notification.status === 'CREATED') {
 				newNotifications = true;
 			}
@@ -31,7 +33,7 @@ function parseResponse(response) {
 	const archivedNotificationsList = userNotifications.filter((notification) => {
 		try {
 			const result = JSON.parse(notification.payload.message);
-			notification.message = result;
+			notification.message = decode.decodeNotificationMessage(result);
 			notification.createdAt = new Date(notification.createdAt);
 			notification.updatedAt = new Date(notification.updatedAt);
 			return (notification.hasOwnProperty('notificationType') && notification.notificationType === 'inbrowser' && notification.status === 'ARCHIVED');

@@ -7,7 +7,7 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 	if(isRead) {
 		background += ' notification-node--isread';
 	}
-	
+
 	return (
 		<div className={background}>
 				<div className="notification-node--details">
