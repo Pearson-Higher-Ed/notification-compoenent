@@ -12,9 +12,10 @@ module.exports = {
 			if (difference >= 24) {
 				return dayOfWeek[updatedAt.getDay()] + ', ' + month[updatedAt.getMonth()] + ' ' + updatedAt.getDate() + ', ' + updatedAt.getFullYear();
 			}
-			return parseInt(difference) === 1 ? parseInt(difference) + ' hour' : parseInt(difference) + ' hours';
+			const hourFormat =  (parseInt(difference) === 1) ? ' hour ago ' : ' hours ago';
+			return (parseInt(difference) + hourFormat);
 		}
 		
-		return parseInt(difference) === 1 || parseInt(difference) === 0 ? 'Just Now' : parseInt(difference) + ' minutes';
+		return parseInt(difference) === 1 || parseInt(difference) === 0 ? 'Just Now' : parseInt(difference) + ' minutes ago';
 	}
 }
