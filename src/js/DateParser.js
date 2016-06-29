@@ -12,7 +12,7 @@ module.exports = {
 			if (difference >= 24) {
 				return dayOfWeek[updatedAt.getDay()] + ', ' + month[updatedAt.getMonth()] + ' ' + updatedAt.getDate() + ', ' + updatedAt.getFullYear();
 			}
-			const hourFormat =  (parseInt(difference) === 1) ? ' hour ago ' : ' hours ago';
+			const hourFormat =  (parseInt(difference) === 1) ? ' hour ago' : ' hours ago';
 			return (parseInt(difference) + hourFormat);
 		}
 		
