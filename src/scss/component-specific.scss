@@ -5,7 +5,6 @@
 	display: none;
 }
 
-
 .notification-bell {
     font-size: 16px;
 
@@ -135,6 +134,12 @@
         -webkit-box-shadow: 0px 0px 5px #93BDE3;
         box-shadow: 0 0 2px 0 #93BDE3;
     }
+    a:-moz-focusring {
+        outline:none;
+        border:2px solid rgba(81, 203, 238, 1);
+        -webkit-box-shadow: 0px 0px 5px  rgba(81, 203, 238, 1);
+        box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    }
     .notification-node--no-decoration {
         text-decoration: none;
     }
@@ -228,6 +233,12 @@
 
     .notification-details--title {
         margin-bottom: 40px;
+    }
+
+    .notification-details--heading {
+        font-size: 24px;
+        border-bottom: 2px solid #a6a8ab;
+        line-height: 30px;
     }
 
     .notification-details--body {
