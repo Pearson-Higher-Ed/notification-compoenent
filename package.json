@@ -1,6 +1,6 @@
 {
   "name": "@pearson-components/notifications",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Stand-alone component for getting notifications.  Designed to be within app-header.",
   "main": "./build/dist.notification.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "gen-changelog": "node ./npm_scripts/gen-changelog.js",
     "version": "npm run gen-changelog && git add CHANGELOG.md",
     "ci": "npm test && npm run build",
-    "release": "node ./npm_scripts/release.js",
+    "release": "npm test && npm run build && git tag",
     "verify": "node ./npm_scripts/verify.js"
   },
   "author": "Aegis Team aegisteam@pearon.com",
