@@ -9,7 +9,7 @@ const NotificationBell = ({unreadCount, toggleList, newNotifications}) => {
 	}
 
 	if (unreadCount === 0) {
-		bellClassNames += ' hide';
+		bellClassNames += ' hide-visibility';
 	}
 
 	return (
