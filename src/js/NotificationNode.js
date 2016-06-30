@@ -18,7 +18,7 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 						<div className="notification-node--summary-description">{summary}</div>
 					</div>
 					<div className="notification-node--meta">
-						<div className="notification-node--meta-course">{source}{source ? ' \u00b7 ' : ''}{time}</div>
+						<div className="notification-node--meta-course">{time}{source ? ' \u00b7 ' : ''}{source}</div>
 					</div>
 				</div>		
 			<div className="notification-node--dismiss">
