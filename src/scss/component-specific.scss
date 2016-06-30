@@ -76,6 +76,13 @@
 	}
 }
 
+.bottom-archive {
+    position:absolute;
+    bottom: 0;
+    border-top: solid 1px #b3b3b3;
+    width:100%;
+}
+
 .notification-archive--back {
     position: absolute;
     color: #231f20;
@@ -87,6 +94,13 @@
     top: 20px;
     right: 20px;
     }
+
+.notification-list {
+    background-color: #f2f2f2;
+    height: 582px;
+    display: block;
+    overflow: auto;
+}
 
 .notification-list {
     background-color: #f2f2f2;

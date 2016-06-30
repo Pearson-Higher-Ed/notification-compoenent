@@ -121,13 +121,11 @@ export default class NotificationContainer extends React.Component {
 					</div>
 				</div>
 				<div className={this.state.displayDetails ? '' : 'hide'}>
-					<div className="notification-list">
-						<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} appendArchiveList={this.appendArchiveList}
-							coachmarkListener={this.props.coachmarkListener} hyphenateWords={this.hyphenateWords}/>
-					</div>
+					<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} appendArchiveList={this.appendArchiveList}
+						coachmarkListener={this.props.coachmarkListener} hyphenateWords={this.hyphenateWords}/>
 				</div>
-				<div className="notification-title" onClick={this.goToArchiveList}>
-					<h1 className={this.state.isArchive || this.state.displayDetails ? 'hide' : 'notification-title--heading'}>
+				<div className={this.state.isArchive || this.state.displayDetails ? 'hide' : 'notification-title bottom-archive'} onClick={this.goToArchiveList}>
+					<h1 className="notification-title--heading">
 						<a href="javascript:void(0);"> Notification Archive </a>
 					</h1>
 				</div>
