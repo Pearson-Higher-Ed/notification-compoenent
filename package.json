@@ -14,7 +14,6 @@
     "gen-changelog": "node ./npm_scripts/gen-changelog.js",
     "version": "npm run gen-changelog && git add CHANGELOG.md",
     "ci": "npm test && npm run build",
-    "release": "npm test && npm run build && git tag",
     "verify": "node ./npm_scripts/verify.js"
   },
   "author": "Aegis Team aegisteam@pearon.com",
