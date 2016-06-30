@@ -24,7 +24,7 @@ export default class NotificationHeading extends React.Component {
 				<div>
 					<h1 className="notification-title--heading" onClick={this.props.back}>
 						<a href="javascript:void(0);" className="notification-title--back">
-							<i className="pe-icon--chevron-left"></i> <span className="notification-title--back_align">{this.props.isArchive ? 'Back to Notifications Archive' : 'Back to Notifications'}</span>
+							<i className="pe-icon--chevron-left align-text"></i> <span>{this.props.isArchive ? 'Back to Notifications Archive' : 'Back to Notifications'}</span>
 						</a>
 					</h1>
 				</div>

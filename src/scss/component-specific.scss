@@ -59,9 +59,10 @@
     .notification-title--back {
         color: #0d65a6;
         text-decoration: none;
-        .notification-title--back_align {
-            position: relative;
-            top: -2px;
+        
+        .align-text {
+            position:relative;
+            top: 2px;
         }
     }
 
