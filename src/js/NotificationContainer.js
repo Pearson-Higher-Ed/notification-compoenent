@@ -101,8 +101,10 @@ export default class NotificationContainer extends React.Component {
 		}
 		return (
 			<div aria-label="Notifiations Menu" role="menuitem">
-				<div className={!this.state.displayDetails ? 'notification-archive--back' : 'hide'} style={closIconPadding} tabIndex={-1} ref="closeButton">
-					{closButton}
+				<div className={!this.state.displayDetails ? 'notification-archive--back' : 'hide'} style={closIconPadding}>
+					<div tabIndex={-1} ref="closeButton">
+						{closButton}
+					</div>
 				</div>
 				<div className="notification-title">
 					<div tabIndex={-1} ref="heading">

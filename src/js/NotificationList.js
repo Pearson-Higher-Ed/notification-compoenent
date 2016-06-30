@@ -52,7 +52,7 @@ export default class NotificationList extends React.Component {
 		}
 
 		return (
-			<div className={!this.props.isArchiveTray ? "notification-list" : "archive-list"}>
+			<div className={!this.props.isArchiveTray ? 'notification-list' : 'archive-list'}>
 				{notificationNodeObjects}
 			</div>
 		);
