@@ -101,7 +101,7 @@ export default class NotificationContainer extends React.Component {
 		}
 		return (
 			<div aria-label="Notifiations Menu" role="menuitem">
-				<div className={!this.state.displayDetails ? 'notification-archive--back' : 'hide'} style={closIconPadding} tabIndex={-1} ref="closeButton">
+				<div className={!this.state.displayDetails ? 'notification-archive--back pe-label pe-label--large' : 'hide'} style={closIconPadding} tabIndex={-1} ref="closeButton">
 					{closButton}
 				</div>
 				<div className="notification-title">
@@ -127,11 +127,11 @@ export default class NotificationContainer extends React.Component {
 					</div>
 				</div>
 				<div className="notification-title" onClick={this.goToArchiveList}>
-					<h1 className={this.state.isArchive || this.state.displayDetails ? 'hide' : 'notification-title--heading'}>
+					<h1 className={this.state.isArchive || this.state.displayDetails ? 'hide' : 'notification-title--heading pe-label pe-label--large'}>
 						<a href="javascript:void(0);"> Notification Archive </a>
 					</h1>
 				</div>
-				<div className={this.state.displayDetails ? 'notification-archive--back' : 'hide'} style={closIconPadding} >
+				<div className={this.state.displayDetails ? 'notification-archive--back pe-label pe-label--large' : 'hide'} style={closIconPadding} >
 					{closButton}
 				</div>
 			</div>

@@ -21,7 +21,7 @@ class NotificationComponent {
 	constructor(config, element) {
 		this.config = config;
 		this.notApi = new NotificationApi(config);
-		
+
 
 		// Connect up the drawer component here.
 		const dom = document.createElement('div');
@@ -43,7 +43,7 @@ class NotificationComponent {
 			bodyDom.insertBefore(dom, appHeaderDom ? appHeaderDom.nextSibling : appHeaderDom);
 		}
 		this.listDrawer = new Drawer(dom);
-		
+
 		this._createBellReactClass();
 		this._createListReactClass();
 		this.unreadCount = 0;
