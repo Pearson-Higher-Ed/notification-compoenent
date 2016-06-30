@@ -76,6 +76,13 @@
 	}
 }
 
+.bottom-archive {
+    position:absolute;
+    bottom: 0;
+    border-top: solid 1px #b3b3b3;
+    width:100%;
+}
+
 .notification-archive--back {
     position: absolute;
     color: #231f20;
@@ -84,9 +91,16 @@
         border-color: white;
         border-width: 0px;
     }
-    top: 20px;
+    top: 22px;
     right: 20px;
     }
+
+.notification-list {
+    background-color: #f2f2f2;
+    height: 582px;
+    display: block;
+    overflow: auto;
+}
 
 .notification-list {
     background-color: #f2f2f2;
@@ -100,7 +114,7 @@
         text-align: center;
         margin: 0;
         position: absolute;
-        top: 37%;
+        top: 3%;
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
@@ -111,7 +125,7 @@
         text-align: center;
         margin: 0;
         position: absolute;
-        top: 50%;
+        top: 15%;
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
