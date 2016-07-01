@@ -97,13 +97,8 @@
 
 .notification-list {
     background-color: #f2f2f2;
-    height: 582px;
     display: block;
     overflow: auto;
-}
-
-.notification-list {
-    background-color: #f2f2f2;
 }
 
 .notification-blank-page {
@@ -239,7 +234,7 @@
 .notification-details {
     background-color: #ffffff;
     padding: 20px;
-
+    border-bottom: 1px solid #a6a8ab;
     .notification-details__meta {
         .noticiation-details__meta--source {
             color: #565656;
