@@ -54,7 +54,7 @@
         float:left;
         border-bottom: none;
         font-size: 16px;
-        margin: 20px 45px 20px 20px;
+        margin: 22px 45px 20px 20px;
         font-weight: bold;
     }
     a {
@@ -109,7 +109,7 @@
         text-align: center;
         margin: 0;
         position: absolute;
-        top: 3%;
+        top: 5%;
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
@@ -120,7 +120,7 @@
         text-align: center;
         margin: 0;
         position: absolute;
-        top: 15%;
+        top: 17%;
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
@@ -229,6 +229,15 @@
     height: 0px;
     width: 0px;
     overflow: hidden;
+}
+
+.notification-archive--uparrow {
+    position: absolute;
+    color: #0D65A6;
+    top: 24px;
+    right: 20px;
+    border:0px;
+    background-color: #FFFFFF;
 }
 
 .notification-details {

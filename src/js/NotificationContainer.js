@@ -130,6 +130,7 @@ export default class NotificationContainer extends React.Component {
 					<h1 className="notification-title--heading">
 						<a href="javascript:void(0);"> Notification Archive </a>
 					</h1>
+					<button aria-label="Go To Notification Archive" className="notification-archive--uparrow"> <i className="pe-icon--chevron-up align-text "></i> </button>
 				</div>
 				<div className={this.state.displayDetails ? 'notification-archive--back' : 'hide'} style={closIconPadding} >
 					{closButton}
