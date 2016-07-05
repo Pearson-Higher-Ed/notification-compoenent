@@ -95,7 +95,11 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	render() {
-		const closButton = <button aria-label="Close Notification" onClick={this.state.isArchive && !this.state.displayDetails ? this.showNonArchivedList : this.resetListOnCloseDrawer}> <i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-left pointer' : 'pe-icon--times close-dropdown pointer'}></i> </button>;
+		const closButton = (
+			<button aria-label="Close Notification" onClick={this.state.isArchive && !this.state.displayDetails ? this.showNonArchivedList : this.resetListOnCloseDrawer}> 
+				<i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-down pointer' : 'pe-icon--times close-dropdown pointer'}></i> 
+			</button>
+		);
 		const closIconPadding = {
 			'paddingTop': this.props.config.appHeaderClientHeight
 		}
@@ -113,11 +117,11 @@ export default class NotificationContainer extends React.Component {
 					</div>
 				</div>
 				<div className={this.state.displayDetails ? 'hide' : ''}>
-					<div className={this.state.isArchive ? 'hide': ''}>
+					<div className={this.state.isArchive ? 'transition-up': 'transition-down'}>
 						<NotificationList list={this.props.list} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
 						 appendArchiveList={this.appendArchiveList} isArchiveTray={false} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
 					</div>
-					<div className={this.state.isArchive ? '': 'hide'}>
+					<div className={this.state.isArchive ? 'transition-down': 'transition-up'}>
 						<NotificationList list={this.props.archivedList} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
 						 appendArchiveList={this.appendArchiveList} isArchiveTray={true} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
 					</div>
@@ -126,9 +130,10 @@ export default class NotificationContainer extends React.Component {
 					<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} appendArchiveList={this.appendArchiveList}
 						coachmarkListener={this.props.coachmarkListener} hyphenateWords={this.hyphenateWords}/>
 				</div>
-				<div className={this.state.isArchive || this.state.displayDetails ? 'hide' : 'notification-title bottom-archive'} onClick={this.goToArchiveList}>
+				<div className={this.state.displayDetails ? 'hide' : 'notification-title bottom-archive'}>
 					<h1 className="notification-title--heading">
-						<a href="javascript:void(0);"> Notification Archive </a>
+						<a href="javascript:void(0);" onClick={this.goToArchiveList} className={this.state.isArchive ? 'hide' : ''}> Notification Archive </a>
+						<a href="javascript:void(0);" onClick={this.showNonArchivedList} className={this.state.isArchive ? '' : 'hide'}> Notifications </a>
 					</h1>
 				</div>
 				<div className={this.state.displayDetails ? 'notification-archive--back' : 'hide'} style={closIconPadding} >

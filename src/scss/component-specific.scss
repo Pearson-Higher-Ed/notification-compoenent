@@ -271,3 +271,15 @@
         text-align: center;
     }
 }
+
+.transition-down, .transition-up {
+    max-height: 582px;
+    overflow-y: auto;
+    transition: max-height 1s ease-in-out, overflow-y 1s ease-in-out;
+}
+
+.transition-up {
+    max-height:0px;
+    overflow-y: hidden;
+}
+
