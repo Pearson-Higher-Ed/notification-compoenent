@@ -76,6 +76,13 @@
 	}
 }
 
+.bottom-archive {
+    position:absolute;
+    bottom: 0;
+    border-top: solid 1px #b3b3b3;
+    width:100%;
+}
+
 .notification-archive--back {
     position: absolute;
     color: #231f20;
@@ -84,12 +91,14 @@
         border-color: white;
         border-width: 0px;
     }
-    top: 20px;
+    top: 22px;
     right: 20px;
     }
 
 .notification-list {
     background-color: #f2f2f2;
+    display: block;
+    overflow: auto;
 }
 
 .notification-blank-page {
@@ -100,7 +109,7 @@
         text-align: center;
         margin: 0;
         position: absolute;
-        top: 37%;
+        top: 3%;
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
@@ -111,7 +120,7 @@
         text-align: center;
         margin: 0;
         position: absolute;
-        top: 50%;
+        top: 15%;
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
@@ -139,6 +148,12 @@
         border: 2px solid #93BDE3;
         -webkit-box-shadow: 0px 0px 5px #93BDE3;
         box-shadow: 0 0 2px 0 #93BDE3;
+    }
+    a:-moz-focusring {
+        outline:none;
+        border:2px solid rgba(81, 203, 238, 1);
+        -webkit-box-shadow: 0px 0px 5px  rgba(81, 203, 238, 1);
+        box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     }
     .notification-node--no-decoration {
         text-decoration: none;
@@ -219,7 +234,7 @@
 .notification-details {
     background-color: #ffffff;
     padding: 20px;
-
+    border-bottom: 1px solid #a6a8ab;
     .notification-details__meta {
         .noticiation-details__meta--source {
             color: #565656;
@@ -233,6 +248,12 @@
 
     .notification-details--title {
         margin-bottom: 40px;
+    }
+
+    .notification-details--heading {
+        font-size: 24px;
+        border-bottom: 2px solid #a6a8ab;
+        line-height: 30px;
     }
 
     .notification-details--body {

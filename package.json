@@ -1,6 +1,6 @@
 {
   "name": "@pearson-components/notifications",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Stand-alone component for getting notifications.  Designed to be within app-header.",
   "main": "./build/dist.notification.js",
   "scripts": {
@@ -14,7 +14,6 @@
     "gen-changelog": "node ./npm_scripts/gen-changelog.js",
     "version": "npm run gen-changelog && git add CHANGELOG.md",
     "ci": "npm test && npm run build",
-    "release": "node ./npm_scripts/release.js",
     "verify": "node ./npm_scripts/verify.js"
   },
   "author": "Aegis Team aegisteam@pearon.com",
@@ -26,8 +25,7 @@
   "dependencies": {
     "@pearson-components/coach-mark": "^0.1.7",
     "@pearson-components/drawer": "^0.2.0",
-    "react-intl": "~2.0.1",
-    "rtd": "git+ssh://git@bitbucket.pearson.com/se/realtime-delivery.git"
+    "react-intl": "~2.0.1"
   },
   "devDependencies": {
     "babel-core": "~6.3.17",
@@ -67,6 +65,7 @@
     "react": "^15.0.0",
     "react-addons-test-utils": "^15.0.0",
     "react-dom": "^15.0.0",
+    "rtd": "git+ssh://git@bitbucket.pearson.com/se/realtime-delivery.git",
     "sass-loader": "^3.2.0",
     "semver": "~5.1.0",
     "style-loader": "~0.13.0",

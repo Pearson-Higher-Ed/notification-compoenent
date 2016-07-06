@@ -27,7 +27,9 @@ const AppHeaderConfig = {
 	//If the notification bell is part of the app-header set the below flag to true
 	bellInsideAppHeaderFlag: true,
 	
-	appHeaderClientHeight:'54px'
+	appHeaderClientHeight:'54px',
+	notificationListDomHeight:'582px' // NotificationListHeight need to add this for scroll height when there is a long list of notifications 
+									 // Ex:notificationListDomHeight:618px for appHeaderClientHeight:44px  and notificationListDomHeight:610px for appHeaderClientHeight:54px  
 };
 function init() {
 
