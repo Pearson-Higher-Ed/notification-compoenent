@@ -114,19 +114,19 @@ export default class NotificationContainer extends React.Component {
 						isDetails={this.state.displayDetails} isArchive={this.state.isArchive}/>
 					</div>
 				</div>
-				<div className={this.state.displayDetails ? 'hide' : 'notification-content'}>
-					<div className={this.state.isArchive ? 'transition-middle transition-to-left': 'transition-middle'}>
+				<div className="notification-content">
+					<div className={!this.state.isArchive && !this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-left'}>
 						<NotificationList list={this.props.list} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
 						 appendArchiveList={this.appendArchiveList} isArchiveTray={false} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
 					</div>
-					<div className={this.state.isArchive ? 'transition-middle': 'transition-middle transition-to-right'}>
+					<div className={this.state.isArchive && !this.state.displayDetails ? 'transition-middle': 'transition-middle transition-to-right'}>
 						<NotificationList list={this.props.archivedList} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
 						 appendArchiveList={this.appendArchiveList} isArchiveTray={true} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
 					</div>
-				</div>
-				<div className={this.state.displayDetails ? '' : 'hide'}>
-					<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} appendArchiveList={this.appendArchiveList}
-						coachmarkListener={this.props.coachmarkListener} hyphenateWords={this.hyphenateWords}/>
+					<div className={this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-right'}>
+						<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} appendArchiveList={this.appendArchiveList}
+							coachmarkListener={this.props.coachmarkListener} hyphenateWords={this.hyphenateWords}/>
+					</div>
 				</div>
 				<div className={this.state.displayDetails ? 'hide' : 'notification-title bottom-archive'}>
 					<h1 className="notification-title--heading">
