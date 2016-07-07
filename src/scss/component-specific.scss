@@ -52,10 +52,16 @@
 }
 
 .notification-content {
-    height: 586px;
     position:relative;
-    overflow-y: scroll;
-    overflow-x: hidden;
+
+    .content-list {
+        height: 586px;
+        overflow-y: scroll;
+    }
+}
+
+.notification-content-full {
+    position: relative;
 }
 
 .notification-title {
@@ -92,6 +98,8 @@
     border-top: solid 1px #b3b3b3;
     width:100%;
     margin-top: -1px;
+    position: absolute;
+    top: 586px;
 }
 
 .notification-archive--back {
@@ -298,6 +306,7 @@
     height:100%;
     width:100%;
     left: 100%;
+    overflow-y: hidden;
 }
 .transition-to-left {
     position: absolute;
