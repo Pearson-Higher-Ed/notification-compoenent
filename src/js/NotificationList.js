@@ -28,9 +28,9 @@ export default class NotificationList extends React.Component {
 		const maxTitleLength = 46;
 		const maxBodyLength = 26;
 		const maxSourceLength = 66;	
-		const notificationListHeightStyle = {
-			'height': this.props.config.notificationListDomHeight
-		}
+		// const notificationListHeightStyle = {
+		// 	'height': this.props.config.notificationListDomHeight
+		// }
 		let notificationNodeObjects = {};
 		if (this.props.list.length > 0) {
 			notificationNodeObjects = this.props.list.map((notification) => {
@@ -54,7 +54,7 @@ export default class NotificationList extends React.Component {
 		}
 
 		return (
-			<div className={!this.props.isArchiveTray ? 'notification-list' : 'archive-list'} style={notificationListHeightStyle}>
+			<div className={!this.props.isArchiveTray ? 'notification-list' : 'archive-list'}>
 				{notificationNodeObjects}
 			</div>
 		);

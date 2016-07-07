@@ -47,6 +47,17 @@
     }
 }
 
+.notification-container {
+    position: relative;
+}
+
+.notification-content {
+    height: 586px;
+    position:relative;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
 .notification-title {
     border-bottom: 1px solid #b3b3b3;
     overflow: auto;
@@ -77,10 +88,10 @@
 }
 
 .bottom-archive {
-    position:absolute;
-    bottom: 0;
+    border-bottom: none;
     border-top: solid 1px #b3b3b3;
     width:100%;
+    margin-top: -1px;
 }
 
 .notification-archive--back {
@@ -98,7 +109,6 @@
 .notification-list {
     background-color: #f2f2f2;
     display: block;
-    overflow: auto;
 }
 
 .notification-blank-page {
@@ -272,14 +282,28 @@
     }
 }
 
-.transition-down, .transition-up {
-    max-height: 618px;
-    overflow-y: auto;
-    transition: max-height 1s ease-in-out, overflow-y 1s ease-in-out;
+.transition-middle {
+    position: absolute;
+    top:0;
+    height:100%;
+    width:100%;
+    left: 0;
+    transition: all 0.4s;
+    display: block;
 }
 
-.transition-up {
-    max-height:0px;
-    overflow-y: hidden;
+.transition-to-right {
+    position: absolute;
+    top: 0;
+    height:100%;
+    width:100%;
+    left: 100%;
+}
+.transition-to-left {
+    position: absolute;
+    top: 0;
+    height:100%;
+    width:100%;
+    left: -100%;
 }
 

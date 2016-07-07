@@ -100,12 +100,10 @@ export default class NotificationContainer extends React.Component {
 				<i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-down pointer' : 'pe-icon--times close-dropdown pointer'}></i> 
 			</button>
 		);
-		const closIconPadding = {
-			'paddingTop': this.props.config.appHeaderClientHeight
-		}
+		
 		return (
-			<div aria-label="Notifiations Menu" role="menuitem">
-				<div className={!this.state.displayDetails ? 'notification-archive--back' : 'hide'} style={closIconPadding}>
+			<div aria-label="Notifiations Menu" role="menuitem" className="notification-container">
+				<div className={!this.state.displayDetails ? 'notification-archive--back' : 'hide'}>
 					<div tabIndex={-1} ref="closeButton">
 						{closButton}
 					</div>
@@ -116,12 +114,12 @@ export default class NotificationContainer extends React.Component {
 						isDetails={this.state.displayDetails} isArchive={this.state.isArchive}/>
 					</div>
 				</div>
-				<div className={this.state.displayDetails ? 'hide' : ''}>
-					<div className={this.state.isArchive ? 'transition-up': 'transition-down'}>
+				<div className={this.state.displayDetails ? 'hide' : 'notification-content'}>
+					<div className={this.state.isArchive ? 'transition-middle transition-to-left': 'transition-middle'}>
 						<NotificationList list={this.props.list} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
 						 appendArchiveList={this.appendArchiveList} isArchiveTray={false} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
 					</div>
-					<div className={this.state.isArchive ? 'transition-down': 'transition-up'}>
+					<div className={this.state.isArchive ? 'transition-middle': 'transition-middle transition-to-right'}>
 						<NotificationList list={this.props.archivedList} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
 						 appendArchiveList={this.appendArchiveList} isArchiveTray={true} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
 					</div>
@@ -136,7 +134,7 @@ export default class NotificationContainer extends React.Component {
 						<a href="javascript:void(0);" onClick={this.showNonArchivedList} className={this.state.isArchive ? '' : 'hide'}> Notifications </a>
 					</h1>
 				</div>
-				<div className={this.state.displayDetails ? 'notification-archive--back' : 'hide'} style={closIconPadding} >
+				<div className={this.state.displayDetails ? 'notification-archive--back' : 'hide'}>
 					{closButton}
 				</div>
 			</div>
