@@ -105,6 +105,7 @@
 .notification-archive--back {
     position: absolute;
     color: #231f20;
+    margin-top: -3px;
     button {
         background-color: white;
         border-color: white;
@@ -112,7 +113,7 @@
     }
     top: 22px;
     right: 20px;
-    }
+}
 
 .notification-list {
     background-color: #f2f2f2;

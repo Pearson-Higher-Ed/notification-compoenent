@@ -95,7 +95,7 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	render() {
-		const closButton = <button aria-label="Close Notification" onClick={this.state.isArchive && !this.state.displayDetails ? this.showNonArchivedList : this.resetListOnCloseDrawer}> <i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-left pointer' : 'pe-icon--times close-dropdown pointer'}></i> </button>;
+
 		// Move the X button up 3px
 		const paddingTop = (parseInt(this.props.config.appHeaderClientHeight) - 3) + 'px';
 		const closIconPadding = {
@@ -103,9 +103,11 @@ export default class NotificationContainer extends React.Component {
 		}
 		return (
 			<div aria-label="Notifiations Menu" role="menuitem" className="notification-container">
-				<div className={!this.state.displayDetails ? 'notification-archive--back pe-label pe-label--large' : 'hide'} style={closIconPadding}>
+				<div className="notification-archive--back pe-label pe-label--large">
 					<div tabIndex={-1} ref="closeButton">
-						{closButton}
+						<button aria-label="Close Notification" onClick={this.resetListOnCloseDrawer}> 
+							<i className="pe-icon--times close-dropdown pointer"></i> 
+						</button>
 					</div>
 				</div>
 				<div className="notification-title">
@@ -139,10 +141,6 @@ export default class NotificationContainer extends React.Component {
 				</div>
 				<div className={this.state.displayDetails || this.state.isArchive ? 'notification-content-full' : 'hide'}>
 					
-				</div>
-				
-				<div className={this.state.displayDetails ? 'notification-archive--back pe-label pe-label--large' : 'hide'} style={closIconPadding} >
-					{closButton}
 				</div>
 			</div>
 		);
