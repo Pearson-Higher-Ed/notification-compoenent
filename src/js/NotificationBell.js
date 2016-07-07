@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NotificationBell = ({unreadCount, toggleList, newNotifications, label}) => {
+const NotificationBell = ({unreadCount, toggleList, newNotifications}) => {
 
 	let bellClassNames = 'notification-bell--count';
 	
