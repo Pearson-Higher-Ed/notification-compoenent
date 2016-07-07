@@ -12,7 +12,11 @@
 
 .notification-bell {
     font-size: 16px;
-
+    button {
+        background-color: #000000;
+        border-color: #000000;
+        border-width: 0px;
+    }
     .notification-bell--activate {
         text-decoration: none;
         display: block;
@@ -21,7 +25,7 @@
         line-height: 18px;
 
         @media (min-width: 1024px) {
-            padding: 20px 15px 2px 15px;
+            padding: 20px 15px 1px 15px;
         }
 
         .notification-bell--count {
@@ -32,7 +36,7 @@
             font-weight: bold;
             min-width: 13px;
             height: 14px;
-            padding-left: 5px;
+            padding-left: 0px;
             position: relative;
             bottom: 24px;
             left: 8px;
@@ -109,7 +113,7 @@
         text-align: center;
         margin: 0;
         position: absolute;
-        top: 5%;
+        top: 7%;
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
@@ -120,7 +124,7 @@
         text-align: center;
         margin: 0;
         position: absolute;
-        top: 17%;
+        top: 20%;
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
@@ -229,15 +233,6 @@
     height: 0px;
     width: 0px;
     overflow: hidden;
-}
-
-.notification-archive--uparrow {
-    position: absolute;
-    color: #0D65A6;
-    top: 24px;
-    right: 20px;
-    border:0px;
-    background-color: #FFFFFF;
 }
 
 .notification-details {
