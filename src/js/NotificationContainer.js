@@ -96,12 +96,14 @@ export default class NotificationContainer extends React.Component {
 
 	render() {
 		const closButton = <button aria-label="Close Notification" onClick={this.state.isArchive && !this.state.displayDetails ? this.showNonArchivedList : this.resetListOnCloseDrawer}> <i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-left pointer' : 'pe-icon--times close-dropdown pointer'}></i> </button>;
+		// Move the X button up 3px
+		const paddingTop = (parseInt(this.props.config.appHeaderClientHeight) - 3) + 'px';
 		const closIconPadding = {
-			'paddingTop': this.props.config.appHeaderClientHeight
+			'paddingTop': paddingTop
 		}
 		return (
 			<div aria-label="Notifiations Menu" role="menuitem">
-				<div className={!this.state.displayDetails ? 'notification-archive--back' : 'hide'} style={closIconPadding}>
+				<div className={!this.state.displayDetails ? 'notification-archive--back pe-label pe-label--large' : 'hide'} style={closIconPadding}>
 					<div tabIndex={-1} ref="closeButton">
 						{closButton}
 					</div>
@@ -126,12 +128,12 @@ export default class NotificationContainer extends React.Component {
 					<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} appendArchiveList={this.appendArchiveList}
 						coachmarkListener={this.props.coachmarkListener} hyphenateWords={this.hyphenateWords}/>
 				</div>
-				<div className={this.state.isArchive || this.state.displayDetails ? 'hide' : 'notification-title bottom-archive'} onClick={this.goToArchiveList}>
+				<div className={this.state.isArchive || this.state.displayDetails ? 'hide' : 'notification-title bottom-archive pe-label pe-label--large'} onClick={this.goToArchiveList}>
 					<h1 className="notification-title--heading">
 						<a href="javascript:void(0);"> Notification Archive </a>
 					</h1>
 				</div>
-				<div className={this.state.displayDetails ? 'notification-archive--back' : 'hide'} style={closIconPadding} >
+				<div className={this.state.displayDetails ? 'notification-archive--back pe-label pe-label--large' : 'hide'} style={closIconPadding} >
 					{closButton}
 				</div>
 			</div>
