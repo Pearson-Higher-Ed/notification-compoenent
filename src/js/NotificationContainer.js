@@ -118,14 +118,14 @@ export default class NotificationContainer extends React.Component {
 				</div>
 				<div className={this.state.displayDetails || this.state.isArchive ? 'notification-content-full': 'notification-content'}>
 					<div className={!this.state.isArchive && !this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-left'}>
-						<div className=" content-list">
+						<div className="content-list">
 							<div>
 								<NotificationList list={this.props.list} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
 								 appendArchiveList={this.appendArchiveList} isArchiveTray={false} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
 							</div>
 							<div className="notification-title bottom-archive pe-label pe-label--large">
 								<h1 className="notification-title--heading">
-									<a href="javascript:void(0);" onClick={this.goToArchiveList} className={this.state.isArchive ? 'hide' : ''}> Notification Archive </a>
+									<a href="javascript:void(0);" onClick={this.goToArchiveList} className={this.state.isArchive ? 'hide' : ''}> Notification Archive</a>
 								</h1>
 							</div>
 						</div>
@@ -138,9 +138,6 @@ export default class NotificationContainer extends React.Component {
 						<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} appendArchiveList={this.appendArchiveList}
 							coachmarkListener={this.props.coachmarkListener} hyphenateWords={this.hyphenateWords}/>
 					</div>
-				</div>
-				<div className={this.state.displayDetails || this.state.isArchive ? 'notification-content-full' : 'hide'}>
-					
 				</div>
 			</div>
 		);
