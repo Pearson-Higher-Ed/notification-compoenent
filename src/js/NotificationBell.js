@@ -11,13 +11,14 @@ const NotificationBell = ({unreadCount, toggleList, newNotifications}) => {
 	if (unreadCount === 0) {
 		bellClassNames += ' hide-visibility';
 	}
-
 	return (
-		<div className="notification-bell">
+		<div className="notification-bell" aria-live="polite" aria-atomic="false">
 			<a aria-label="Notifications" href="javascript:void(0)" className="notification-bell--activate" onClick={toggleList}>
-				<i className="pe-icon--bell"></i>
+				<span className={unreadCount===0 ? 'sr-hidden' : 'hide'}>Notifications</span>
+				<i className="pe-icon--bell" aria-hidden="true"></i>
 				<div className={bellClassNames}>
-					{unreadCount > 9 ? '9+' : unreadCount}
+					<span className="sr-hidden">{unreadCount > 1 ? unreadCount+ 'Unread Notifications' : unreadCount+'Unread Notification'}</span>
+					<span>{unreadCount > 9 ? '9+' : unreadCount}</span>
 				</div>
 			</a>
 		</div>
