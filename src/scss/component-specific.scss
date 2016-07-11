@@ -47,6 +47,23 @@
     }
 }
 
+.notification-container {
+    position: relative;
+}
+
+.notification-content {
+    position:relative;
+
+    .content-list {
+        height: 586px;
+        overflow-y: scroll;
+    }
+}
+
+.notification-content-full {
+    position: relative;
+}
+
 .notification-title {
     border-bottom: 1px solid #b3b3b3;
     overflow: auto;
@@ -77,15 +94,18 @@
 }
 
 .bottom-archive {
-    position:absolute;
-    bottom: 0;
+    border-bottom: none;
     border-top: solid 1px #b3b3b3;
     width:100%;
+    margin-top: -1px;
+    position: absolute;
+    top: 586px;
 }
 
 .notification-archive--back {
     position: absolute;
     color: #231f20;
+    margin-top: -3px;
     button {
         background-color: white;
         border-color: white;
@@ -93,12 +113,11 @@
     }
     top: 22px;
     right: 20px;
-    }
+}
 
 .notification-list {
     background-color: #f2f2f2;
     display: block;
-    overflow: auto;
 }
 
 .notification-blank-page {
@@ -271,3 +290,32 @@
         text-align: center;
     }
 }
+
+.transition-middle {
+    position: absolute;
+    top:0;
+    height:100%;
+    width:100%;
+    left: 0;
+    transition: all 0.4s;
+    display: block;
+}
+
+.transition-to-right {
+    position: absolute;
+    top: 0;
+    height:100%;
+    width:100%;
+    left: 100%;
+    overflow-y: hidden;
+    visibile: hidden;
+}
+.transition-to-left {
+    position: absolute;
+    top: 0;
+    height:100%;
+    width:100%;
+    left: -100%;
+    visibile: hidden;
+}
+

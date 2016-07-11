@@ -22,8 +22,8 @@ export default class NotificationHeading extends React.Component {
 		if (this.props.isDetails) {
 			return (
 				<div>
-					<h1 className="notification-title--heading pe-label pe-label--large" onClick={this.props.back}>
-						<a href="javascript:void(0);" className="notification-title--back pe-label pe-label--large">
+					<h1 className="notification-title--heading pe-label pe-label--large">
+						<a href="javascript:void(0);" className="notification-title--back pe-label pe-label--large" onClick={this.props.back}>
 							<i className="pe-icon--chevron-left"></i> <span className="notification-title--back_align">{this.props.isArchive ? 'Back to Notifications Archive' : 'Back to Notifications'}</span>
 						</a>
 					</h1>
@@ -32,8 +32,10 @@ export default class NotificationHeading extends React.Component {
 		}
 		return (
 			<div>
-				<h1 className="notification-title--heading pe-label pe-label--large">
-					Notifications Archive
+				<h1 className="notification-title--heading pe-label pe-label--large" >
+					<a href="javascript:void(0);" className="notification-title--back pe-label pe-label--large" onClick={this.props.archiveBack}>
+						<i className="pe-icon--chevron-left"></i> <span className="notification-title--back_align">Back to Notifications</span>
+					</a>
 				</h1>
 			</div>
 			);
