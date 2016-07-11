@@ -96,10 +96,8 @@ export default class NotificationContainer extends React.Component {
 
 	render() {
 		const closButton = <button aria-label="Close Notification" onClick={this.state.isArchive && !this.state.displayDetails ? this.showNonArchivedList : this.resetListOnCloseDrawer}> <i className={this.state.isArchive && !this.state.displayDetails ? 'pe-icon--chevron-left pointer' : 'pe-icon--times close-dropdown pointer'}></i> </button>;
-		// Move the X button up 3px
-		const paddingTop = (parseInt(this.props.config.appHeaderClientHeight) - 3) + 'px';
 		const closIconPadding = {
-			'paddingTop': paddingTop
+			'paddingTop': this.props.config.appHeaderClientHeight
 		}
 		return (
 			<div aria-label="Notifiations Menu" role="menuitem">
