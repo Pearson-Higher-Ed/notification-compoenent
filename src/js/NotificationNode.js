@@ -12,9 +12,11 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 		<div className={background}>
 				<div className="notification-node--details">
 					<div className="notification-node--summary">
-						<a href="javascript:void(0)"  className="notification-node--no-decoration" onClick={detailsClick}>
-							<h2> {title} </h2>
-						</a>
+						<h2> 
+							<a href="javascript:void(0)"  className="notification-node--no-decoration" onClick={detailsClick}>
+								{title} 
+							</a>
+						</h2>
 						<div className="notification-node--summary-description">{summary}</div>
 					</div>
 					<div className="notification-node--meta">
