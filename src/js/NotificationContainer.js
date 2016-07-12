@@ -95,18 +95,12 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	render() {
-
-		// Move the X button up 3px
-		const paddingTop = (parseInt(this.props.config.appHeaderClientHeight) - 3) + 'px';
-		const closIconPadding = {
-			'paddingTop': paddingTop
-		}
 		return (
 			<div aria-label="Notifiations Menu" role="menuitem" className="notification-container">
 				<div className="notification-archive--back pe-label pe-label--large">
 					<div tabIndex={-1} ref="closeButton">
-						<button aria-label="Close Notification" onClick={this.resetListOnCloseDrawer}> 
-							<i className="pe-icon--times close-dropdown pointer"></i> 
+						<button aria-label="Close Notification" onClick={this.resetListOnCloseDrawer}>
+							<i className="pe-icon--times close-dropdown pointer"></i>
 						</button>
 					</div>
 				</div>
