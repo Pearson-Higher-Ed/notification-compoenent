@@ -35,7 +35,7 @@ class NotificationComponent {
 
 		//insert the notification as a sibling for the app header so as to get keyboard tab focus in order ,also turn aria-hidden to false inside the appheader
 		if (config.bellInsideAppHeaderFlag) {
-			dom.setAttribute('style', 'padding-top:' + config.appHeaderClientHeight + ';display: none;');
+			dom.setAttribute('style', 'padding-top:' + config.appHeaderClientHeight + ';display: none;overflow:hidden;');
 			const listItemNotification = document.getElementsByClassName('o-header__nav-item o-app-header__nav-item-notification');
 			listItemNotification[0].setAttribute('aria-hidden', false);
 			const bodyDom = document.getElementsByTagName('body')[0];
@@ -104,37 +104,35 @@ class NotificationComponent {
 				notificationType: 'inbrowser',
 				recipientId: message.payload.recipientId
 			});
+			this.fixNotificationValues(this.notificationList);
+			this._sortNotificationList();
+			this.unreadCount++;
+			this.newNotifications = true;
+
+			this.bellComponent.forceUpdate();
+			this.containerComponent.forceUpdate();
 		}
-
-		this.fixNotificationValues(this.notificationList);
-		this._sortNotificationList();
-		this.unreadCount++;
-		this.newNotifications = true;
-
-		this.bellComponent.forceUpdate();
-		this.containerComponent.forceUpdate();
-
 	}
 
 	/*
- * If a property wasn't passed in to the API when the notification was created,
- * the Velocity template will default the property value to '$eventModel.[property name]',
- * but we instead need this to default to an empty string.
- */
-fixNotificationValues(notificationList) {
-	const badStr = '$eventModel.';
-	notificationList = notificationList.filter(n => n !== undefined);
+	 * If a property wasn't passed in to the API when the notification was created,
+	 * the Velocity template will default the property value to '$eventModel.[property name]',
+	 * but we instead need this to default to an empty string.
+	 */
+	fixNotificationValues(notificationList) {
+		const badStr = '$eventModel.';
+		notificationList = notificationList.filter(n => n !== undefined);
 
-	for (let i = 0; i < notificationList.length; i++) {
-		const msgObj = notificationList[i].message;
-		for (const prop in msgObj) {
-			if (msgObj.hasOwnProperty(prop) && msgObj[prop].toString().substring(0, badStr.length) === badStr) {
-				msgObj[prop] = '';
+		for (let i = 0; i < notificationList.length; i++) {
+			const msgObj = notificationList[i].message;
+			for (const prop in msgObj) {
+				if (msgObj.hasOwnProperty(prop) && msgObj[prop].toString().substring(0, badStr.length) === badStr) {
+					msgObj[prop] = '';
+				}
 			}
 		}
+		return notificationList;
 	}
-	return notificationList;
-}
 
 	_createBellReactClass() {
 		//  Keep track of the parent react class
@@ -226,21 +224,21 @@ fixNotificationValues(notificationList) {
 		}
 	}
 
-    _sortNotificationList() {
-	this.notificationList.sort((x, y) => {
-		return this._getDateDiff(x, y);
-	});
-}
+	_sortNotificationList() {
+		this.notificationList.sort((x, y) => {
+			return this._getDateDiff(x, y);
+		});
+	}
 
-    _sortArchivedNotificationList() {
-	this.archivedNotificationList.sort((x, y) => {
-		return this._getDateDiff(x, y);
-	});
-}
+	_sortArchivedNotificationList() {
+		this.archivedNotificationList.sort((x, y) => {
+			return this._getDateDiff(x, y);
+		});
+	}
 
-    _getDateDiff(x, y) {
-	return y.createdAt - x.createdAt;
-}
+	_getDateDiff(x, y) {
+		return y.createdAt - x.createdAt;
+	}
 
 	closeDrawer() {
 		this.listDrawer.close();
