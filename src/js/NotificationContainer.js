@@ -95,6 +95,13 @@ export default class NotificationContainer extends React.Component {
 	}
 
 	render() {
+		// this is super dumb because product wants things to "snap" to the bottom
+		const contentHeight = {
+			height: window.innerHeight - 175
+		};
+		const positionTop = {
+			top: window.innerHeight - 175
+		};
 		return (
 			<div aria-label="Notifiations Menu" role="menuitem" className="notification-container">
 				<div className="notification-archive--back pe-label pe-label--large">
@@ -112,12 +119,12 @@ export default class NotificationContainer extends React.Component {
 				</div>
 				<div className={this.state.displayDetails || this.state.isArchive ? 'notification-content-full': 'notification-content'}>
 					<div className={!this.state.isArchive && !this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-left'}>
-						<div className="content-list">
+						<div className="content-list" style={contentHeight}>
 							<div>
 								<NotificationList list={this.props.list} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
 								 appendArchiveList={this.appendArchiveList} isArchiveTray={false} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
 							</div>
-							<div className="notification-title bottom-archive pe-label pe-label--large">
+							<div className="notification-title bottom-archive pe-label pe-label--large" style={positionTop}>
 								<h1 className="notification-title--heading">
 									<a href="javascript:void(0);" onClick={this.goToArchiveList} className={this.state.isArchive ? 'hide' : ''}> Notification Archive</a>
 								</h1>
