@@ -55,7 +55,7 @@
     position:relative;
 
     .content-list {
-        overflow-y: scroll;
+        overflow-y: auto;
         background-color: #f2f2f2;
     }
 }
@@ -72,7 +72,6 @@
         border-bottom: none;
         font-size: 16px;
         margin: 22px 45px 20px 20px;
-        font-weight: bold;
     }
     a {
         text-decoration: none;
@@ -188,14 +187,12 @@
                 border-bottom: none;
                 color: #0d65a6;
                 line-height: normal;
-                font-weight: bold;
                 height: 40px;
                 overflow: hidden;
                 margin: 0px;
                 display:block;
             }
             .notification-node--summary-description {
-                color: #565656;
                 height: 20px;
                 overflow: hidden;
             }
@@ -260,7 +257,7 @@
     }
 
     .notification-details--title {
-        margin-bottom: 40px;
+        margin-bottom: 20px;
     }
 
     .notification-details--heading {
