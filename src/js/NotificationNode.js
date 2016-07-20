@@ -17,7 +17,7 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 								{title} 
 							</a>
 						</h2>
-						<div className="notification-node--summary-description pe-label pe-label--small">{summary}</div>
+						<div className="notification-node--summary-description pe-label pe-label--small" dangerouslySetInnerHTML={{__html: summary}}/>
 					</div>
 					<div className="notification-node--meta">
 						<div className="notification-node--meta-course">{time}{source ? ' \u00b7 ' : ''}{source}</div>
