@@ -42,8 +42,8 @@ export default class NotificationDetails extends React.Component {
 				<div className="notification-details--title">
 					<h1 className="notification-details--heading">{this.props.hyphenateWords(this.props.notification.message.title)}</h1>
 				</div>
-				<div className="notification-details--body">
-					{this.props.hyphenateWords(this.props.notification.message.body)}
+				<div className="notification-details--body" dangerouslySetInnerHTML={{__html: this.props.hyphenateWords(this.props.notification.message.body)}}>
+					
 				</div>
 				{tourButton}
 				<div className="notification-details--align">
