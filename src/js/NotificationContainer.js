@@ -140,6 +140,14 @@ export default class NotificationContainer extends React.Component {
 							coachmarkListener={this.props.coachmarkListener} hyphenateWords={this.hyphenateWords}/>
 					</div>
 				</div>
+				{/* Having to create the close icon twice to get the tab order right during the notification detail view ,X icon should be the last in the order*/}
+				<div className="notification-archive--back pe-label pe-label--large">
+					<div>
+						<button aria-label="Close Notification" onClick={this.resetListOnCloseDrawer}>
+							<i className="pe-icon--times close-dropdown pointer"></i>
+						</button>
+					</div>
+				</div>
 			</div>
 		);
 	}
