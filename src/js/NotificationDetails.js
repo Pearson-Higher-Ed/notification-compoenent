@@ -43,7 +43,9 @@ export default class NotificationDetails extends React.Component {
 				<div className="notification-details--title">
 					<h1 className="notification-details--heading">{this.props.hyphenateWords(this.props.notification.message.title)}</h1>
 				</div>
-				<div className="notification-details--body" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(this.props.hyphenateWords(this.props.notification.message.body))}}/>
+				 <div className="notification-details--body">
+					<p dangerouslySetInnerHTML={{__html: DOMPurify.sanitize((this.props.notification.message.body))}}/>
+				</div>
 				{tourButton}
 				<div className="notification-details--align">
 					<a href="javascript:void(0);" onClick={this.archiveItem.bind(this)} className={archiveCss}><i className="pe-icon--archive"></i> Archive this Notification </a>
