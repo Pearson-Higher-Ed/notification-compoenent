@@ -16,8 +16,7 @@ export default class NotificationBlankState extends React.Component {
 	render() {  
 		const contentHeight = {
 			height: window.innerHeight - 175
-		}; 
-		
+		};
 		if (this.props.isError) {
 			return (
 			<div className="notification-blank-page" style={contentHeight}>
