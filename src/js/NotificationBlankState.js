@@ -17,8 +17,8 @@ export default class NotificationBlankState extends React.Component {
 		const contentHeight = {
 			height: window.innerHeight - 175
 		}; 
-		{ /* need to do add margin top and bottom for the scenario where the zoomed screen should not have the heading and the description overlapped*/ }
-		const marginpercent = (window.innerHeight - 175 < 350 ? 10 : 0) + '%';
+		{ /* need to add margin top and bottom for the scenario where the zoomed screen should not have the heading and the description overlapped*/ }
+		const marginpercent = (window.innerHeight - 175 < 350 ? 15 : 0) + '%';
 		const headingMarginBottom = {
 			marginBottom: marginpercent
 		};
