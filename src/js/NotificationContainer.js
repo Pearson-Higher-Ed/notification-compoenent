@@ -118,7 +118,7 @@ export default class NotificationContainer extends React.Component {
 					</div>
 				</div>
 				<div className={this.state.displayDetails || this.state.isArchive ? 'notification-content-full': 'notification-content'}>
-					<div className={!this.state.isArchive && !this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-left'}>
+					<div className={!this.state.isArchive && !this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-left hide'}>
 						<div className="content-list" style={contentHeight}>
 							<div>
 								<NotificationList list={this.props.list} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
@@ -131,11 +131,11 @@ export default class NotificationContainer extends React.Component {
 							</div>
 						</div>
 					</div>
-					<div className={this.state.isArchive && !this.state.displayDetails ? 'transition-middle': 'transition-middle transition-to-right'}>
+					<div className={this.state.isArchive && !this.state.displayDetails ? 'transition-middle': 'transition-middle transition-to-right hide'}>
 						<NotificationList list={this.props.archivedList} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
 						 appendArchiveList={this.appendArchiveList} isArchiveTray={true} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
 					</div>
-					<div className={this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-right'}>
+					<div className={this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-right hide'}>
 						<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} appendArchiveList={this.appendArchiveList}
 							coachmarkListener={this.props.coachmarkListener} hyphenateWords={this.hyphenateWords}/>
 					</div>
