@@ -118,7 +118,7 @@ export default class NotificationContainer extends React.Component {
 					</div>
 				</div>
 				<div className={this.state.displayDetails || this.state.isArchive ? 'notification-content-full': 'notification-content'}>
-					<div className={!this.state.isArchive && !this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-left'}>
+					<div className={!this.state.isArchive && !this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-left'} aria-hidden = {!this.state.isArchive && !this.state.displayDetails ? false : true}>
 						<div className="content-list" style={contentHeight}>
 							<div>
 								<NotificationList list={this.props.list} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
@@ -131,7 +131,7 @@ export default class NotificationContainer extends React.Component {
 							</div>
 						</div>
 					</div>
-					<div className={this.state.isArchive && !this.state.displayDetails ? 'transition-middle': 'transition-middle transition-to-right'}>
+					<div className={this.state.isArchive && !this.state.displayDetails ? 'transition-middle': 'transition-middle transition-to-right'} aria-hidden = {this.state.isArchive && !this.state.displayDetails ? false : true}>
 						<NotificationList list={this.props.archivedList} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
 						 appendArchiveList={this.appendArchiveList} isArchiveTray={true} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
 					</div>
