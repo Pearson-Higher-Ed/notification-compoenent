@@ -1,6 +1,5 @@
 import React from 'react';
 import DateParser from './DateParser';
-import DOMPurify from 'dompurify';
 
 export default class NotificationDetails extends React.Component {
 
@@ -44,7 +43,7 @@ export default class NotificationDetails extends React.Component {
 					<h1 className="notification-details--heading">{this.props.hyphenateWords(this.props.notification.message.title)}</h1>
 				</div>
 				<div className="notification-details--body">
-					<p className="notification-details--bodytext" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize((this.props.notification.message.body))}}/>
+					<p className="notification-details--bodytext" dangerouslySetInnerHTML={{__html: this.props.notification.message.body}}/>
 				</div>
 				{tourButton}
 				<div className="notification-details--align">
