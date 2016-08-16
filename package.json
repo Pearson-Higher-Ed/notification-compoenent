@@ -16,7 +16,7 @@
     "ci": "npm test && npm run build",
     "verify": "node ./npm_scripts/verify.js"
   },
-  "author": "Aegis Team aegisteam@pearon.com",
+  "author": "Aegis Team aegisteam@pearson.com",
   "license": "MIT",
   "repository": {
     "type": "git",

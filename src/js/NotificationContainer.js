@@ -126,7 +126,7 @@ export default class NotificationContainer extends React.Component {
 							</div>
 							<div className="notification-title bottom-archive pe-label pe-label--large" style={positionTop}>
 								<h1 className="notification-title--heading">
-									<a href="javascript:void(0);" onClick={this.goToArchiveList} className={this.state.isArchive ? 'hide' : ''}> Notification Archive</a>
+									<a href="javascript:void(0);" onClick={this.goToArchiveList} className={this.state.isArchive ? 'hide' : ''}> Go to Notifications Archive</a>
 								</h1>
 							</div>
 						</div>
