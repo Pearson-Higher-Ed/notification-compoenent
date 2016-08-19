@@ -30,9 +30,9 @@ export default class NotificationBlankState extends React.Component {
 			return (
 				<div className="notification-blank-page" style={contentHeight}>
 					<h2 className="notification-blank-page-heading">Nothing yet!</h2>
-					<h3 className="notification-blank-page-description">We’ll let you know when<br/>something comes up. Till then,<br/>find previous notifications in your
+					<h3 className="notification-blank-page-description">We’ll let you know when something comes up. Till then, browse your
 					<br/>
-					<a href="javascript:void(0);" onClick={this.archiveList.bind(this)}> Archive. </a>
+					<a href="javascript:void(0);" onClick={this.archiveList.bind(this)}>Notification Archive</a>.
 					</h3>
 				</div>
 			);

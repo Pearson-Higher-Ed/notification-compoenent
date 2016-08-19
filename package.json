@@ -1,6 +1,6 @@
 {
   "name": "@pearson-components/notifications",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "description": "Stand-alone component for getting notifications. Designed to be within app-header.",
   "main": "./build/dist.notification.js",
   "scripts": {
@@ -16,14 +16,14 @@
     "ci": "npm test && npm run build",
     "verify": "node ./npm_scripts/verify.js"
   },
-  "author": "Aegis Team aegisteam@pearon.com",
+  "author": "Aegis Team aegisteam@pearson.com",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git@github.com:Pearson-Higher-Ed/notification-component.git"
   },
   "dependencies": {
-    "@pearson-components/coach-mark": "^0.1.7",
+    "@pearson-components/coach-mark": "^0.1.12",
     "@pearson-components/drawer": "^0.2.0",
     "react-intl": "~2.0.1"
   },
@@ -74,7 +74,6 @@
     "webpack-dev-server": "~1.14.0",
     "webpack-strip": "^0.1.0",
     "whatwg-fetch": "^0.11.0",
-    "dompurify":"^0.8.2",
     "@pearson-components/app-header": "^1.1.2"
   },
   "keywords": [
