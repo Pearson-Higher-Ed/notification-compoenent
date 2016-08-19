@@ -9,6 +9,7 @@ module.exports = {
     filename: 'build/[name].notification.js',
     libraryTarget: "umd"
   },
+  devtool: 'cheap-module-source-map',
   externals: [
     {
       'react': {
