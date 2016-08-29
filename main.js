@@ -39,8 +39,8 @@ class NotificationComponent {
 		document.body.appendChild(dom);
 
 		this.intlData = {
-			locale: 'en',
-			messages: i18n.en
+			locale: 'fr',
+			messages: i18n.fr
 		};
 		//insert the notification as a sibling for the app header so as to get keyboard tab focus in order ,also turn aria-hidden to false inside the appheader
 		if (config.bellInsideAppHeaderFlag) {
