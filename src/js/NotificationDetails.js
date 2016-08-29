@@ -44,9 +44,7 @@ export default class NotificationDetails extends React.Component {
 						{this.props.notification.message.source}
 					</div>
 					<div className="notification-details__meta--time">
-						
 						{DateParser.getFormatDateString(new Date(this.props.notification.createdAt))}
-						
 					</div>
 				</div>
 				<div className="notification-details--title">

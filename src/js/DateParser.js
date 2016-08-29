@@ -22,6 +22,6 @@ module.exports = {
 			return <FormattedRelative value={new Date(updatedAt)} units="hour"/>
 		}
 		
-		return parseInt(difference) === 1 || parseInt(new Date() - updatedAt- 1000 * 60 * 60 * 24) === 0 ? 'Just Now' : parseInt(difference) + ' minutes ago';
+		return parseInt(difference) === 1 || parseInt(new Date() - updatedAt- 1000 * 60 * 60 * 24) === 0 ? 'Just Now' : <FormattedRelative value={new Date(updatedAt)} units="minute"/>;
 	}
 }
