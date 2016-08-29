@@ -118,7 +118,7 @@ export default class NotificationContainer extends React.Component {
 					</div>
 				</div>
 				<div className={this.state.displayDetails || this.state.isArchive ? 'notification-content-full': 'notification-content'}>
-					<div className={!this.state.isArchive && !this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-left notification-componet--hide'}>
+					<div className={!this.state.isArchive && !this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-left notification-component--hide'}>
 						<div className="content-list" style={contentHeight}>
 							<div>
 								<NotificationList list={this.props.list} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
@@ -126,16 +126,16 @@ export default class NotificationContainer extends React.Component {
 							</div>
 							<div className="notification-title bottom-archive pe-label pe-label--large" style={positionTop}>
 								<h1 className="notification-title--heading">
-									<a href="javascript:void(0);" onClick={this.goToArchiveList} className={this.state.isArchive ? 'hide' : ''}> Go to Notifications Archive</a>
+									<a href="javascript:void(0);" onClick={this.goToArchiveList} className={this.state.isArchive ? 'notification-component--hide' : ''}> Go to Notifications Archive</a>
 								</h1>
 							</div>
 						</div>
 					</div>
-					<div className={this.state.isArchive && !this.state.displayDetails ? 'transition-middle': 'transition-middle transition-to-right notification-componet--hide'}>
+					<div className={this.state.isArchive && !this.state.displayDetails ? 'transition-middle': 'transition-middle transition-to-right notification-component--hide'}>
 						<NotificationList list={this.props.archivedList} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
 						 appendArchiveList={this.appendArchiveList} isArchiveTray={true} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
 					</div>
-					<div className={this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-right notification-componet--hide'}>
+					<div className={this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-right notification-component--hide'}>
 						<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} appendArchiveList={this.appendArchiveList}
 							coachmarkListener={this.props.coachmarkListener} hyphenateWords={this.hyphenateWords}/>
 					</div>

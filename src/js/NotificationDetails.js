@@ -34,7 +34,7 @@ export default class NotificationDetails extends React.Component {
 
 		let archiveCss = 'notification-details--archive';
 		if(this.props.notification.status === 'ARCHIVED') {
-			archiveCss += ' notification-componet--hide';
+			archiveCss += ' notification-component--hide';
 		}
 
 		return (
