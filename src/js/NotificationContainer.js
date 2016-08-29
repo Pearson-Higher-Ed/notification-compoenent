@@ -3,7 +3,14 @@ import NotificationList from './NotificationList';
 import NotificationDetails from './NotificationDetails';
 import NotificationHeading from './NotificationHeading';
 import NotificationApi from './NotificationApi';
-
+import { defineMessages, injectIntl, intlShape, FormattedMessage } from 'react-intl';
+const messages = defineMessages({
+	
+	goToNotificationArchive: {
+		id: 'notification.footer',
+		defaultMessage: 'Go to Notifications Archive'
+	}
+});
 export default class NotificationContainer extends React.Component {
 
 	constructor(props) {
@@ -126,7 +133,7 @@ export default class NotificationContainer extends React.Component {
 							</div>
 							<div className="notification-title bottom-archive pe-label pe-label--large" style={positionTop}>
 								<h1 className="notification-title--heading">
-									<a href="javascript:void(0);" onClick={this.goToArchiveList} className={this.state.isArchive ? 'notification-component--hide' : ''}> Go to Notifications Archive</a>
+									<a href="javascript:void(0);" onClick={this.goToArchiveList} className={this.state.isArchive ? 'notification-component--hide' : ''}> <FormattedMessage {...messages.goToNotificationArchive} /></a>
 								</h1>
 							</div>
 						</div>
