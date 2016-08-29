@@ -2,7 +2,6 @@ import React from 'react';
 import DateParser from './DateParser';
 import { defineMessages, injectIntl, intlShape, FormattedMessage, FormattedDate } from 'react-intl';
 const messages = defineMessages({
-
 	archiveNotificationLink: {
 		id: 'notificationDetails.link',
 		defaultMessage: 'Archive this Notification'

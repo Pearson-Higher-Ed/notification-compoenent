@@ -53,7 +53,7 @@ export default class NotificationBlankState extends React.Component {
 			return (
 			<div className="notification-blank-page" style={contentHeight}>
 				<h2 className="notification-blank-page-heading"><FormattedMessage {...messages.errorMessageHeading} /></h2>
-				<h3 className="notification-blank-page-description"><FormattedMessage {...messages.errorMessageDescription} /> </h3>
+				<h3 className="notification-blank-page-description"><FormattedMessage {...messages.errorMessageDescription} /></h3>
 			</div>
 			);
 		}

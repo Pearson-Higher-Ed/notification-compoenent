@@ -1,13 +1,7 @@
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
-import {
-    injectIntl,
-    IntlProvider,
-    FormattedRelative,
-    FormattedDate, defineMessages, FormattedMessage 
-} from 'react-intl';
+import { injectIntl, IntlProvider, FormattedRelative, FormattedDate, defineMessages, FormattedMessage } from 'react-intl';
 const messages = defineMessages({
-
 	dateParserNow: {
 		id: 'dateParser.now',
 		defaultMessage: 'Just Now'

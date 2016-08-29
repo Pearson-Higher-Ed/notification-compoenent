@@ -3,9 +3,8 @@ import NotificationList from './NotificationList';
 import NotificationDetails from './NotificationDetails';
 import NotificationHeading from './NotificationHeading';
 import NotificationApi from './NotificationApi';
-import { defineMessages, injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { defineMessages, FormattedMessage } from 'react-intl';
 const messages = defineMessages({
-	
 	goToNotificationArchive: {
 		id: 'notification.footer',
 		defaultMessage: 'Go to Notifications Archive'
