@@ -1,5 +1,13 @@
 import React from 'react';
-import DateParser from './DateParser';
+//import PostDate from './DateParser';
+import { defineMessages, injectIntl, intlShape, FormattedMessage, FormattedDate } from 'react-intl';
+const messages = defineMessages({
+
+	archiveNotificationLink: {
+		id: 'notificationDetails.link',
+		defaultMessage: 'Archive this Notification'
+	}
+});
 
 export default class NotificationDetails extends React.Component {
 
@@ -26,7 +34,7 @@ export default class NotificationDetails extends React.Component {
 
 		let archiveCss = 'notification-details--archive';
 		if(this.props.notification.status === 'ARCHIVED') {
-			archiveCss += ' hide';
+			archiveCss += ' notification-componet--hide';
 		}
 
 		return (
@@ -36,7 +44,9 @@ export default class NotificationDetails extends React.Component {
 						{this.props.notification.message.source}
 					</div>
 					<div className="notification-details__meta--time">
-						{DateParser.getFormatDateString(new Date(this.props.notification.createdAt))}
+						
+						<FormattedDate value={new Date(1459832991883)} year="numeric" month="long" day="2-digit"/>
+						
 					</div>
 				</div>
 				<div className="notification-details--title">
@@ -47,7 +57,7 @@ export default class NotificationDetails extends React.Component {
 				</div>
 				{tourButton}
 				<div className="notification-details--align">
-					<a href="javascript:void(0);" onClick={this.archiveItem.bind(this)} className={archiveCss}><i className="pe-icon--archive"></i> Archive this Notification </a>
+					<a href="javascript:void(0);" onClick={this.archiveItem.bind(this)} className={archiveCss}><i className="pe-icon--archive"></i> <FormattedMessage {...messages.archiveNotificationLink} /> </a>
 				</div>
 			</div>
 		);
