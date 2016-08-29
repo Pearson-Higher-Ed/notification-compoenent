@@ -8,9 +8,9 @@ import Drawer from '@pearson-components/drawer/main';
 import CoachmarkListener from './src/js/CoachmarkListener';
 import NotificationRealTimeApi from './src/js/NotificationRealTimeApi';
 import { IntlProvider, addLocaleData } from 'react-intl';
-//import en from 'react-intl/locale-data/en';
+import en from 'react-intl/locale-data/en';
 import fr from 'react-intl/locale-data/fr';
-//import zh from 'react-intl/locale-data/zh';
+import zh from 'react-intl/locale-data/zh';
 import i18n from './translations/';
 
 /**
@@ -39,8 +39,8 @@ class NotificationComponent {
 		document.body.appendChild(dom);
 
 		this.intlData = {
-			locale: 'fr',
-			messages: i18n.fr
+			locale: 'en',
+			messages: i18n.en
 		};
 		//insert the notification as a sibling for the app header so as to get keyboard tab focus in order ,also turn aria-hidden to false inside the appheader
 		if (config.bellInsideAppHeaderFlag) {

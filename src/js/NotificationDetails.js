@@ -1,5 +1,5 @@
 import React from 'react';
-//import PostDate from './DateParser';
+import DateParser from './DateParser';
 import { defineMessages, injectIntl, intlShape, FormattedMessage, FormattedDate } from 'react-intl';
 const messages = defineMessages({
 
@@ -45,7 +45,7 @@ export default class NotificationDetails extends React.Component {
 					</div>
 					<div className="notification-details__meta--time">
 						
-						<FormattedDate value={new Date(1459832991883)} year="numeric" month="long" day="2-digit"/>
+						{DateParser.getFormatDateString(new Date(this.props.notification.createdAt))}
 						
 					</div>
 				</div>

@@ -1,0 +1,14 @@
+{
+    "errorMessage.heading": "Mon compte",
+	"errorMessage.description": "Mon compte",
+	"notificationBlankState.heading": "Mon compte",
+	"notificationBlankState.description": "Mon compte",
+	"notificationBlankState.link":"Mon compte",
+	"archiveBlankState.heading": "Mon compte",
+	"archiveBlankState.description": "This is where you will see your<br/>Mon compte.",
+	"notification.heading":"notifier",
+	"backToNotification.heading":"arrière à notifier",
+	"backToArchive.heading":"arrière à archiver",
+	"notification.footer":"aller à archiver",
+	"notificationDetails.link":"archvie ce notification"
+}
