@@ -4,9 +4,19 @@ import {
     injectIntl,
     IntlProvider,
     FormattedRelative,
-    FormattedDate
+    FormattedDate, defineMessages, FormattedMessage 
 } from 'react-intl';
+const messages = defineMessages({
 
+	dateParserNow: {
+		id: 'dateParser.now',
+		defaultMessage: 'Just Now'
+	},
+	dateParserMinutes: {
+		id: 'dateParser.minutes',
+		defaultMessage: 'minutes ago'
+	}
+});
 module.exports = {
 
 	getFormatDateString: function(updatedAt) {
@@ -22,6 +32,6 @@ module.exports = {
 			return <FormattedRelative value={new Date(updatedAt)} units="hour"/>
 		}
 		
-		return parseInt(difference) === 1 || parseInt(new Date() - updatedAt- 1000 * 60 * 60 * 24) === 0 ? 'Just Now' : <FormattedRelative value={new Date(updatedAt)} units="minute"/>;
+		return parseInt(difference) === 1 || parseInt(new Date() - updatedAt- 1000 * 60 * 60 * 24) === 0 ? <FormattedMessage {...messages.dateParserNow} /> : <div> <span>{parseInt(difference)}</span> <FormattedMessage {...messages.dateParserMinutes} /></div>;
 	}
 }

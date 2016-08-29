@@ -10,5 +10,7 @@
 	"backToNotification.heading":"arrière à notifier",
 	"backToArchive.heading":"arrière à archiver",
 	"notification.footer":"aller à archiver",
-	"notificationDetails.link":"archvie ce notification"
+	"notificationDetails.link":"archvie ce notification",
+	"dateParser.now":"juste now",
+	"dateParser.minutes":"minutes ago"
 }
