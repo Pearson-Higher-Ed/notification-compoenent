@@ -21,6 +21,8 @@ import i18n from './translations/';
  *    into it.
  */
  addLocaleData(fr);
+ addLocaleData(en);
+ addLocaleData(zh);
 class NotificationComponent {
 
 	constructor(config, element) {
@@ -39,8 +41,8 @@ class NotificationComponent {
 		document.body.appendChild(dom);
 
 		this.intlData = {
-			locale: 'fr',
-			messages: i18n.fr
+			locale: config.locale,
+			messages: i18n[config.locale]
 		};
 		//insert the notification as a sibling for the app header so as to get keyboard tab focus in order ,also turn aria-hidden to false inside the appheader
 		if (config.bellInsideAppHeaderFlag) {
