@@ -6,13 +6,13 @@ const messages = defineMessages({
 	
 	notificationHeading: {
 		id: 'notification.heading',
-		defaultMessage: 'Notifications!'
+		defaultMessage: 'Notifications'
 	},
 	backToNotificationHeading: {
 		id: 'backToNotification.heading',
 		defaultMessage: 'Back to Notifications'
 	},
-	backToArchvieHeading: {
+	backToArchiveHeading: {
 		id: 'backToArchive.heading',
 		defaultMessage: 'Back to Notifications Archive'
 	}
@@ -40,7 +40,7 @@ export default class NotificationHeading extends React.Component {
 				<div>
 					<h1 className="notification-title--heading pe-label pe-label--large">
 						<a href="javascript:void(0);" className="notification-title--back pe-label pe-label--large" onClick={this.props.back}>
-							<i className="pe-icon--chevron-left"></i> <span className="notification-title--back_align">{this.props.isArchive ? <FormattedMessage {...messages.backToArchvieHeading} /> : <FormattedMessage {...messages.backToNotificationHeading} />}</span>
+							<i className="pe-icon--chevron-left"></i> <span className="notification-title--back_align">{this.props.isArchive ? <FormattedMessage {...messages.backToArchiveHeading} /> : <FormattedMessage {...messages.backToNotificationHeading} />}</span>
 						</a>
 					</h1>
 				</div>
