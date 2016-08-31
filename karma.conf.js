@@ -57,7 +57,11 @@ module.exports = function(config) {
                         // sass-loader for the origami pieces
                         test: /\.scss$/,
                         loader: 'null-loader'
-                    }
+                    },
+                    {
+                        test: /\.json$/,
+                        loader: 'json'
+                    },
                 ]
             },
             resolve: {

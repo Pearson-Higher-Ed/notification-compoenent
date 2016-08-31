@@ -17,7 +17,7 @@ describe('NotificationComponent', () => {
 		// CoachmarkAPI
 		cmApiUrl: 'http://localhost:8080',
 		cmContentTypeHeader: 'application/json',
-
+		locale:'en',
 		// FeedbackAPI
 		fbApiUrl: 'http://localhost:8080',
 		fbContentTypeHeader: 'application/json'

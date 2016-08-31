@@ -1,7 +1,10 @@
 import React from 'react';
 import NotificationContainer from '../src/js/NotificationContainer';
 import ReactTestUtils from 'react-addons-test-utils';
-
+import IntlPolyfill from 'intl';
+import { IntlProvider ,addLocaleData } from 'react-intl';
+import en from 'intl/locale-data/jsonp/en.js';
+import i18n from '../translations/';
 
 
 describe('NotificationContainer', () => {
@@ -38,7 +41,7 @@ describe('NotificationContainer', () => {
         // CoachmarkAPI
         cmApiUrl: 'http://localhost:8080',
         cmContentTypeHeader: 'application/json',
-
+        locale:'en',
         // FeedbackAPI
         fbApiUrl: 'http://localhost:8080',
         fbContentTypeHeader: 'application/json'
@@ -58,19 +61,32 @@ describe('NotificationContainer', () => {
     let archiveNotification = function() {
         archiveNotificationFunctionCalled = true;
     }
-    
+	function renderWithIntl(element) {
+		let instance;
+		let intlData = {
+			locale: 'en',
+			messages: i18n['en']
+		};
+		ReactTestUtils.renderIntoDocument(
+			<IntlProvider {...intlData}>
+				{React.cloneElement(element, {ref: (c) => instance = c.refs.wrappedInstance})}
+			</IntlProvider>);
+
+		return instance;
+	}
     beforeEach(() => {
+        Intl.NumberFormat = IntlPolyfill.NumberFormat;
+        Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
         closeDrawerFunctionCalled = false;
         notifcationReadFunctionCalled = false;
         archiveNotificationFunctionCalled = false;
-        container = ReactTestUtils.renderIntoDocument(<NotificationContainer archiveNotification={archiveNotification} notificationRead={notificationRead} list={list} config={config} archivedList={archivedList} closeDrawer={closeDrawerFunction} />);
+        container = renderWithIntl(<NotificationContainer archiveNotification={archiveNotification} notificationRead={notificationRead} list={list} config={config} archivedList={archivedList} closeDrawer={closeDrawerFunction} />);
     });
 
     describe('showDetails', function() {
         it('should set displayDetails to true and publish event when not in archive mode', function() {
             let passedParam = {check: true, message: {title: 'test', body: 'body'}};
             container.showDetails(passedParam);
-
             expect(container.state.displayDetails).toBe(true);
             expect(container.state.notificationDetails).toBe(passedParam);
             expect(notifcationReadFunctionCalled).toBe(true);

@@ -26,6 +26,6 @@ module.exports = {
 			return <FormattedRelative value={new Date(updatedAt)} units="hour"/>
 		}
 		
-		return parseInt(difference) === 1 || parseInt(new Date() - updatedAt- 1000 * 60 * 60 * 24) === 0 ? <FormattedMessage {...messages.dateParserNow} /> : <div> <span>{parseInt(difference)}</span> <FormattedMessage {...messages.dateParserMinutes} /></div>;
+		return (parseInt(difference) === 1 || parseInt(difference) === 0 || parseInt(new Date() - updatedAt- 1000 * 60 * 60 * 24) === 0) ? <FormattedMessage {...messages.dateParserNow} /> : <div>{parseInt(difference)} <FormattedMessage {...messages.dateParserMinutes} /></div>;
 	}
 }

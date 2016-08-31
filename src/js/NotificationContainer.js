@@ -3,14 +3,14 @@ import NotificationList from './NotificationList';
 import NotificationDetails from './NotificationDetails';
 import NotificationHeading from './NotificationHeading';
 import NotificationApi from './NotificationApi';
-import { defineMessages, FormattedMessage } from 'react-intl';
+import { defineMessages, FormattedMessage, injectIntl } from 'react-intl';
 const messages = defineMessages({
 	goToNotificationArchive: {
 		id: 'notification.footer',
 		defaultMessage: 'Go to Notifications Archive'
 	}
 });
-export default class NotificationContainer extends React.Component {
+class NotificationContainer extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -158,3 +158,4 @@ export default class NotificationContainer extends React.Component {
 		);
 	}
 }
+export default injectIntl(NotificationContainer, {withRef: true});
