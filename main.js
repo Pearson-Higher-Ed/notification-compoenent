@@ -166,13 +166,11 @@ class NotificationComponent {
 		this.containerClass = React.createClass({
 			render: function() {
 				return (
-					<div>
 						<IntlProvider {..._this.intlData}>
-						<NotificationContainer list={_this.notificationList} notificationRead={_this.notificationRead.bind(_this)} config={_this.config} apiError={_this.apiError}
-						archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} archiveNotification={_this.archiveNotification.bind(_this)}
-						coachmarkListener={_this.coachmarkListener}/>
+							<NotificationContainer list={_this.notificationList} notificationRead={_this.notificationRead.bind(_this)} config={_this.config} apiError={_this.apiError}
+							archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} archiveNotification={_this.archiveNotification.bind(_this)}
+							coachmarkListener={_this.coachmarkListener}/>
 						</IntlProvider>
-					</div>
 				);
 			}
 		});
