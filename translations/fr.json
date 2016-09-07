@@ -11,6 +11,6 @@
 	"backToArchive.heading":"Back to Notifications Archive",
 	"notification.footer":"Voir les notifications archivées",
 	"notificationDetails.link":"Archive this Notification",
-	"dateParser.now":"juste maintenant",
-	"dateParser.minutes":"minutes depuis"
+	"dateParser.now":"just now",
+	"dateParser.minutes":"minutes"
 }
