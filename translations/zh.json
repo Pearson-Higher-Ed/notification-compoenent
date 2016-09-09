@@ -1,0 +1,16 @@
+{
+    "errorMessage.heading": "系统遇到问题。",
+	"errorMessage.description": "这个功能有错误。请尝试刷新浏览器或清除缓存。",
+	"notificationBlankState.heading": "目前无任何内容！",
+	"notificationBlankState.description": "有新内容时，我们会通知您。",
+	"notificationBlankState.link":"查看推送记录。",
+	"archiveBlankState.heading": "目前无任何推送！",
+	"archiveBlankState.description": "这是推送记录页面",
+	"notification.heading":"通知",
+	"backToNotification.heading":"前往推送记录",
+	"backToArchive.heading":"Back to Notifications Archive",
+	"notification.footer":"前往推送记录",
+	"notificationDetails.link":"Archive this Notification",
+	"dateParser.now":"Just Now",
+	"dateParser.minutes":"minutes ago"
+}

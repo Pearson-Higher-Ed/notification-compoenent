@@ -1,4 +1,16 @@
 {
-  "buttonText": "dis bonjour",
-  "placeholder": "espace réservé"
+    "errorMessage.heading": "Oh, that's not good",
+	"errorMessage.description": "There seems to be a problem with this feature. Try refreshing your browser or clearing your cache.",
+	"notificationBlankState.heading": "Rien pour l'instant.",
+	"notificationBlankState.description": "Vous serez prévenu en cas de nouvelle notification.En attendant, vous pouvez consulter les",
+	"notificationBlankState.link":"notification archivées.",
+	"archiveBlankState.heading": "Aucune archive.",
+	"archiveBlankState.description": "C'est ici que vous trouverez les notifications archivées.",
+	"notification.heading":"Notifications",
+	"backToNotification.heading":"Retour aux notifications",
+	"backToArchive.heading":"Back to Notifications Archive",
+	"notification.footer":"Voir les notifications archivées",
+	"notificationDetails.link":"Archive this Notification",
+	"dateParser.now":"just now",
+	"dateParser.minutes":"minutes"
 }

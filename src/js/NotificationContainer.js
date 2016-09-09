@@ -3,8 +3,14 @@ import NotificationList from './NotificationList';
 import NotificationDetails from './NotificationDetails';
 import NotificationHeading from './NotificationHeading';
 import NotificationApi from './NotificationApi';
-
-export default class NotificationContainer extends React.Component {
+import { defineMessages, FormattedMessage, injectIntl } from 'react-intl';
+const messages = defineMessages({
+	goToNotificationArchive: {
+		id: 'notification.footer',
+		defaultMessage: 'Go to Notifications Archive'
+	}
+});
+class NotificationContainer extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -103,7 +109,7 @@ export default class NotificationContainer extends React.Component {
 			top: window.innerHeight - 175
 		};
 		return (
-			<div aria-label="Notifiations Menu" role="menuitem" className="notification-container">
+			<div aria-label="Notifications Menu" role="menuitem" className="notification-container">
 				<div className="notification-archive--back pe-label pe-label--large">
 					<div tabIndex={-1} ref="closeButton">
 						<button aria-label="Close Notification" onClick={this.resetListOnCloseDrawer}>
@@ -126,7 +132,7 @@ export default class NotificationContainer extends React.Component {
 							</div>
 							<div className="notification-title bottom-archive pe-label pe-label--large" style={positionTop}>
 								<h1 className="notification-title--heading">
-									<a href="javascript:void(0);" onClick={this.goToArchiveList} className={this.state.isArchive ? 'notification-component--hide' : ''}> Go to Notifications Archive</a>
+									<a href="javascript:void(0);" onClick={this.goToArchiveList} className={this.state.isArchive ? 'notification-component--hide' : ''}> <FormattedMessage {...messages.goToNotificationArchive} /></a>
 								</h1>
 							</div>
 						</div>
@@ -152,3 +158,4 @@ export default class NotificationContainer extends React.Component {
 		);
 	}
 }
+export default injectIntl(NotificationContainer, {withRef: true});

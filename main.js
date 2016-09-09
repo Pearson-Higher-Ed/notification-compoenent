@@ -7,7 +7,11 @@ import NotificationContainer from './src/js/NotificationContainer';
 import Drawer from '@pearson-components/drawer/main';
 import CoachmarkListener from './src/js/CoachmarkListener';
 import NotificationRealTimeApi from './src/js/NotificationRealTimeApi';
-
+import { IntlProvider, addLocaleData } from 'react-intl';
+import en from 'react-intl/locale-data/en';
+import fr from 'react-intl/locale-data/fr';
+import zh from 'react-intl/locale-data/zh';
+import i18n from './translations/';
 
 /**
  *  NotificationComponent.
@@ -16,6 +20,9 @@ import NotificationRealTimeApi from './src/js/NotificationRealTimeApi';
  *    as a parameter.  This component needs to make several api calls from places that could change, so we need to pass configuration
  *    into it.
  */
+ addLocaleData(fr);
+ addLocaleData(en);
+ addLocaleData(zh);
 class NotificationComponent {
 
 	constructor(config, element) {
@@ -33,6 +40,10 @@ class NotificationComponent {
 
 		document.body.appendChild(dom);
 
+		this.intlData = {
+			locale: config.locale,
+			messages: i18n[config.locale]
+		};
 		//insert the notification as a sibling for the app header so as to get keyboard tab focus in order ,also turn aria-hidden to false inside the appheader
 		if (config.bellInsideAppHeaderFlag) {
 			dom.setAttribute('style', 'padding-top:' + config.appHeaderClientHeight + ';display: none;');
@@ -155,11 +166,11 @@ class NotificationComponent {
 		this.containerClass = React.createClass({
 			render: function() {
 				return (
-					<div>
-						<NotificationContainer list={_this.notificationList} notificationRead={_this.notificationRead.bind(_this)} config={_this.config} apiError={_this.apiError}
-						archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} archiveNotification={_this.archiveNotification.bind(_this)}
-						coachmarkListener={_this.coachmarkListener}/>
-					</div>
+						<IntlProvider {..._this.intlData}>
+							<NotificationContainer list={_this.notificationList} notificationRead={_this.notificationRead.bind(_this)} config={_this.config} apiError={_this.apiError}
+							archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} archiveNotification={_this.archiveNotification.bind(_this)}
+							coachmarkListener={_this.coachmarkListener}/>
+						</IntlProvider>
 				);
 			}
 		});

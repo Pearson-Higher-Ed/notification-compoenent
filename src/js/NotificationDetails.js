@@ -1,5 +1,12 @@
 import React from 'react';
 import DateParser from './DateParser';
+import { defineMessages, injectIntl, intlShape, FormattedMessage, FormattedDate } from 'react-intl';
+const messages = defineMessages({
+	archiveNotificationLink: {
+		id: 'notificationDetails.link',
+		defaultMessage: 'Archive this Notification'
+	}
+});
 
 export default class NotificationDetails extends React.Component {
 
@@ -47,7 +54,7 @@ export default class NotificationDetails extends React.Component {
 				</div>
 				{tourButton}
 				<div className="notification-details--align">
-					<a href="javascript:void(0);" onClick={this.archiveItem.bind(this)} className={archiveCss}><i className="pe-icon--archive"></i> Archive this Notification </a>
+					<a href="javascript:void(0);" onClick={this.archiveItem.bind(this)} className={archiveCss}><i className="pe-icon--archive"></i> <FormattedMessage {...messages.archiveNotificationLink} /> </a>
 				</div>
 			</div>
 		);

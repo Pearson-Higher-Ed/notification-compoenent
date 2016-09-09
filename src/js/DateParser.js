@@ -1,7 +1,16 @@
-
-const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
+import React, {PropTypes} from 'react';
+import ReactDOM from 'react-dom';
+import { injectIntl, IntlProvider, FormattedRelative, FormattedDate, defineMessages, FormattedMessage } from 'react-intl';
+const messages = defineMessages({
+	dateParserNow: {
+		id: 'dateParser.now',
+		defaultMessage: 'Just Now'
+	},
+	dateParserMinutes: {
+		id: 'dateParser.minutes',
+		defaultMessage: 'minutes ago'
+	}
+});
 module.exports = {
 
 	getFormatDateString: function(updatedAt) {
@@ -10,12 +19,13 @@ module.exports = {
 		if (difference >= 60) {
 			difference = difference / 60;
 			if (difference >= 24) {
-				return dayOfWeek[updatedAt.getDay()] + ', ' + month[updatedAt.getMonth()] + ' ' + updatedAt.getDate() + ', ' + updatedAt.getFullYear();
+				return <FormattedDate value={new Date(updatedAt)} year="numeric" month="short" day="2-digit" 
+				weekday="short"/>
 			}
-			const hourFormat =  (parseInt(difference) === 1) ? ' hour ago' : ' hours ago';
-			return (parseInt(difference) + hourFormat);
+			
+			return <FormattedRelative value={new Date(updatedAt)} units="hour"/>
 		}
 		
-		return parseInt(difference) === 1 || parseInt(difference) === 0 ? 'Just Now' : parseInt(difference) + ' minutes ago';
+		return (parseInt(difference) === 1 || parseInt(difference) === 0 || parseInt(new Date() - updatedAt- 1000 * 60 * 60 * 24) === 0) ? <FormattedMessage {...messages.dateParserNow} /> : <div>{parseInt(difference)} <FormattedMessage {...messages.dateParserMinutes} /></div>;
 	}
 }
