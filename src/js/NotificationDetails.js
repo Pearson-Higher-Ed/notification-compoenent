@@ -28,7 +28,7 @@ export default class NotificationDetails extends React.Component {
 		if (this.props.notification.message.cmIds) {
 			let tourButtonText = this.props.notification.message.tourButtonText
 			tourButtonText = tourButtonText ? tourButtonText : 'Take the tour';
-			tourButton = <button onClick={this.launchCoachmark.bind(this)} className="notification-details--button">{tourButtonText}</button>;
+			tourButton = <button onClick={this.launchCoachmark.bind(this)} className="notification-details--button pe-btn">{tourButtonText}</button>;
 		}
 
 		let archiveCss = 'notification-details--archive';
