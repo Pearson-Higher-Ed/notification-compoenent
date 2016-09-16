@@ -237,7 +237,7 @@ class NotificationComponent {
 	get_language(data)
 	{
 		const dash_index = data.locale.indexOf('-');
-		if (dash_index >= 0)
+		if (dash_index > 0)
 		{
 			 data.locale = data.locale.substring(0, dash_index);
 		}
