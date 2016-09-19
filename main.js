@@ -166,7 +166,7 @@ class NotificationComponent {
 		this.containerClass = React.createClass({
 			render: function() {
 				return (
-						<IntlProvider {..._this.intlData}>
+						<IntlProvider {..._this.get_language(_this.intlData)}>
 							<NotificationContainer list={_this.notificationList} notificationRead={_this.notificationRead.bind(_this)} config={_this.config} apiError={_this.apiError}
 							archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} archiveNotification={_this.archiveNotification.bind(_this)}
 							coachmarkListener={_this.coachmarkListener}/>
@@ -233,6 +233,15 @@ class NotificationComponent {
 			this.newNotifications = false;
 			this.bellComponent.forceUpdate();
 		}
+	}
+	get_language(data)
+	{
+		const dash_index = data.locale.indexOf('-');
+		if (dash_index > 0)
+		{
+			 data.locale = data.locale.substring(0, dash_index);
+		}
+		return data;
 	}
 
 	_sortNotificationList() {
