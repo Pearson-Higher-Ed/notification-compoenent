@@ -8,7 +8,7 @@ const messages = defineMessages({
 	},
 	dateParserMinutes: {
 		id: 'dateParser.minutes',
-		defaultMessage: 'minutes ago'
+		defaultMessage: '{minutesCount} minutes ago'
 	}
 });
 module.exports = {
@@ -26,6 +26,6 @@ module.exports = {
 			return <FormattedRelative value={new Date(updatedAt)} units="hour"/>
 		}
 		
-		return (parseInt(difference) === 1 || parseInt(difference) === 0 || parseInt(new Date() - updatedAt- 1000 * 60 * 60 * 24) === 0) ? <FormattedMessage {...messages.dateParserNow} /> : <span>{parseInt(difference)} <FormattedMessage {...messages.dateParserMinutes} /></span>;
+		return (parseInt(difference) === 1 || parseInt(difference) === 0 || parseInt(new Date() - updatedAt- 1000 * 60 * 60 * 24) === 0) ? <FormattedMessage {...messages.dateParserNow} /> : <FormattedMessage {...messages.dateParserMinutes} values={{minutesCount: parseInt(difference)}} />;
 	}
 }

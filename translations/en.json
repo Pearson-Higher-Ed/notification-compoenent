@@ -12,5 +12,5 @@
 	"notification.footer":"Go to Notifications Archive",
 	"notificationDetails.link":"Archive this Notification",
 	"dateParser.now":"Just Now",
-	"dateParser.minutes":"minutes ago"
+	"dateParser.minutes":"{minutesCount} minutes ago"
 }
