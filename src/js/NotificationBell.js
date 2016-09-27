@@ -12,7 +12,7 @@ const NotificationBell = ({unreadCount, toggleList, newNotifications}) => {
 		bellClassNames += ' hide-visibility';
 	}
 	return (
-		<div className="notification-bell" aria-live="polite" aria-atomic="false">
+		<div id="notification-bell" className="notification-bell" aria-live="polite" aria-atomic="false">
 			<a aria-label="Notifications" href="javascript:void(0)" className="notification-bell--activate" onClick={toggleList}>
 				<span className={unreadCount===0 ? 'sr-hidden' : 'notification-component--hide'}>Notifications</span>
 				<i className="pe-icon--bell" aria-hidden="true"></i>
