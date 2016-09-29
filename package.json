@@ -23,7 +23,7 @@
     "url": "git@github.com:Pearson-Higher-Ed/notification-component.git"
   },
   "dependencies": {
-    "@pearson-components/coach-mark": "^0.1.12",
+    "@pearson-components/coach-mark": "^0.2.5",
     "@pearson-components/drawer": "^0.2.0",
     "json-loader": "^0.5.4",
     "react-intl": "~2.0.1"

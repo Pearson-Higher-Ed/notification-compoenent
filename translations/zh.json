@@ -8,9 +8,9 @@
 	"archiveBlankState.description": "这是推送记录页面",
 	"notification.heading":"通知",
 	"backToNotification.heading":"前往推送记录",
-	"backToArchive.heading":"Back to Notifications Archive",
+	"backToArchive.heading":"回到推送档案",
 	"notification.footer":"前往推送记录",
-	"notificationDetails.link":"Archive this Notification",
-	"dateParser.now":"Just Now",
-	"dateParser.minutes":"minutes ago"
+	"notificationDetails.link":"将推送归档",
+	"dateParser.now":"刚才",
+	"dateParser.minutes":"{minutesCount} 分钟以前"
 }

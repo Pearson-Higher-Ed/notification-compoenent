@@ -150,7 +150,7 @@ export default class CoachmarkListener {
 
 				// Display the coach mark
 				console.log(`Display CM with element: ${coachmark.element}, options: ${options}`);
-				new Coachmark(document.getElementById(coachmark.element), options, () => {
+				new Coachmark({elementId:coachmark.element, opts:options}, () => {
 					this.notificationApi.markAsRead(state.userNotificationId);
 				});
 
@@ -209,9 +209,9 @@ export default class CoachmarkListener {
 			title: 'There seems to be a problem with this feature.',
 			text: 'Try refreshing your browser or clearing your cache.​',
 			id: Date.now(),
-			disableShadow: true,
+			disableShadowing: true,
 			disablePointer: true
 		};
-		new Coachmark(document.getElementsByClassName('notification-bell')[0], options, () => {});
+		new Coachmark({elementId:'notification-bell', opts:options}, ()=>{});
 	}
 }
