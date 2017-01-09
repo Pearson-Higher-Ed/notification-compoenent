@@ -4,11 +4,11 @@ import utils from './utils';
 const NotificationSummary = ({summary, className}) => {
 	if(summary && utils.hasHTMLTags(summary)) {
 		return (
-			<div className={className} dangerouslySetInnerHTML={{__html: summary}}/>
+			<p className={className} dangerouslySetInnerHTML={{__html: summary}}/>
 		);
 	}
 	return (
-		<div className={className}>{summary}</div>	
+		<p className={className}>{summary}</p>	
 	);  
 };
 
