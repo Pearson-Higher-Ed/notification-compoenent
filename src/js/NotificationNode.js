@@ -1,4 +1,5 @@
 import React from 'react';
+import NotificationSummary from './NotificationSummary'
 
 const NotificationNode = ({detailsClick, title, summary, source, archivedNotification, time, isRead, trashIconDisable}) => {
 
@@ -17,7 +18,7 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 								{title} 
 							</a>
 						</h2>
-						<div className="notification-node--summary-description pe-label pe-label--small" dangerouslySetInnerHTML={{__html: summary}}/>
+						<NotificationSummary className={'notification-node--summary-description pe-label pe-label--small'} summary={summary}/>
 					</div>
 					<div className="notification-node--meta">
 						<div className="notification-node--meta-course">{time}{source ? ' \u00b7 ' : ''}{source}</div>
