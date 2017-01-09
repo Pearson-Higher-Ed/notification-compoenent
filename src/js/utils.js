@@ -1,4 +1,4 @@
-// Because dangerouslySetInnerHTML prop is not needed for normal string
+// Because dangerouslySetInnerHTML prop is required only if the string contains HTML tags
 
 module.exports = {
 	hasHTMLTags : function(s) {
