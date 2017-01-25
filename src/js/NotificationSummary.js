@@ -22,7 +22,7 @@ export default class NotificationSummary extends React.Component {
 				);
 		}
 		return (
-			<p>{summary}</p>	
+			<p>{utils.removeScriptTags(summary).innerHTML}</p>	
 			);  
 	}
 	
