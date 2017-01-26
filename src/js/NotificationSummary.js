@@ -22,7 +22,7 @@ export default class NotificationSummary extends React.Component {
 				);
 		}
 		return (
-			<p>{utils.removeScriptTags(summary).innerHTML}</p>	
+			<p>{summary}</p>
 			);  
 	}
 	
@@ -48,7 +48,7 @@ export default class NotificationSummary extends React.Component {
 						);
 				}
 				return (
-					<div key={i}>{s}</div>
+					<div key={i}>{decode.getDecodedString(s)}</div>
 					);
 			})
 		}
