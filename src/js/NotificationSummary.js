@@ -18,7 +18,7 @@ export default class NotificationSummary extends React.Component {
 	containsHtml(summary) {
 		if(summary && utils.hasHTMLTags(summary)) {
 			return (
-				<p dangerouslySetInnerHTML={{__html: summary}}/>
+				<p dangerouslySetInnerHTML={{__html: utils.removeScriptTags(summary).innerHTML}}/>
 				);
 		}
 		return (
