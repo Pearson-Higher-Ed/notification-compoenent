@@ -1,6 +1,7 @@
 import React from 'react';
 import DateParser from './DateParser';
 import { defineMessages, injectIntl, intlShape, FormattedMessage, FormattedDate } from 'react-intl';
+import NotificationSummary from './NotificationSummary'
 const messages = defineMessages({
 	archiveNotificationLink: {
 		id: 'notificationDetails.link',
@@ -50,7 +51,7 @@ export default class NotificationDetails extends React.Component {
 					<h1 className="notification-details--heading">{this.props.hyphenateWords(this.props.notification.message.title)}</h1>
 				</div>
 				<div className="notification-details--body">
-					<p className="notification-details--bodytext" dangerouslySetInnerHTML={{__html: this.props.notification.message.body}}/>
+					<NotificationSummary className={'notification-details--bodytext'} summary={this.props.notification.message}/>
 				</div>
 				{tourButton}
 				<div className="notification-details--align">
