@@ -1,8 +1,9 @@
 import React from 'react';
+import NotificationIcon from './NotificationIcon';
 
 const NotificationBell = ({unreadCount, toggleList, newNotifications}) => {
 
-	let bellClassNames = 'notification-bell--count';
+	let bellClassNames = 'notification-bell--count pe-label--small';
 	
 	if (newNotifications) {
 		bellClassNames += ' notification-bell--new'
@@ -12,12 +13,14 @@ const NotificationBell = ({unreadCount, toggleList, newNotifications}) => {
 		bellClassNames += ' hide-visibility';
 	}
 	return (
-		<div id="notification-bell" className="notification-bell" aria-live="polite" aria-atomic="false">
+		<div id="notification-bell" aria-live="polite" aria-atomic="false">
 			<a aria-label="Notifications" href="javascript:void(0)" className="notification-bell--activate" onClick={toggleList}>
-				<span className={unreadCount===0 ? 'sr-hidden' : 'notification-component--hide'}>Notifications</span>
-				<i className="pe-icon--bell" aria-hidden="true"></i>
+				<span className={unreadCount===0 ? 'pe-sr-only ' : 'notification-component--hide'}>Notifications</span>
+				 
+				<NotificationIcon iconName="notification-18" iconAltText="" />
+				 
 				<div className={bellClassNames}>
-					<span className="sr-hidden">{unreadCount > 1 ? unreadCount+ 'Unread Notifications' : unreadCount+'Unread Notification'}</span>
+					<span className="pe-sr-only ">{unreadCount > 1 ? unreadCount+ 'Unread Notifications' : unreadCount+'Unread Notification'}</span>
 					<span>{unreadCount > 9 ? '9+' : unreadCount}</span>
 				</div>
 			</a>

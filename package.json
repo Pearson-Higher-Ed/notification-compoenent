@@ -23,8 +23,8 @@
     "url": "git@github.com:Pearson-Higher-Ed/notification-component.git"
   },
   "dependencies": {
-    "@pearson-components/coach-mark": "^0.2.5",
-    "@pearson-components/drawer": "^0.2.0",
+    "@pearson-components/coach-mark": "0.2.12",
+    "@pearson-components/drawer": "^0.3.3",
     "json-loader": "^0.5.4",
     "react-intl": "~2.0.1"
   },
@@ -61,7 +61,7 @@
     "karma-webpack": "^1.7.0",
     "node-sass": "^3.4.2",
     "null-loader": "^0.1.1",
-    "pearson-elements": "1.7.3",
+    "pearson-elements": "1.8.1",
     "phantomjs": "^2.1.7",
     "phantomjs-prebuilt": "^2.1.7",
     "react": "^15.0.0",
@@ -72,6 +72,7 @@
     "semver": "~5.1.0",
     "style-loader": "~0.13.0",
     "url-loader": "~0.5.7",
+    "inline-loader": "^0.1.1",
     "webpack": "~1.12.9",
     "webpack-dev-server": "~1.14.0",
     "webpack-strip": "^0.1.0",

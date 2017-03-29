@@ -1,7 +1,10 @@
 import React from 'react';
 import CoachmarkApi from './CoachmarkApi';
 import FeedbackApi from './FeedbackApi';
+import NotificationIcon from './NotificationIcon';
 import { defineMessages, injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import ReactDOM from 'react-dom';
+
 const messages = defineMessages({
 	
 	notificationHeading: {
@@ -18,42 +21,42 @@ const messages = defineMessages({
 	}
 });
 
-export default class NotificationHeading extends React.Component {
+ class NotificationHeading extends React.Component {
 
 	constructor(props) {
 		super(props);
 	}
-
+	componentDidUpdate() {
+		if (this.props.isDetails) {
+			ReactDOM.findDOMNode(this.refs.heading).focus();
+		}
+	}
 	render() {
 		if (this.props.isList) {
 			return (
-				<div>
-					<h1 className="notification-title--heading pe-label pe-label--large">
+				<div className="notification-title--heading1 center-align">
+					<h2 className="pe-label--large pe-label--bold">
 						<FormattedMessage {...messages.notificationHeading} />
-					</h1>
+					</h2>
 				</div>
 			);
 		}
 
 		if (this.props.isDetails) {
 			return (
-				<div>
-					<h1 className="notification-title--heading pe-label pe-label--large">
-						<a href="javascript:void(0);" className="notification-title--back pe-label pe-label--large" onClick={this.props.back}>
-							<i className="pe-icon--chevron-left"></i> <span className="notification-title--back_align">{this.props.isArchive ? <FormattedMessage {...messages.backToArchiveHeading} /> : <FormattedMessage {...messages.backToNotificationHeading} />}</span>
-						</a>
-					</h1>
-				</div>
+				<button ref="heading" className="notification-title--heading2 pe-icon--btn" onClick={this.props.back}>
+					<NotificationIcon iconName="chevron-back-18" iconAltText={this.props.isArchive ? <FormattedMessage {...messages.backToArchiveHeading} /> : <FormattedMessage {...messages.backToNotificationHeading} />} />
+					{this.props.isArchive ? <FormattedMessage {...messages.backToArchiveHeading} /> : <FormattedMessage {...messages.backToNotificationHeading} />}
+				</button>
 			);
 		}
 		return (
-			<div>
-				<h1 className="notification-title--heading pe-label pe-label--large" >
-					<a href="javascript:void(0);" className="notification-title--back pe-label pe-label--large" onClick={this.props.archiveBack}>
-						<i className="pe-icon--chevron-left"></i> <span className="notification-title--back_align"><FormattedMessage {...messages.backToNotificationHeading} /></span>
-					</a>
-				</h1>
-			</div>
+			<button ref="heading" className="notification-title--heading2 pe-icon--btn" onClick={this.props.archiveBack}>
+				<NotificationIcon iconName="chevron-back-18" iconAltText={<FormattedMessage {...messages.backToNotificationHeading} />} />
+				<FormattedMessage {...messages.backToNotificationHeading} />
+			</button>
 			);
 	}
 }
+
+export default NotificationHeading;

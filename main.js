@@ -29,7 +29,9 @@ class NotificationComponent {
 		this.config = config;
 		this.notApi = new NotificationApi(config);
 
-
+		// grab all files in icons folder and import them inline (appends to end of body)
+		const svgFiles = require.context('inline!pearson-elements/assets/icons', false, /^.*\.svg$/);
+		svgFiles.keys().forEach(svgFiles);
 		// Connect up the drawer component here.
 		const dom = document.createElement('div');
 		dom.setAttribute('id', 'notification-component');
@@ -46,7 +48,7 @@ class NotificationComponent {
 		};
 		//insert the notification as a sibling for the app header so as to get keyboard tab focus in order ,also turn aria-hidden to false inside the appheader
 		if (config.bellInsideAppHeaderFlag) {
-			dom.setAttribute('style', 'padding-top:' + config.appHeaderClientHeight + ';display: none;');
+			dom.setAttribute('style', 'padding-top:' + config.appHeaderClientHeight + ';background-color:#F5F5F5;display: none;');
 			const listItemNotification = document.getElementsByClassName('o-header__nav-item o-app-header__nav-item-notification');
 			listItemNotification[0].setAttribute('aria-hidden', false);
 			const bodyDom = document.getElementsByTagName('body')[0];

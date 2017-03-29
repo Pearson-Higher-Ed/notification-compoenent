@@ -6,6 +6,8 @@
     npm install 
     npm test //runs the test
     npm run dev //runs the demo
+    if you have token.sh file set up
+    ./token.sh //runs the demo with default values
 ```
 
 ## Demo

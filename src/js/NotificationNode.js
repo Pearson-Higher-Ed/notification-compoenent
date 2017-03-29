@@ -1,4 +1,5 @@
 import React from 'react';
+import NotificationIcon from './NotificationIcon';
 
 const NotificationNode = ({detailsClick, title, summary, source, archivedNotification, time, isRead, trashIconDisable}) => {
 
@@ -10,21 +11,23 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 
 	return (
 		<div className={background}>
-				<div className="notification-node--details">
-					<div className="notification-node--summary">
-						<h2> 
-							<a href="javascript:void(0)"  className="notification-node--no-decoration pe-label pe-label--large" onClick={detailsClick}>
-								{title} 
-							</a>
-						</h2>
-						<div className="notification-node--summary-description pe-label pe-label--small">{summary}</div>
-					</div>
-					<div className="notification-node--meta">
-						<div className="notification-node--meta-course">{time}{source ? ' \u00b7 ' : ''}{source}</div>
-					</div>
-				</div>		
+			<div className="notification-node--details">
+				<div className="notification-node--summary">
+					<h2 className="pe-label--large"> 
+						<a href="javascript:void(0)" onClick={detailsClick}>
+							{title} 
+						</a>
+					</h2>
+					<p className="notification-node--summary-description ">{summary}</p>
+				</div>
+				<div className="notification-node--meta">
+					<div className="notification-node--meta-course pe-label--small">{time}{source ? ' \u00b7 ' : ''}{source}</div>
+				</div>
+			</div>		
 			<div className="notification-node--dismiss ">
-				<button aria-label="Archive" className={trashIconDisable ? 'notification-component--hide' : 'pe-btn'} onClick={archivedNotification} ><i className="pe-icon--archive" ></i></button>
+				<button aria-label="Archive" className={trashIconDisable ? 'notification-component--hide' : 'pe-btn'} onClick={archivedNotification} >
+					<NotificationIcon iconName="archive-18" iconAltText="" />
+				</button>
 			</div>
 		</div>
 	);
