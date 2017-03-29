@@ -44,14 +44,14 @@ const messages = defineMessages({
 
 		if (this.props.isDetails) {
 			return (
-				<button ref="heading" className="notification-title--heading2 pe-icon--btn" onClick={this.props.back}>
+				<button ref="heading" className="notification-title--heading2 pe-icon--btn pe-label--large" onClick={this.props.back}>
 					<NotificationIcon iconName="chevron-back-18" iconAltText={this.props.isArchive ? <FormattedMessage {...messages.backToArchiveHeading} /> : <FormattedMessage {...messages.backToNotificationHeading} />} />
 					{this.props.isArchive ? <FormattedMessage {...messages.backToArchiveHeading} /> : <FormattedMessage {...messages.backToNotificationHeading} />}
 				</button>
 			);
 		}
 		return (
-			<button ref="heading" className="notification-title--heading2 pe-icon--btn" onClick={this.props.archiveBack}>
+			<button ref="heading" className="notification-title--heading2 pe-icon--btn pe-label--large" onClick={this.props.archiveBack}>
 				<NotificationIcon iconName="chevron-back-18" iconAltText={<FormattedMessage {...messages.backToNotificationHeading} />} />
 				<FormattedMessage {...messages.backToNotificationHeading} />
 			</button>

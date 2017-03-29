@@ -94,7 +94,7 @@
 }
 
 .notification-node {
-    height: 134px;
+    height: 154px;
     border-bottom: solid 1px #b3b3b3;
     padding: 20px;
     background-color: $pe-color-white;
@@ -114,12 +114,14 @@
 
         .notification-node--summary {
             float: left;
-            height: 74px;
+            height: 94px;
             overflow: hidden;
             cursor: default;
+            h2 {
+                height: 46px;
+            }
 
             .notification-node--summary-description {
-                height: 20px;
                 overflow: hidden;
             }
         }
