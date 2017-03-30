@@ -19,13 +19,9 @@
 
 .notification-bell--activate {
     display: block;
-    padding: 12px 15px 0px 15px;
+    padding: 25px 15px 2px 15px;
     color: $pe-color-charcoal;
-
-    @media (min-width: 1024px) {
-        padding: 25px 15px 2px 15px;
-    }
-
+    
     .notification-bell--count {
         background-color: $pe-color-white;
         color: $pe-color-charcoal;
@@ -63,7 +59,7 @@
     overflow: auto;
     background-color: $pe-color-moonlight;
     .notification-title--heading1 {
-        margin: 18px 10px;
+        margin: 21px 10px;
     }
     .notification-title--heading2 {
         margin: 20px 10px;
@@ -201,4 +197,10 @@
     width:100%;
     left: -100%;
     visibility: hidden;
+}
+
+@include pe-responsive-breakpoint(to sm) {
+  .notification-bell--activate {
+     padding: 20px 15px 2px 15px;
+  }
 }
