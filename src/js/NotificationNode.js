@@ -14,7 +14,7 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 			<div className="notification-node--details">
 				<div className="notification-node--summary">
 					<h2 className="pe-label--large"> 
-						<a href="#void" onClick={detailsClick}>
+						<a href="javascript:void(0)" onClick={detailsClick}>
 							{title} 
 						</a>
 					</h2>
@@ -25,9 +25,9 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 				</div>
 			</div>		
 			<div className="notification-node--dismiss ">
-				<a href="#void" aria-label="Archive" className={trashIconDisable ? 'notification-component--hide' : 'pe-btn'} onClick={archivedNotification} >
+				<button aria-label="Archive" className={trashIconDisable ? 'notification-component--hide' : 'pe-btn'} onClick={archivedNotification} >
 					<NotificationIcon iconName="archive-18" iconAltText="" />
-				</a>
+				</button>
 			</div>
 		</div>
 	);

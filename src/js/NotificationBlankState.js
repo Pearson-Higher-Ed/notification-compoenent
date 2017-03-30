@@ -63,7 +63,7 @@ export default class NotificationBlankState extends React.Component {
 					<h2 className="notification-blank-page-heading center-align pe-title--large"><FormattedMessage {...messages.notificationBlankStateHeading}/></h2>
 					<h3 className="notification-blank-page-description center-align pe-title--small"><FormattedMessage {...messages.notificationsBlankStateDescription}/>
 					<br/>
-					<button className="pe-link--btn" onClick={this.archiveList.bind(this)}><FormattedMessage {...messages.notificationsBlankStateLink}/></button>
+					<a href="javascript:void(0);" onClick={this.archiveList.bind(this)}><FormattedMessage {...messages.notificationsBlankStateLink}/></a>
 					</h3>
 				</div>
 			);

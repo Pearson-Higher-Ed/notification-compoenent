@@ -6,14 +6,7 @@ const iconStyles = {
 };
 
 class NotificationIcon extends React.Component {
-	static propTypes = {
-		iconName: React.PropTypes.string.isRequired,
-		iconAltText: React.PropTypes.oneOfType([
-			React.PropTypes.string.isRequired,
-			React.PropTypes.object.isRequired
-		]),
-		className: React.PropTypes.string
-	};
+	
 	render() {
 		return (
 			<span className={this.props.className}>
