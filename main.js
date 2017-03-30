@@ -29,9 +29,6 @@ class NotificationComponent {
 		this.config = config;
 		this.notApi = new NotificationApi(config);
 
-		// grab all files in icons folder and import them inline (appends to end of body)
-		const svgFiles = require.context('inline!pearson-elements/assets/icons', false, /^.*\.svg$/);
-		svgFiles.keys().forEach(svgFiles);
 		// Connect up the drawer component here.
 		const dom = document.createElement('div');
 		dom.setAttribute('id', 'notification-component');
@@ -154,9 +151,7 @@ class NotificationComponent {
 		this.bellClass = React.createClass({
 			render: function() {
 				return (
-					<div>
-						<NotificationBell newNotifications={_this.newNotifications} unreadCount={_this.unreadCount} toggleList={_this.toggleList.bind(_this)}/>
-					</div>
+					<NotificationBell newNotifications={_this.newNotifications} unreadCount={_this.unreadCount} toggleList={_this.toggleList.bind(_this)}/>
 				);
 			}
 		});

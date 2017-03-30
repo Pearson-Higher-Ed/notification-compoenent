@@ -34,7 +34,10 @@ const AppHeaderConfig = {
 									 // Ex:notificationListDomHeight:618px for appHeaderClientHeight:44px  and notificationListDomHeight:610px for appHeaderClientHeight:54px  
 };
 function init() {
-
+	
+	// grab all files in icons folder and import them inline (appends to end of body)
+	const svgFiles = require.context('inline!pearson-elements/assets/icons', false, /^.*\.svg$/);
+	svgFiles.keys().forEach(svgFiles);
 	// Demo eventing API
 	new AppHeader(document.body); // instantiate app header only if it is not already instantiated
 	const appHeaderNotificationDiv = document.getElementsByClassName('o-app-header__nav-item-notification');
