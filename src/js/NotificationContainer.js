@@ -127,7 +127,7 @@ class NotificationContainer extends React.Component {
 							appendArchiveList={this.appendArchiveList} isArchiveTray={false} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
 							<div className="notification-title bottom-archive" style={positionTop}>
 								<div className="notification-title--heading1 center-align pe-label--large pe-label--bold">
-									<button onClick={this.goToArchiveList} className={this.state.isArchive ? 'notification-component--hide' : 'decoration-none pe-link--btn'}> <FormattedMessage {...messages.goToNotificationArchive} /></button>
+									<a href="javascript:void(0);" onClick={this.goToArchiveList} className={this.state.isArchive ? 'notification-component--hide' : 'decoration-none'}> <FormattedMessage {...messages.goToNotificationArchive} /></a>
 								</div>
 							</div>
 						</div>

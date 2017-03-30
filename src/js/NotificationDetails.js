@@ -33,7 +33,7 @@ export default class NotificationDetails extends React.Component {
 			tourButton = <button onClick={this.launchCoachmark.bind(this)} className="notification-details--button pe-btn">{tourButtonText}</button>;
 		}
 
-		let archiveCss = 'decoration-none pe-link--btn';
+		let archiveCss = 'decoration-none';
 		if(this.props.notification.status === 'ARCHIVED') {
 			archiveCss += ' notification-component--hide';
 		}
@@ -56,10 +56,10 @@ export default class NotificationDetails extends React.Component {
 				</div>
 				{tourButton}
 				<div className="center-align">
-					<button onClick={this.archiveItem.bind(this)} className={archiveCss}>
+					<a href="javascript:void(0);" onClick={this.archiveItem.bind(this)} className={archiveCss}>
 						<NotificationIcon iconName="archive-18" iconAltText="" /> 
 						<FormattedMessage {...messages.archiveNotificationLink} /> 
-					</button>
+					</a>
 				</div>
 			</div>
 		);
