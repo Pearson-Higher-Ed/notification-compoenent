@@ -19,7 +19,6 @@
 
 .notification-bell--activate {
     display: block;
-    padding: 25px 15px 2px 15px;
     color: $pe-color-charcoal;
     
     .notification-bell--count {
@@ -64,6 +63,10 @@
     .notification-title--heading2 {
         margin: 20px 10px;
         display: block;
+        div {
+            display: inline-block;
+            margin-top: 3px;
+        }
     }
 	.close-dropdown {
 		float:right;
@@ -203,8 +206,3 @@
     visibility: hidden;
 }
 
-@include pe-responsive-breakpoint(to sm) {
-  .notification-bell--activate {
-     padding: 20px 15px 2px 15px;
-  }
-}

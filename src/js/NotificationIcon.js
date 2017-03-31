@@ -1,6 +1,6 @@
 import React from 'react';
 const iconStyles = {
-	marginTop:'3px',
+	marginTop: '3px',
 	maxHeight: '25px',
 	maxWidth: '25px'
 };

@@ -46,14 +46,14 @@ const messages = defineMessages({
 			return (
 				<button ref="heading" className="notification-title--heading2 pe-icon--btn pe-label--large" onClick={this.props.back}>
 					<NotificationIcon iconName="chevron-back-18" iconAltText={this.props.isArchive ? <FormattedMessage {...messages.backToArchiveHeading} /> : <FormattedMessage {...messages.backToNotificationHeading} />} />
-					{this.props.isArchive ? <FormattedMessage {...messages.backToArchiveHeading} /> : <FormattedMessage {...messages.backToNotificationHeading} />}
+					<div>{this.props.isArchive ? <FormattedMessage {...messages.backToArchiveHeading} /> : <FormattedMessage {...messages.backToNotificationHeading} />}</div>
 				</button>
 			);
 		}
 		return (
 			<button ref="heading" className="notification-title--heading2 pe-icon--btn pe-label--large" onClick={this.props.archiveBack}>
 				<NotificationIcon iconName="chevron-back-18" iconAltText={<FormattedMessage {...messages.backToNotificationHeading} />} />
-				<FormattedMessage {...messages.backToNotificationHeading} />
+				<div><FormattedMessage {...messages.backToNotificationHeading} /></div>
 			</button>
 			);
 	}
