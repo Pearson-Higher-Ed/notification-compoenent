@@ -24,11 +24,9 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 					<div className="notification-node--meta-course pe-label--small">{time}{source ? ' \u00b7 ' : ''}{source}</div>
 				</div>
 			</div>		
-			<div className="notification-node--dismiss ">
-				<button aria-label="Archive" className={trashIconDisable ? 'notification-component--hide' : 'pe-btn'} onClick={archivedNotification} >
-					<NotificationIcon iconName="archive-18" iconAltText="" />
-				</button>
-			</div>
+			<button aria-label="Archive" className={trashIconDisable ? 'notification-component--hide' : 'pe-btn notification-node--dismiss'} onClick={archivedNotification} >
+				<NotificationIcon iconName="archive-18" iconAltText="" />
+			</button>
 		</div>
 	);
 };

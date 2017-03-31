@@ -58,7 +58,7 @@ export default class NotificationDetails extends React.Component {
 				<div className="center-align">
 					<a href="javascript:void(0);" onClick={this.archiveItem.bind(this)} className={archiveCss}>
 						<NotificationIcon iconName="archive-18" iconAltText="" /> 
-						<FormattedMessage {...messages.archiveNotificationLink} /> 
+						<div className="notification-details-archive--button"><FormattedMessage {...messages.archiveNotificationLink} /></div> 
 					</a>
 				</div>
 			</div>
