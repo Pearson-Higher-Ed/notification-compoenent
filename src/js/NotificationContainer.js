@@ -104,10 +104,10 @@ class NotificationContainer extends React.Component {
 	render() {
 		// this is super dumb because product wants things to "snap" to the bottom
 		const contentHeight = {
-			height: window.innerHeight - 175
+			height: window.innerHeight - 185
 		};
 		const positionTop = {
-			top: window.innerHeight - 175
+			top: window.innerHeight - 185
 		};
 		return (
 			<div aria-label="Notifications Menu" role="menuitem" className="notification-container">
