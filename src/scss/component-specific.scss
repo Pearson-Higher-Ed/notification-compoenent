@@ -23,7 +23,7 @@
 }
 .notification-bell--activate {
     display: block;
-    color: $pe-color-charcoal;
+    height: 100%;
     
     .notification-bell--count {
         background-color: $pe-color-white;
@@ -53,7 +53,7 @@
     position:relative;
 
     .content-list {
-        overflow-y: auto;
+        overflow-y: hidden;
     }
 }
 
