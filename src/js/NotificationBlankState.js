@@ -51,28 +51,28 @@ export default class NotificationBlankState extends React.Component {
 		
 		if (this.props.isError) {
 			return (
-			<div className="notification-blank-page" style={contentHeight}>
-				<h2 className="notification-blank-page-heading"><FormattedMessage {...messages.errorMessageHeading} /></h2>
-				<h3 className="notification-blank-page-description"><FormattedMessage {...messages.errorMessageDescription} /></h3>
+			<div style={contentHeight}>
+				<h2 className="notification-blank-page-heading center-align pe-title--large"><FormattedMessage {...messages.errorMessageHeading} /></h2>
+				<h3 className="notification-blank-page-description center-align pe-title--small"><FormattedMessage {...messages.errorMessageDescription} /></h3>
 			</div>
 			);
 		}
 		if (!this.props.isArchivedTray) {
 			return (
-				<div className="notification-blank-page" style={contentHeight}>
-					<h2 className="notification-blank-page-heading"><FormattedMessage {...messages.notificationBlankStateHeading}/></h2>
-					<h3 className="notification-blank-page-description"><FormattedMessage {...messages.notificationsBlankStateDescription}/>
+				<div style={contentHeight}>
+					<h2 className="notification-blank-page-heading center-align pe-title--large"><FormattedMessage {...messages.notificationBlankStateHeading}/></h2>
+					<h3 className="notification-blank-page-description center-align pe-title--small"><FormattedMessage {...messages.notificationsBlankStateDescription}/>
 					<br/>
-					<a href="javascript:void(0);" onClick={this.archiveList.bind(this)}><FormattedMessage {...messages.notificationsBlankStateLink}/></a>.
+					<a href="javascript:void(0);" onClick={this.archiveList.bind(this)}><FormattedMessage {...messages.notificationsBlankStateLink}/></a>
 					</h3>
 				</div>
 			);
 		 }
 	   
 		return (
-			<div className="notification-blank-page" style={contentHeight}>
-				<h2 className="notification-blank-page-heading"><FormattedMessage {...messages.archiveBlankStateHeading}/></h2>
-				<h3 className="notification-blank-page-description"><FormattedHTMLMessage {...messages.archiveBlankStateDescription}/></h3>
+			<div style={contentHeight}>
+				<h2 className="notification-blank-page-heading center-align pe-title--large"><FormattedMessage {...messages.archiveBlankStateHeading}/></h2>
+				<h3 className="notification-blank-page-description center-align pe-title--small"><FormattedHTMLMessage {...messages.archiveBlankStateDescription}/></h3>
 			</div>
 		);  
 	}

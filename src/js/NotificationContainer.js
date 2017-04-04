@@ -4,6 +4,7 @@ import NotificationDetails from './NotificationDetails';
 import NotificationHeading from './NotificationHeading';
 import NotificationApi from './NotificationApi';
 import { defineMessages, FormattedMessage, injectIntl } from 'react-intl';
+import NotificationIcon from './NotificationIcon';
 const messages = defineMessages({
 	goToNotificationArchive: {
 		id: 'notification.footer',
@@ -103,37 +104,31 @@ class NotificationContainer extends React.Component {
 	render() {
 		// this is super dumb because product wants things to "snap" to the bottom
 		const contentHeight = {
-			height: window.innerHeight - 175
+			height: window.innerHeight - 185
 		};
 		const positionTop = {
-			top: window.innerHeight - 175
+			top: window.innerHeight - 185
 		};
 		return (
 			<div aria-label="Notifications Menu" role="menuitem" className="notification-container">
-				<div className="notification-archive--back pe-label pe-label--large">
-					<div tabIndex={-1} ref="closeButton">
-						<button aria-label="Close Notification" onClick={this.resetListOnCloseDrawer}>
-							<i className="pe-icon--times close-dropdown pointer"></i>
-						</button>
-					</div>
+				<div className="notifications--close">
+					<button ref="closeButton" className="pe-icon--btn" aria-label="Close Notification" onClick={this.resetListOnCloseDrawer}>
+						<NotificationIcon iconName="remove-sm-18" iconAltText="" />
+					</button>
 				</div>
 				<div className="notification-title">
-					<div tabIndex={-1} ref="heading">
-						<NotificationHeading back={this.showList} isList={!this.state.isArchive && !this.state.displayDetails}
-						isDetails={this.state.displayDetails} isArchive={this.state.isArchive} archiveBack={this.showNonArchivedList} />
-					</div>
+					<NotificationHeading back={this.showList} isList={!this.state.isArchive && !this.state.displayDetails}
+					isDetails={this.state.displayDetails} isArchive={this.state.isArchive} archiveBack={this.showNonArchivedList} />
 				</div>
-				<div className={this.state.displayDetails || this.state.isArchive ? 'notification-content-full': 'notification-content'}>
+				<div className="notification-content">
 					<div className={!this.state.isArchive && !this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-left notification-component--hide'}>
 						<div className="content-list" style={contentHeight}>
-							<div>
-								<NotificationList list={this.props.list} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
-								 appendArchiveList={this.appendArchiveList} isArchiveTray={false} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
-							</div>
-							<div className="notification-title bottom-archive pe-label pe-label--large" style={positionTop}>
-								<h1 className="notification-title--heading">
-									<a href="javascript:void(0);" onClick={this.goToArchiveList} className={this.state.isArchive ? 'notification-component--hide' : ''}> <FormattedMessage {...messages.goToNotificationArchive} /></a>
-								</h1>
+							<NotificationList list={this.props.list} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
+							appendArchiveList={this.appendArchiveList} isArchiveTray={false} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
+							<div className="notification-title bottom-archive" style={positionTop}>
+								<div className="notification-title--heading1 center-align pe-label--large pe-label--bold">
+									<a href="javascript:void(0);" onClick={this.goToArchiveList} className={this.state.isArchive ? 'notification-component--hide' : 'decoration-none'}> <FormattedMessage {...messages.goToNotificationArchive} /></a>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -143,16 +138,14 @@ class NotificationContainer extends React.Component {
 					</div>
 					<div className={this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-right notification-component--hide'}>
 						<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} appendArchiveList={this.appendArchiveList}
-							coachmarkListener={this.props.coachmarkListener} hyphenateWords={this.hyphenateWords}/>
+						coachmarkListener={this.props.coachmarkListener} hyphenateWords={this.hyphenateWords}/>
 					</div>
 				</div>
 				{/* Having to create the close icon twice to get the tab order right during the notification detail view ,X icon should be the last in the order*/}
-				<div className="notification-archive--back pe-label pe-label--large">
-					<div>
-						<button aria-label="Close Notification" onClick={this.resetListOnCloseDrawer}>
-							<i className="pe-icon--times close-dropdown pointer"></i>
-						</button>
-					</div>
+				<div className="notifications--close">
+					<button  className="pe-icon--btn" aria-label="Close Notification" onClick={this.resetListOnCloseDrawer}>
+						<NotificationIcon iconName="remove-sm-18" iconAltText="" />
+					</button>
 				</div>
 			</div>
 		);

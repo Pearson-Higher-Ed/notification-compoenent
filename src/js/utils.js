@@ -11,12 +11,13 @@ module.exports = {
 
 	removeScriptTags : function (s) {	
 		const doc = new DOMParser().parseFromString(s, 'text/html');
-		const scriptTags = doc.body.getElementsByTagName('script')
+		if (doc && doc.body) {
+			const scriptTags = doc.body.getElementsByTagName('script')
 
-		doc && scriptTags && [].slice.call(scriptTags).forEach(item => {
-			item.remove();
-		});
-		return doc.body;
+			scriptTags && [].slice.call(scriptTags).forEach(item => {
+				item.remove();
+			});
+			return doc.body;
+		}
 	}
-
 }
