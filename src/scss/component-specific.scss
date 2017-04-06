@@ -20,6 +20,7 @@
 .archive-list {
     padding-bottom: 68px;
 }
+
 .notification-bell--activate {
     display: block;
     height: 100%;
@@ -87,8 +88,12 @@
 
 .notifications--close {
     position: absolute;
-    top: 15px;
+    top: 20px;
     right: 20px;
+    button > span > svg {
+        width: 14px;
+        height: 14px;
+    }
 }
 
 .notification-blank-page-heading {     
