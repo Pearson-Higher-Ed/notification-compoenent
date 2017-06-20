@@ -34,8 +34,8 @@ const messages = defineMessages({
 	render() {
 		if (this.props.isList) {
 			return (
-				<div className="notification-title--heading1 center-align">
-					<h2 className="pe-label--large pe-label--bold">
+				<div className="notification-title--heading1">
+					<h2 className="pe-label--large">
 						<FormattedMessage {...messages.notificationHeading} />
 					</h2>
 				</div>

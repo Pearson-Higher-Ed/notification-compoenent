@@ -33,21 +33,13 @@ export default class NotificationDetails extends React.Component {
 			tourButton = <button onClick={this.launchCoachmark.bind(this)} className="notification-details--button pe-btn">{tourButtonText}</button>;
 		}
 
-		let archiveCss = 'decoration-none';
-		if(this.props.notification.status === 'ARCHIVED') {
-			archiveCss += ' notification-component--hide';
-		}
+		//let archiveCss = '';
+		//if(this.props.notification.status === 'ARCHIVED') {
+		//	const archiveCss = ' notification-component--hide';
+		//}
 
 		return (
 			<div className="notification-details">
-				<div className="pe-label--small" >
-					<div>
-						{this.props.notification.message.source}
-					</div>
-					<div>
-						{DateParser.getFormatDateString(new Date(this.props.notification.createdAt))}
-					</div>
-				</div>
 				<div className="notification-details--title">
 					<h2 className="pe-label--bold pe-label--large">{this.props.hyphenateWords(this.props.notification.message.title)}</h2>
 				</div>
@@ -55,12 +47,15 @@ export default class NotificationDetails extends React.Component {
 					<NotificationSummary className={'notification-details--bodytext'} summary={this.props.notification.message}/>
 				</div>
 				{tourButton}
-				<div className="center-align">
-					<a href="javascript:void(0);" onClick={this.archiveItem.bind(this)} className={archiveCss}>
-						<NotificationIcon iconName="archive-18" iconAltText="" /> 
-						<div className="notification-details-archive--button"><FormattedMessage {...messages.archiveNotificationLink} /></div> 
-					</a>
+				<div className="pe-label--small" >
+					{DateParser.getFormatDateString(new Date(this.props.notification.createdAt))}{this.props.notification.message.source ? ' \u00b7 ' : ''}{this.props.notification.message.source}
+					<span className="notification-details--body--archive">
+						<a href="javascript:void(0);" onClick={this.archiveItem.bind(this)} className={this.props.notification.status === 'ARCHIVED'? ' notification-component--hide': ''}>
+							Archive
+						</a>
+					</span>
 				</div>
+				
 			</div>
 		);
 	}

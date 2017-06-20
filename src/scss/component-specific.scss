@@ -60,7 +60,6 @@
 .notification-title {
     border-bottom: 1px solid $pe-color-concrete;
     overflow: auto;
-    background-color: $pe-color-moonlight;
     .notification-title--heading1 {
         margin: 21px 10px;
     }
@@ -107,38 +106,55 @@
 .pointer:hover{
 	cursor: pointer;
 }
-
+.new-notification-icon{
+     color: $pe-color-hot-pink;
+    padding: 0 6px 6px;
+    position: absolute;
+    top:23px;
+}
+.new-notification-icon-unread{
+    border: 2px solid $pe-color-hot-pink;
+    border-radius: 50%;
+    outline: none;
+}
 .notification-node {
-    height: 154px;
-    border-bottom: solid 1px #b3b3b3;
-    padding: 20px;
-    background-color: $pe-color-white;
+    height: 112px;
+    //border-bottom: solid 1px #b3b3b3;
+   // padding: 20px;
+   // background-color: $pe-color-white;
     position: relative;
 
     .notification-node--details {
 	    cursor: pointer;
         float: left;
         width: 231px;
-
+        
         .notification-node--summary {
             float: left;
-            height: 94px;
+            height: 80px;
             overflow: hidden;
             cursor: default;
-            padding: 5px 0px 0 3px;
-            h2 {
-                height: 46px;
+            padding: 25px 0px 0 3px;
+            div {
+                //height: 46px;
+                padding-left: 24px;
+                a {
+                    text-decoration: none;
+                    color: $pe-color-charcoal;
+                }
             }
 
             .notification-node--summary-description {
                 overflow: hidden;
+                color: $pe-color-medium-gray;
+                padding-left: 24px;
             }
         }
     }
 
     .notification-node--dismiss {
         position: absolute;
-        top: 60px;
+        top: 80px;
         z-index: 1;
         right: 20px
     }
@@ -150,19 +166,22 @@
             float:left;
             height: 32px;
             overflow: hidden;
-            padding: 10px 10px 0 10px;
+            padding: 0 30px;
         }
 
     }
 }
 
 .notification-node--isread {
-    background-color: $pe-color-white-gray;
+    //background-color: $pe-color-white-gray;
 }
 
 .notification-details {
     padding: 20px;
     border-bottom: 1px solid $pe-color-concrete;
+    .notification-details--body--archive{
+            float: right;
+        }
 
     .notification-details--title {
         margin: 20px 0;
@@ -174,6 +193,9 @@
     }
     .notification-details--bodytext {
         word-break: break-word;
+        p {
+        color: $pe-color-medium-gray;
+    }
     }
 
     .notification-details--button {
