@@ -19,6 +19,9 @@
 
 .archive-list {
     padding-bottom: 68px;
+    .archive-list--heading {
+        padding: 25px 0 0 25px;
+    }
 }
 
 .notification-bell--activate {
@@ -62,6 +65,9 @@
     overflow: auto;
     .notification-title--heading1 {
         margin: 21px 10px;
+        button {
+            width: 100%;
+        }
     }
     .notification-title--heading2 {
         margin: 20px 10px;
@@ -184,7 +190,7 @@
         }
 
     .notification-details--title {
-        margin: 20px 0;
+        //margin: 20px 0;
     }
 
     .notification-details--body {
