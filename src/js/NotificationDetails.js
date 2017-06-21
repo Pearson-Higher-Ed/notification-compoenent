@@ -6,7 +6,7 @@ import NotificationIcon from './NotificationIcon';
 const messages = defineMessages({
 	archiveNotificationLink: {
 		id: 'notificationDetails.link',
-		defaultMessage: 'Archive this Notification'
+		defaultMessage: 'Archive'
 	}
 });
 
@@ -46,7 +46,7 @@ export default class NotificationDetails extends React.Component {
 					{DateParser.getFormatDateString(new Date(this.props.notification.createdAt))}{this.props.notification.message.source ? ' \u00b7 ' : ''}{this.props.notification.message.source}
 					<span className="notification-details--body--archive">
 						<a href="javascript:void(0);" onClick={this.archiveItem.bind(this)} className={this.props.notification.status === 'ARCHIVED'? ' notification-component--hide': ''}>
-							Archive
+							<FormattedMessage {...messages.archiveNotificationLink} />
 						</a>
 					</span>
 				</div>

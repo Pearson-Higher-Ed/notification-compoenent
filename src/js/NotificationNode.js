@@ -4,9 +4,9 @@ import NotificationIcon from './NotificationIcon';
 const NotificationNode = ({detailsClick, title, summary, source, archivedNotification, time, isRead, trashIconDisable}) => {
 
 	
-	let background = 'new-notification-icon';
+	let notificationDotIcon = 'new-notification-icon';
 	if(!isRead) {
-		background += ' new-notification-icon-unread';
+		notificationDotIcon += ' new-notification-icon-unread';
 	}
 
 	return (
@@ -27,8 +27,8 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 			<a href="javascript:void(0)" aria-label="Archive" className={trashIconDisable ? 'notification-component--hide' : 'notification-node--dismiss pe-label--small'} onClick={archivedNotification} >
 				Archive
 			</a>
-			<div className={background}>
-			 <NotificationIcon iconName="new-notification-9" iconAltText="" />
+			<div className={notificationDotIcon}>
+			 	<NotificationIcon iconName="new-notification-9" iconAltText="" />
 			</div>
 		</div>
 	);

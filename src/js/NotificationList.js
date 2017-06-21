@@ -1,8 +1,16 @@
 import React from 'react';
 import NotificationNode from './NotificationNode';
+import { defineMessages, injectIntl, intlShape, FormattedMessage, FormattedDate } from 'react-intl';
 import DateParser from './DateParser';
 import NotificationBlankState from './NotificationBlankState';
 import NotificationApi from './NotificationApi';
+
+const messages = defineMessages({
+	notificationList: {
+		id: 'notificationList.link',
+		defaultMessage: 'Archive'
+	}
+});
 
 export default class NotificationList extends React.Component {
 
@@ -54,7 +62,9 @@ export default class NotificationList extends React.Component {
 		if(this.props.isArchiveTray) {
 			return (
 				<div className="archive-list">
-					<div className="archive-list--heading pe-title"> Archive </div>
+					<div className="archive-list--heading pe-title"> 
+						<FormattedMessage {...messages.notificationList} />
+					</div>
 					{notificationNodeObjects}
 				</div>
 			)

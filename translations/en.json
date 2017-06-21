@@ -9,6 +9,7 @@
 	"notification.heading":"Notifications",
 	"backToNotification.heading":"Back",
 	"notification.footer":"View Archive",
+	"notificationDetails.link":"Archive",
 	"dateParser.now":"Just Now",
 	"dateParser.minutes":"{minutesCount} minutes ago"
 }
