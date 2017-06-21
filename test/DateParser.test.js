@@ -103,6 +103,6 @@ describe('DateParser', () => {
 			<IntlProvider {...intlData}>
 				{DateParser.getFormatDateString(oneHourAgo)}
 			</IntlProvider>);
-		expect(ReactDOM.findDOMNode(hourAgo).textContent).toMatch(/[a-zA-Z]{3},\s[a-zA-z]{3}\s\d{1,2},\s\d{4}/);
+		expect(ReactDOM.findDOMNode(hourAgo).textContent).toMatch(/\d{1,2}\/\d{1,2}\/\d{2}/);
     });
 });
