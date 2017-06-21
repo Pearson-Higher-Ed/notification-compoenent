@@ -125,9 +125,6 @@
 }
 .notification-node {
     height: 112px;
-    //border-bottom: solid 1px #b3b3b3;
-   // padding: 20px;
-   // background-color: $pe-color-white;
     position: relative;
 
     .notification-node--details {
@@ -142,7 +139,6 @@
             cursor: default;
             padding: 25px 0px 0 3px;
             div {
-                //height: 46px;
                 padding-left: 24px;
                 a {
                     text-decoration: none;
@@ -178,19 +174,11 @@
     }
 }
 
-.notification-node--isread {
-    //background-color: $pe-color-white-gray;
-}
-
 .notification-details {
     padding: 20px;
     border-bottom: 1px solid $pe-color-concrete;
-    .notification-details--body--archive{
-            float: right;
-        }
-
-    .notification-details--title {
-        //margin: 20px 0;
+    .notification-details--body--archive {
+        float: right;
     }
 
     .notification-details--body {
@@ -201,7 +189,7 @@
         word-break: break-word;
         p {
         color: $pe-color-medium-gray;
-    }
+        }
     }
 
     .notification-details--button {

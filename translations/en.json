@@ -8,9 +8,7 @@
 	"archiveBlankState.description": "This is where you will see your<br/>archived notifications.",
 	"notification.heading":"Notifications",
 	"backToNotification.heading":"Back",
-	"backToArchive.heading":"Back to Notifications Archive",
 	"notification.footer":"View Archive",
-	"notificationDetails.link":"Archive this Notification",
 	"dateParser.now":"Just Now",
 	"dateParser.minutes":"{minutesCount} minutes ago"
 }

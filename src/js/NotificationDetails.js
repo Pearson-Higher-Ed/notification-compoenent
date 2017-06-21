@@ -33,11 +33,6 @@ export default class NotificationDetails extends React.Component {
 			tourButton = <button onClick={this.launchCoachmark.bind(this)} className="notification-details--button pe-btn">{tourButtonText}</button>;
 		}
 
-		//let archiveCss = '';
-		//if(this.props.notification.status === 'ARCHIVED') {
-		//	const archiveCss = ' notification-component--hide';
-		//}
-
 		return (
 			<div className="notification-details">
 				<div className="notification-details--title">
