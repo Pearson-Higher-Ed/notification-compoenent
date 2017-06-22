@@ -35,7 +35,7 @@ const messages = defineMessages({
 		if (this.props.isList) {
 			return (
 				<div className="notification-title--heading1">
-					<h2 className="pe-label--large">
+					<h2 className="pe-title">
 						<FormattedMessage {...messages.notificationHeading} />
 					</h2>
 				</div>
