@@ -65,7 +65,7 @@
     overflow: auto;
     .notification-title--heading1 {
         margin: 21px 10px;
-        button {
+        .view-archive-button {
             width: 100%;
         }
     }
@@ -138,7 +138,7 @@
             overflow: hidden;
             cursor: default;
             padding: 25px 0px 0 3px;
-            div {
+            .notification-node--summary-title {
                 padding-left: 25px;
                 a {
                     text-decoration: none;
@@ -188,7 +188,7 @@
     .notification-details--bodytext {
         word-break: break-word;
         p {
-        color: $pe-color-medium-gray;
+            color: $pe-color-medium-gray;
         }
     }
 

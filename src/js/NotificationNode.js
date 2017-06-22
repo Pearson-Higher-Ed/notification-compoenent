@@ -1,7 +1,7 @@
 import React from 'react';
 import NotificationIcon from './NotificationIcon';
 
-const NotificationNode = ({detailsClick, title, summary, source, archivedNotification, time, isRead, trashIconDisable}) => {
+const NotificationNode = ({detailsClick, title, summary, source, archivedNotification, time, isRead, trashIconDisable, archiveLinkText}) => {
 
 	
 	let notificationDotIcon = 'new-notification-icon';
@@ -13,7 +13,7 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 		<div className="notification-node">
 			<div className="notification-node--details">
 				<div className="notification-node--summary">
-					<div className="pe-bold"> 
+					<div className="pe-bold notification-node--summary-title"> 
 						<a href="javascript:void(0)" onClick={detailsClick}>
 							{title}
 						</a>
@@ -25,7 +25,7 @@ const NotificationNode = ({detailsClick, title, summary, source, archivedNotific
 				</div>
 			</div>		
 			<a href="javascript:void(0)" aria-label="Archive" className={trashIconDisable ? 'notification-component--hide' : 'notification-node--dismiss pe-label--small'} onClick={archivedNotification} >
-				Archive
+				{archiveLinkText}
 			</a>
 			<div className={notificationDotIcon}>
 			 	<NotificationIcon iconName="new-notification-9" iconAltText="" />

@@ -29,6 +29,8 @@ export default class NotificationList extends React.Component {
 	goToArchiveList() {
 		this.props.goToArchiveList();
 	}
+
+
 	/**
 	 * Render
 	 **/
@@ -51,7 +53,9 @@ export default class NotificationList extends React.Component {
 					summary={(notification.message.body && notification.message.body.length > maxBodyLength) ? notification.message.body.substring(0, maxBodyLength)  + '\u2026' : notification.message.body}
 					archivedNotification={this.onArchived.bind(this, notification)} trashIconDisable={this.props.isArchiveTray}  time={time}
 					isRead={notification.isRead}
-					source={(notification.message.source && notification.message.source.length > maxSourceLength) ? notification.message.source.substring(0, maxSourceLength) + '\u2026' : notification.message.source}/>
+					source={(notification.message.source && notification.message.source.length > maxSourceLength) ? notification.message.source.substring(0, maxSourceLength) + '\u2026' : notification.message.source}
+					archiveLinkText={<FormattedMessage {...messages.notificationList} />}/>
+
 				);
 			});
 		}
