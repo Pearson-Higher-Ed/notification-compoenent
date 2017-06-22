@@ -64,7 +64,7 @@
     border-bottom: 1px solid $pe-color-concrete;
     overflow: auto;
     .notification-title--heading1 {
-        margin: 21px 10px;
+        margin: 21px 20px;
         .view-archive-button {
             width: 100%;
         }
@@ -135,7 +135,7 @@
             cursor: default;
             padding: 25px 0px 0 3px;
             .notification-node--summary-title {
-                padding-left: 25px;
+                padding-left: 20px;
                 a {
                     text-decoration: none;
                     color: $pe-color-charcoal;
@@ -145,7 +145,7 @@
             .notification-node--summary-description {
                 overflow: hidden;
                 color: $pe-color-medium-gray;
-                padding-left: 25px;
+                padding-left: 20px;
             }
         }
     }
@@ -164,7 +164,7 @@
             float:left;
             height: 32px;
             overflow: hidden;
-            padding: 0 30px;
+            padding: 0 25px;
         }
 
     }
