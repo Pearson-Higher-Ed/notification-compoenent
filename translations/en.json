@@ -6,10 +6,11 @@
 	"notificationBlankState.link":"Notification Archive",
 	"archiveBlankState.heading": "Nothing here!",
 	"archiveBlankState.description": "This is where you will see your<br/>archived notifications.",
-	"notification.heading":"Notifications",
-	"backToNotification.heading":"Back",
-	"notification.footer":"View Archive",
-	"notificationDetails.link":"Archive",
+	"notification.heading": "Notifications",
+	"backToNotification.heading": "Back",
+	"notification.footer": "View Archive",
+	"notificationDetails.link": "Archive",
+	"notificationList.link": "Archive",
 	"dateParser.now":"Just Now",
 	"dateParser.minutes":"{minutesCount} minutes ago"
 }
