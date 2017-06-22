@@ -112,13 +112,13 @@
 .pointer:hover{
 	cursor: pointer;
 }
-.new-notification-icon{
-     color: $pe-color-hot-pink;
+.new-notification-icon {
+    color: $pe-color-hot-pink;
     padding: 0 7px 7px;
     position: absolute;
-    top:23px;
+    top: 23px;
 }
-.new-notification-icon-unread{
+.new-notification-icon-unread {
     border: 2px solid $pe-color-hot-pink;
     border-radius: 50%;
     outline: none;

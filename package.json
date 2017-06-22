@@ -1,6 +1,6 @@
 {
   "name": "@pearson-components/notifications",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Stand-alone component for getting notifications. Designed to be within app-header.",
   "main": "./build/dist.notification.js",
   "scripts": {
