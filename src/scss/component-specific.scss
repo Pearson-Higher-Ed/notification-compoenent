@@ -116,11 +116,11 @@
     color: $pe-color-hot-pink;
     padding: 0 7px 7px;
     position: absolute;
-    top: 23px;
+    top: 25px;
 }
 
 .notification-node {
-    height: 112px;
+    height: 114px;
     position: relative;
 
     .notification-node--details {
@@ -130,10 +130,10 @@
         
         .notification-node--summary {
             float: left;
-            height: 80px;
+            height: 82px;
             overflow: hidden;
             cursor: default;
-            padding: 25px 0px 0 3px;
+            padding-top: 25px;
             .notification-node--summary-title {
                 padding-left: 20px;
                 a {
@@ -171,8 +171,8 @@
 }
 
 .notification-details {
-    padding: 20px;
-    border-bottom: 1px solid $pe-color-concrete;
+    padding-top: 25px;
+
     .notification-details--body--archive {
         float: right;
     }
