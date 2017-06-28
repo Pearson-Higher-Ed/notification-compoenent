@@ -5,7 +5,7 @@ const newNotification = (isRead)=>{
 	if(!isRead) {
 		return (
 			<div className="new-notification-icon">
-			 	<NotificationIcon iconName="new-notification-9" iconAltText="" />
+			 	<NotificationIcon iconName="new-notification-9" iconAltText="new notification" />
 			 </div>
 		)
 	}
