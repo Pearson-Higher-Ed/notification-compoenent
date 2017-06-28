@@ -19,6 +19,9 @@
 
 .archive-list {
     padding-bottom: 68px;
+    .archive-list--heading {
+        padding: 25px 0 0 25px;
+    }
 }
 
 .notification-bell--activate {
@@ -60,9 +63,11 @@
 .notification-title {
     border-bottom: 1px solid $pe-color-concrete;
     overflow: auto;
-    background-color: $pe-color-moonlight;
     .notification-title--heading1 {
-        margin: 21px 10px;
+        margin: 21px 20px;
+        .view-archive-button {
+            width: 100%;
+        }
     }
     .notification-title--heading2 {
         margin: 20px 10px;
@@ -107,38 +112,47 @@
 .pointer:hover{
 	cursor: pointer;
 }
+.new-notification-icon {
+    color: $pe-color-hot-pink;
+    padding: 0 7px 7px;
+    position: absolute;
+    top: 25px;
+}
 
 .notification-node {
-    height: 154px;
-    border-bottom: solid 1px #b3b3b3;
-    padding: 20px;
-    background-color: $pe-color-white;
+    height: 114px;
     position: relative;
 
     .notification-node--details {
 	    cursor: pointer;
         float: left;
         width: 231px;
-
+        
         .notification-node--summary {
             float: left;
-            height: 94px;
+            height: 82px;
             overflow: hidden;
             cursor: default;
-            padding: 5px 0px 0 3px;
-            h2 {
-                height: 46px;
+            padding-top: 25px;
+            .notification-node--summary-title {
+                padding-left: 20px;
+                a {
+                    text-decoration: none;
+                    color: $pe-color-charcoal;
+                }
             }
 
             .notification-node--summary-description {
                 overflow: hidden;
+                color: $pe-color-medium-gray;
+                padding-left: 20px;
             }
         }
     }
 
     .notification-node--dismiss {
         position: absolute;
-        top: 60px;
+        top: 90px;
         z-index: 1;
         right: 20px
     }
@@ -150,22 +164,18 @@
             float:left;
             height: 32px;
             overflow: hidden;
-            padding: 10px 10px 0 10px;
+            padding: 10px 25px 0;
         }
 
     }
 }
 
-.notification-node--isread {
-    background-color: $pe-color-white-gray;
-}
-
 .notification-details {
-    padding: 20px;
-    border-bottom: 1px solid $pe-color-concrete;
+    padding-top: 25px;
+    padding-bottom: 20px;
 
-    .notification-details--title {
-        margin: 20px 0;
+    .notification-details--body--archive {
+        float: right;
     }
 
     .notification-details--body {
@@ -174,6 +184,9 @@
     }
     .notification-details--bodytext {
         word-break: break-word;
+        p {
+            color: $pe-color-medium-gray;
+        }
     }
 
     .notification-details--button {

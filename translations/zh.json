@@ -7,10 +7,10 @@
 	"archiveBlankState.heading": "目前无任何推送！",
 	"archiveBlankState.description": "这是推送记录页面",
 	"notification.heading":"通知",
-	"backToNotification.heading":"前往推送记录",
-	"backToArchive.heading":"回到推送档案",
-	"notification.footer":"前往推送记录",
-	"notificationDetails.link":"将推送归档",
+	"backToNotification.heading":"背部",
+	"notification.footer":"查看存檔",
+	"notificationDetails.link":"檔案",
+	"notificationList.link":"檔案",
 	"dateParser.now":"刚才",
 	"dateParser.minutes":"{minutesCount} 分钟以前"
 }

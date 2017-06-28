@@ -19,8 +19,7 @@ module.exports = {
 		if (difference >= 60) {
 			difference = difference / 60;
 			if (difference >= 24) {
-				return <FormattedDate value={new Date(updatedAt)} year="numeric" month="short" day="2-digit" 
-				weekday="short"/>
+				return <FormattedDate value={new Date(updatedAt)} />
 			}
 			
 			return <FormattedRelative value={new Date(updatedAt)} units="hour"/>

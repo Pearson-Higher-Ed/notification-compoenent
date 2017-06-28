@@ -43,6 +43,10 @@ module.exports = {
         loader: 'style!css!sass' // sass -> css -> javascript -> inline style
       },
       {
+        test: /\.(jpg|jpeg|png|ico)$/,
+        loaders: ['file-loader?name=images/[path]/[name].[hash].[ext]&context=src/images']
+      },
+      {
         test: /\.js$/,
         loader: 'babel',
         query: {
