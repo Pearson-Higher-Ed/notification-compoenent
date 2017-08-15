@@ -256,7 +256,6 @@ class NotificationComponent {
 	}
 
 	closeDrawer() {
-		console.log('closing');
 		this.listDrawer.close();
 	}
 }
