@@ -112,7 +112,12 @@ class NotificationContainer extends React.Component {
 		return (
 			<div aria-label="Notifications Menu" role="menuitem" className="notification-container">
 				<div className="notifications--close">
-					<button ref="closeButton" className="pe-icon--btn" aria-label="Close Notification" onClick={this.resetListOnCloseDrawer}>
+					<button
+						ref="closeButton"
+						className="pe-icon--btn"
+						aria-label="Close Notifications"
+						onClick={this.resetListOnCloseDrawer}
+					>
 						<NotificationIcon iconName="remove-lg-18" iconAltText="" />
 					</button>
 				</div>
@@ -143,7 +148,7 @@ class NotificationContainer extends React.Component {
 				</div>
 				{/* Having to create the close icon twice to get the tab order right during the notification detail view ,X icon should be the last in the order*/}
 				<div className="notifications--close">
-					<button  className="pe-icon--btn" aria-label="Close Notification" onClick={this.resetListOnCloseDrawer}>
+					<button  className="pe-icon--btn" aria-label="Close Notifications" onClick={this.resetListOnCloseDrawer}>
 						<NotificationIcon iconName="remove-lg-18" iconAltText="" />
 					</button>
 				</div>

@@ -34,8 +34,6 @@ class NotificationComponent {
 		dom.setAttribute('id', 'notification-component');
 		dom.setAttribute('data-o-component', 'o-drawer');
 		dom.classList.add('o-drawer-right', 'o-drawer-animated');
-		dom.setAttribute('aria-role', 'menu');
-		dom.setAttribute('role', 'menu');
 
 		document.body.appendChild(dom);
 
@@ -258,6 +256,7 @@ class NotificationComponent {
 	}
 
 	closeDrawer() {
+		console.log('closing');
 		this.listDrawer.close();
 	}
 }
