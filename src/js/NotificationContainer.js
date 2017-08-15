@@ -110,7 +110,7 @@ class NotificationContainer extends React.Component {
 			top: window.innerHeight - 255
 		};
 		return (
-			<div aria-label="Notifications Menu" role="menuitem" className="notification-container">
+			<div className="notification-container">
 				<div className="notifications--close">
 					<button
 						ref="closeButton"
