@@ -30,7 +30,7 @@ const messages = defineMessages({
 	},
 	archiveBlankStateDescription: {
 		id: 'archiveBlankState.description',
-		defaultMessage: 'This is where you will see your<br/>archived notifications.'
+		defaultMessage: 'This is where you will see your archived notifications.'
 	}
 });
 
@@ -44,36 +44,36 @@ export default class NotificationBlankState extends React.Component {
 		this.props.goToArchiveList();
 	}
 
-	render() {  
+	render() {
 		const contentHeight = {
 			height: window.innerHeight - 175
 		};
-		
+
 		if (this.props.isError) {
 			return (
 			<div style={contentHeight}>
-				<h2 className="notification-blank-page-heading center-align pe-title--large"><FormattedMessage {...messages.errorMessageHeading} /></h2>
-				<h3 className="notification-blank-page-description center-align pe-title--small"><FormattedMessage {...messages.errorMessageDescription} /></h3>
+				<h3 className="notification-blank-page-heading center-align"><FormattedMessage {...messages.errorMessageHeading} /></h3>
+				<p className="notification-blank-page-description center-align"><FormattedMessage {...messages.errorMessageDescription} /></p>
 			</div>
 			);
 		}
 		if (!this.props.isArchivedTray) {
 			return (
 				<div style={contentHeight}>
-					<h2 className="notification-blank-page-heading center-align pe-title--large"><FormattedMessage {...messages.notificationBlankStateHeading}/></h2>
-					<h3 className="notification-blank-page-description center-align pe-title--small"><FormattedMessage {...messages.notificationsBlankStateDescription}/>
+					<h3 className="notification-blank-page-heading center-align"><FormattedMessage {...messages.notificationBlankStateHeading} /></h3>
+					<p className="notification-blank-page-description center-align"><FormattedMessage {...messages.notificationsBlankStateDescription} />
 					<br/>
-					<a href="javascript:void(0);" onClick={this.archiveList.bind(this)}><FormattedMessage {...messages.notificationsBlankStateLink}/></a>
-					</h3>
+					<a href="#" onClick={this.archiveList.bind(this)}><FormattedMessage {...messages.notificationsBlankStateLink} /></a>
+					</p>
 				</div>
 			);
 		 }
-	   
+
 		return (
 			<div style={contentHeight}>
-				<h2 className="notification-blank-page-heading center-align pe-title--large"><FormattedMessage {...messages.archiveBlankStateHeading}/></h2>
-				<h3 className="notification-blank-page-description center-align pe-title--small"><FormattedHTMLMessage {...messages.archiveBlankStateDescription}/></h3>
+				<h3 className="notification-blank-page-heading center-align"><FormattedMessage {...messages.archiveBlankStateHeading} /></h3>
+				<p className="notification-blank-page-description center-align"><FormattedHTMLMessage {...messages.archiveBlankStateDescription} /></p>
 			</div>
-		);  
+		);
 	}
 }

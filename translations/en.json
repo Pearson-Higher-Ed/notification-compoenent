@@ -5,7 +5,7 @@
 	"notificationBlankState.description": "We’ll let you know when something comes up. Till then, browse your",
 	"notificationBlankState.link":"Notification Archive",
 	"archiveBlankState.heading": "Nothing here!",
-	"archiveBlankState.description": "This is where you will see your<br/>archived notifications.",
+	"archiveBlankState.description": "This is where you will see your archived notifications.",
 	"notification.heading": "Notifications",
 	"backToNotification.heading": "Back",
 	"notification.footer": "View Archive",

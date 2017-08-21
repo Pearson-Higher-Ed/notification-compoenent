@@ -37,8 +37,8 @@ export default class NotificationList extends React.Component {
 	render() {
 		const maxTitleLength = 46;
 		const maxBodyLength = 26;
-		const maxSourceLength = 66;	
-		
+		const maxSourceLength = 66;
+
 		let notificationNodeObjects = {};
 		if (this.props.list.length > 0) {
 			notificationNodeObjects = this.props.list.map((notification) => {
@@ -62,13 +62,13 @@ export default class NotificationList extends React.Component {
 		if (this.props.list.length === 0) {
 			notificationNodeObjects = <NotificationBlankState isError={this.props.isError} isArchivedTray={this.props.isArchiveTray} goToArchiveList={this.goToArchiveList.bind(this)}/>
 		}
-		
+
 		if(this.props.isArchiveTray) {
 			return (
 				<div className="archive-list">
-					<div className="archive-list--heading pe-title"> 
+					<h2 className="archive-list--heading">
 						<FormattedMessage {...messages.notificationList} />
-					</div>
+					</h2>
 					{notificationNodeObjects}
 				</div>
 			)
