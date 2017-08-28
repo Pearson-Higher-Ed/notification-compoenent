@@ -1,9 +1,9 @@
 import React from 'react';
+import { defineMessages, FormattedMessage, injectIntl } from 'react-intl';
+import NotificationHeading from './NotificationHeading';
 import NotificationList from './NotificationList';
 import NotificationDetails from './NotificationDetails';
-import NotificationHeading from './NotificationHeading';
 import NotificationApi from './NotificationApi';
-import { defineMessages, FormattedMessage, injectIntl } from 'react-intl';
 import NotificationIcon from './NotificationIcon';
 const messages = defineMessages({
 	goToNotificationArchive: {
@@ -34,7 +34,7 @@ class NotificationContainer extends React.Component {
 	showDetails(notification) {
 		const state = {
 			displayDetails: true,
-			notificationDetails: notification
+			notificationDetails: 'details'
 		};
 		if(!this.state.isArchive && !notification.isRead) {
 			this.props.notificationRead(notification);
@@ -47,6 +47,7 @@ class NotificationContainer extends React.Component {
 		this.setState({
 			displayDetails: false
 		});
+		this.props.handleFocus();
 	}
 
 	appendArchiveList(archivedNotification) {
@@ -67,6 +68,7 @@ class NotificationContainer extends React.Component {
 		this.setState({
 			isArchive: false
 		});
+		this.props.handleFocus();
 	}
 
 	resetListOnCloseDrawer() {
@@ -102,7 +104,7 @@ class NotificationContainer extends React.Component {
 	}
 
 	render() {
-		// this is super dumb because product wants things to "snap" to the bottom
+		// this is done because product wants things to "snap" to the bottom
 		const contentHeight = {
 			height: window.innerHeight - 255
 		};
@@ -122,28 +124,67 @@ class NotificationContainer extends React.Component {
 					</button>
 				</div>
 				<div className="notification-title">
-					<NotificationHeading back={this.showList} isList={!this.state.isArchive && !this.state.displayDetails}
-					isDetails={this.state.displayDetails} isArchive={this.state.isArchive} archiveBack={this.showNonArchivedList} />
+					<NotificationHeading
+						back={this.showList}
+						isList={!this.state.isArchive && !this.state.displayDetails}
+						isDetails={this.state.displayDetails}
+						isArchive={this.state.isArchive}
+						archiveBack={this.showNonArchivedList}
+					/>
 				</div>
 				<div className="notification-content">
-					<div className={!this.state.isArchive && !this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-left notification-component--hide'}>
+					<div className={!this.state.isArchive &&
+						!this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-left notification-component--hide'}
+					>
 						<div className="content-list" style={contentHeight}>
-							<NotificationList list={this.props.list} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
-							appendArchiveList={this.appendArchiveList} isArchiveTray={false} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
+							<NotificationList
+								list={this.props.list}
+								config={this.props.config}
+								showDetails={this.showDetails}
+								isError={this.props.apiError}
+								appendArchiveList={this.appendArchiveList}
+								isArchiveTray={false}
+								goToArchiveList={this.goToArchiveList}
+								hyphenateWords={this.hyphenateWords}
+							/>
 							<div className="notification-title bottom-archive" style={positionTop}>
 								<div className="notification-title--heading1 center-align pe-label--large pe-label--bold">
-									<button onClick={this.goToArchiveList} className={this.state.isArchive ? 'notification-component--hide' : 'pe-btn__primary--btn_large view-archive-button'}> <FormattedMessage {...messages.goToNotificationArchive} /></button>
+									<button
+										onClick={this.goToArchiveList}
+										className={this.state.isArchive ?
+											'notification-component--hide' : 'pe-btn__primary--btn_large view-archive-button'}
+									>
+										<FormattedMessage {...messages.goToNotificationArchive} />
+									</button>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div className={this.state.isArchive && !this.state.displayDetails ? 'transition-middle': 'transition-middle transition-to-right notification-component--hide'}>
-						<NotificationList list={this.props.archivedList} config={this.props.config} showDetails={this.showDetails} isError={this.props.apiError}
-						 appendArchiveList={this.appendArchiveList} isArchiveTray={true} goToArchiveList={this.goToArchiveList} hyphenateWords={this.hyphenateWords}/>
+					<div className={this.state.isArchive &&
+						!this.state.displayDetails ? 'transition-middle': 'transition-middle transition-to-right notification-component--hide'}
+					>
+						<NotificationList
+							list={this.props.archivedList}
+							config={this.props.config}
+							showDetails={this.showDetails}
+							isError={this.props.apiError}
+						 	appendArchiveList={this.appendArchiveList}
+						 	isArchiveTray={true}
+						 	goToArchiveList={this.goToArchiveList}
+						 	hyphenateWords={this.hyphenateWords}
+						 />
 					</div>
-					<div className={this.state.displayDetails ? 'transition-middle' : 'transition-middle transition-to-right notification-component--hide'}>
-						<NotificationDetails notification={this.state.notificationDetails} closeDrawer={this.props.closeDrawer} apiConfig={this.props.config} appendArchiveList={this.appendArchiveList}
-						coachmarkListener={this.props.coachmarkListener} hyphenateWords={this.hyphenateWords}/>
+					<div className={this.state.displayDetails ?
+						'transition-middle' : 'transition-middle transition-to-right notification-component--hide'}
+					>
+						<NotificationDetails
+							notification={this.state.notificationDetails}
+							closeDrawer={this.props.closeDrawer}
+							apiConfig={this.props.config}
+							appendArchiveList={this.appendArchiveList}
+							coachmarkListener={this.props.coachmarkListener}
+							hyphenateWords={this.hyphenateWords}
+						/>
 					</div>
 				</div>
 			</div>
