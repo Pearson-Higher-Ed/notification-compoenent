@@ -54,7 +54,8 @@ export default class NotificationList extends React.Component {
 					archivedNotification={this.onArchived.bind(this, notification)} trashIconDisable={this.props.isArchiveTray}  time={time}
 					isRead={notification.isRead}
 					source={(notification.message.source && notification.message.source.length > maxSourceLength) ? notification.message.source.substring(0, maxSourceLength) + '\u2026' : notification.message.source}
-					archiveLinkText={<FormattedMessage {...messages.notificationList} />}/>
+					archiveLinkText={<FormattedMessage {...messages.notificationList} />}
+					clickId={notification.id}/>
 
 				);
 			});

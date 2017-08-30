@@ -171,7 +171,6 @@ class NotificationComponent {
 							closeDrawer={_this.closeDrawer.bind(_this)}
 							archiveNotification={_this.archiveNotification.bind(_this)}
 							coachmarkListener={_this.coachmarkListener}
-							handleFocus={_this.handleFocus.bind(_this)}
 						/>
 					</IntlProvider>
 				);
@@ -265,10 +264,6 @@ class NotificationComponent {
 
 	closeDrawer() {
 		this.listDrawer.close();
-	}
-
-	handleFocus() {
-		this.listDrawer.handleFocusOnBack();
 	}
 }
 

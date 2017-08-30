@@ -11,14 +11,14 @@ const newNotification = (isRead)=>{
 	}
 }
 
-const NotificationNode = ({detailsClick, title, summary, source, archivedNotification, time, isRead, trashIconDisable, archiveLinkText}) => {
+const NotificationNode = ({detailsClick, title, summary, source, archivedNotification, time, isRead, trashIconDisable, archiveLinkText, clickId}) => {
 
 	return (
 		<div className="notification-node">
 			<div className="notification-node--details">
 				<div className="notification-node--summary">
 					<div className="pe-bold notification-node--summary-title">
-						<a href="javascript:void(0)" onClick={detailsClick}>
+						<a href="#" onClick={detailsClick} id={clickId}>
 							{title}
 						</a>
 					</div>

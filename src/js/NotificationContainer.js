@@ -21,7 +21,8 @@ class NotificationContainer extends React.Component {
 			displayDetails: false,
 			notificationDetails: {
 				message: {}
-			}
+			},
+			activeId: null
 		};
 		this.showDetails = this.showDetails.bind(this);
 		this.showList = this.showList.bind(this);
@@ -34,7 +35,8 @@ class NotificationContainer extends React.Component {
 	showDetails(notification) {
 		const state = {
 			displayDetails: true,
-			notificationDetails: 'details'
+			notificationDetails: notification,
+			activeId: notification.id
 		};
 		if(!this.state.isArchive && !notification.isRead) {
 			this.props.notificationRead(notification);
@@ -47,7 +49,10 @@ class NotificationContainer extends React.Component {
 		this.setState({
 			displayDetails: false
 		});
-		this.props.handleFocus();
+		const activeId = this.state.activeId;
+		setTimeout(function() {
+			document.getElementById(activeId).focus();
+		}, 50);
 	}
 
 	appendArchiveList(archivedNotification) {
@@ -65,10 +70,10 @@ class NotificationContainer extends React.Component {
 	}
 
 	showNonArchivedList() {
+		this.refs.closeButton && this.refs.closeButton.focus();
 		this.setState({
 			isArchive: false
 		});
-		this.props.handleFocus();
 	}
 
 	resetListOnCloseDrawer() {
