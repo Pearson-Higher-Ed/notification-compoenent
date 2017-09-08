@@ -13,10 +13,10 @@ const NotificationBell = ({unreadCount, toggleList, newNotifications}) => {
 		bellClassNames += ' hide-visibility';
 	}
 	return (
-		<a
+		<button
 			id="notification-bell"
-			href="#void"
-			className="notification-bell--activate"
+			type="button"
+			className="notification-bell--activate pe-icon--btn"
 			onClick={toggleList}
 		>
 			<span className={unreadCount===0 ? 'pe-sr-only' : 'notification-component--hide'}>Notifications</span>
@@ -28,7 +28,7 @@ const NotificationBell = ({unreadCount, toggleList, newNotifications}) => {
 					{unreadCount > 1 ? ' Unread Notifications' : ' Unread Notification'}
 				</span>
 			</div>
-		</a>
+		</button>
 	);
 }
 

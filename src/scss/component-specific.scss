@@ -27,7 +27,8 @@
 .notification-bell--activate {
     display: block;
     height: 100%;
-    
+    padding: 20px 14px 0;
+
     .notification-bell--count {
         background-color: $pe-color-white;
         color: $pe-color-charcoal;
@@ -101,12 +102,12 @@
     }
 }
 
-.notification-blank-page-heading {     
-    margin: 29px 0 0 0;       
-}      
-.notification-blank-page-description {     
-    padding: 18px 0 0 0;       
-}      
+.notification-blank-page-heading {
+    margin: 29px 0 0 0;
+}
+.notification-blank-page-description {
+    padding: 18px 0 0 0;
+}
 
 
 .pointer:hover{
@@ -127,7 +128,7 @@
 	    cursor: pointer;
         float: left;
         width: 231px;
-        
+
         .notification-node--summary {
             float: left;
             height: 82px;
@@ -180,7 +181,7 @@
 
     .notification-details--body {
         margin-bottom: 20px;
-        
+
     }
     .notification-details--bodytext {
         word-break: break-word;
