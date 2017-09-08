@@ -15,7 +15,7 @@ const NotificationBell = ({unreadCount, toggleList, newNotifications}) => {
 	return (
 		<a
 			id="notification-bell"
-			href="javascript:void(0)"
+			href="#void"
 			className="notification-bell--activate"
 			onClick={toggleList}
 		>
