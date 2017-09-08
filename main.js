@@ -34,8 +34,6 @@ class NotificationComponent {
 		dom.setAttribute('id', 'notification-component');
 		dom.setAttribute('data-o-component', 'o-drawer');
 		dom.classList.add('o-drawer-right', 'o-drawer-animated');
-		dom.setAttribute('aria-role', 'menu');
-		dom.setAttribute('role', 'menu');
 
 		document.body.appendChild(dom);
 
@@ -163,11 +161,18 @@ class NotificationComponent {
 		this.containerClass = React.createClass({
 			render: function() {
 				return (
-						<IntlProvider {..._this.get_language(_this.intlData)}>
-							<NotificationContainer list={_this.notificationList} notificationRead={_this.notificationRead.bind(_this)} config={_this.config} apiError={_this.apiError}
-							archivedList={_this.archivedNotificationList} closeDrawer={_this.closeDrawer.bind(_this)} archiveNotification={_this.archiveNotification.bind(_this)}
-							coachmarkListener={_this.coachmarkListener}/>
-						</IntlProvider>
+					<IntlProvider {..._this.get_language(_this.intlData)}>
+						<NotificationContainer
+							list={_this.notificationList}
+							notificationRead={_this.notificationRead.bind(_this)}
+							config={_this.config}
+							apiError={_this.apiError}
+							archivedList={_this.archivedNotificationList}
+							closeDrawer={_this.closeDrawer.bind(_this)}
+							archiveNotification={_this.archiveNotification.bind(_this)}
+							coachmarkListener={_this.coachmarkListener}
+						/>
+					</IntlProvider>
 				);
 			}
 		});

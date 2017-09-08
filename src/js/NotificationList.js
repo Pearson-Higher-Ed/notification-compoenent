@@ -37,8 +37,8 @@ export default class NotificationList extends React.Component {
 	render() {
 		const maxTitleLength = 46;
 		const maxBodyLength = 26;
-		const maxSourceLength = 66;	
-		
+		const maxSourceLength = 66;
+
 		let notificationNodeObjects = {};
 		if (this.props.list.length > 0) {
 			notificationNodeObjects = this.props.list.map((notification) => {
@@ -54,7 +54,8 @@ export default class NotificationList extends React.Component {
 					archivedNotification={this.onArchived.bind(this, notification)} trashIconDisable={this.props.isArchiveTray}  time={time}
 					isRead={notification.isRead}
 					source={(notification.message.source && notification.message.source.length > maxSourceLength) ? notification.message.source.substring(0, maxSourceLength) + '\u2026' : notification.message.source}
-					archiveLinkText={<FormattedMessage {...messages.notificationList} />}/>
+					archiveLinkText={<FormattedMessage {...messages.notificationList} />}
+					clickId={notification.id}/>
 
 				);
 			});
@@ -62,13 +63,13 @@ export default class NotificationList extends React.Component {
 		if (this.props.list.length === 0) {
 			notificationNodeObjects = <NotificationBlankState isError={this.props.isError} isArchivedTray={this.props.isArchiveTray} goToArchiveList={this.goToArchiveList.bind(this)}/>
 		}
-		
+
 		if(this.props.isArchiveTray) {
 			return (
 				<div className="archive-list">
-					<div className="archive-list--heading pe-title"> 
+					<h2 className="archive-list--heading">
 						<FormattedMessage {...messages.notificationList} />
-					</div>
+					</h2>
 					{notificationNodeObjects}
 				</div>
 			)

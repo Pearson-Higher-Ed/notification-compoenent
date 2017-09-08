@@ -50,7 +50,6 @@ export default class NotificationDetails extends React.Component {
 						</a>
 					</span>
 				</div>
-				
 			</div>
 		);
 	}

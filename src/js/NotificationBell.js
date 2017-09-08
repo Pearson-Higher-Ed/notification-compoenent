@@ -4,7 +4,7 @@ import NotificationIcon from './NotificationIcon';
 const NotificationBell = ({unreadCount, toggleList, newNotifications}) => {
 
 	let bellClassNames = 'notification-bell--count pe-label--small';
-	
+
 	if (newNotifications) {
 		bellClassNames += ' notification-bell--new'
 	}
@@ -13,16 +13,22 @@ const NotificationBell = ({unreadCount, toggleList, newNotifications}) => {
 		bellClassNames += ' hide-visibility';
 	}
 	return (
-		<a id="notification-bell" aria-label="Notifications" href="javascript:void(0)" className="notification-bell--activate" 
-			onClick={toggleList}>
+		<button
+			id="notification-bell"
+			type="button"
+			className="notification-bell--activate pe-icon--btn"
+			onClick={toggleList}
+		>
 			<span className={unreadCount===0 ? 'pe-sr-only' : 'notification-component--hide'}>Notifications</span>
 			<NotificationIcon iconName="notification-18" iconAltText="" />
-				 
+
 			<div className={bellClassNames}>
-				<span className="pe-sr-only">{unreadCount > 1 ? unreadCount+ 'Unread Notifications' : unreadCount+'Unread Notification'}</span>
 				<span>{unreadCount > 9 ? '9+' : unreadCount}</span>
+				<span className="pe-sr-only">
+					{unreadCount > 1 ? ' Unread Notifications' : ' Unread Notification'}
+				</span>
 			</div>
-		</a>
+		</button>
 	);
 }
 

@@ -6,7 +6,7 @@ import { defineMessages, injectIntl, intlShape, FormattedMessage } from 'react-i
 import ReactDOM from 'react-dom';
 
 const messages = defineMessages({
-	
+
 	notificationHeading: {
 		id: 'notification.heading',
 		defaultMessage: 'Notifications'
@@ -42,10 +42,10 @@ const messages = defineMessages({
 			);
 		}
 
-		
+
 		return (
 			<button ref="heading" className="notification-title--heading2 pe-icon--btn pe-label--large" onClick={this.props.isDetails ? this.props.back : this.props.archiveBack}>
-				<NotificationIcon iconName="chevron-back-18" iconAltText={<FormattedMessage {...messages.backToNotificationHeading} />} />
+				<NotificationIcon iconName="chevron-back-18" />
 				<div><FormattedMessage {...messages.backToNotificationHeading} /></div>
 			</button>
 			);

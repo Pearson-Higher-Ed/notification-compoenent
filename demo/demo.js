@@ -28,13 +28,13 @@ const AppHeaderConfig = {
 	bellInsideAppHeaderFlag: true,
 
 	locale:'en',
-	
+
 	appHeaderClientHeight:'70px',
-	notificationListDomHeight:'582px' // NotificationListHeight need to add this for scroll height when there is a long list of notifications 
-									 // Ex:notificationListDomHeight:618px for appHeaderClientHeight:44px  and notificationListDomHeight:610px for appHeaderClientHeight:54px  
+	notificationListDomHeight:'582px' // NotificationListHeight need to add this for scroll height when there is a long list of notifications
+									 // Ex:notificationListDomHeight:618px for appHeaderClientHeight:44px  and notificationListDomHeight:610px for appHeaderClientHeight:54px
 };
 function init() {
-	
+
 	// grab all files in icons folder and import them inline (appends to end of body)
 	const svgFiles = require.context('inline!pearson-elements/assets/icons', false, /^.*\.svg$/);
 	svgFiles.keys().forEach(svgFiles);
